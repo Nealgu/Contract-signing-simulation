@@ -1,0 +1,1840 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4e9">
+  <title>O一下 信息科技有限公司 · 公司经营模拟</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0ibG9nby10aXRsZSI+CiAgPHRpdGxlIGlkPSJsb2dvLXRpdGxlIj5P5LiA5LiLIOS/oeaBr+enkeaKgOaciemZkOWFrOWPuDwvdGl0bGU+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJhZGdlIiB4MT0iNyIgeTE9IjQiIHgyPSI1OCIgeTI9IjYyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMzMjc0NUQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMTczRTMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHJ4PSIxNCIgZmlsbD0idXJsKCNiYWRnZSkiIHN0cm9rZT0iIzU0ODY3MyIvPgogIDxlbGxpcHNlIGN4PSIyOCIgY3k9IjMzLjUiIHJ4PSIxMy4yIiByeT0iMTUuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGM0Q0IiBzdHJva2Utd2lkdGg9IjcuNiIvPgogIDxwYXRoIGQ9Im00Ni41IDcuNSAyLjkgNS45IDYuMSAzLjEtNi4xIDMtMi45IDYtMi45LTYtNi4xLTMgNi4xLTMuMXoiIGZpbGw9IiNGRkNFNkEiLz4KPC9zdmc+">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f4eb;
+  --paper: #fffdf6;
+  --ink: #273c38;
+  --muted: #626b5e;
+  --line: #e3dfd0;
+  --green: #32614d;
+  --yellow: #f5c65e;
+  --shadow: 0 3px 0 #e7e2d5;
+  font: 15px/1.5 "Microsoft YaHei UI", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+button:focus-visible, [tabindex]:focus-visible { outline: 3px solid #41806a; outline-offset: 3px; }
+[hidden] { display: none !important; }
+h1, h2, h3, p { margin: 0; }
+svg { display: block; }
+[data-icon] { display: inline-grid; place-items: center; flex: none; }
+.glyph { width: 1.12em; height: 1.12em; }
+.sprite { width: 100%; height: 100%; overflow: visible; }
+.topbar { background: #fffdf5; border-bottom: 1px solid var(--line); }
+.topbar-inner, .page { max-width: 1430px; margin: auto; padding-inline: clamp(24px, 4.3vw, 64px); }
+.topbar-inner { height: 67px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand, .top-actions { display: flex; align-items: center; gap: 11px; }
+.brand { min-width: 0; }
+.top-actions { flex: none; }
+.brand-mark { display: block; flex: none; width: 40px; height: 40px; }
+.brand-name { font-size: clamp(13px, 2.6vw, 19px); line-height: 1.25; font-weight: 900; letter-spacing: .04em; }
+.brand-sub, .clock-year { font: 800 9px/1.4 system-ui, sans-serif; letter-spacing: .18em; color: var(--muted); }
+.save-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-right: 6px; }
+i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #64a078; }
+.icon-button { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 11px; background: var(--paper); font-size: 17px; }
+.icon-button:hover { background: #eeeee2; }
+.intro { display: flex; align-items: end; justify-content: space-between; gap: 14px; padding-block: 27px 21px; }
+.eyebrow { display: flex; align-items: center; gap: 8px; color: #517360; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+.eyebrow span { display: inline-block; width: 16px; height: 3px; background: #dda942; border-radius: 2px; }
+h1 { margin-top: 3px; font-size: clamp(33px, 3.1vw, 48px); line-height: 1.22; letter-spacing: -.055em; font-weight: 900; }
+h1 span { color: #c89028; }
+.intro p { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.year-tag { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid #e3dec9; background: #fbf7e8; border-radius: 99px; color: #655a39; white-space: nowrap; font-size: 12px; font-weight: 700; }
+.year-tag b { color: #c19543; }
+.board { display: grid; grid-template-columns: minmax(0, 1fr) minmax(245px, 285px); gap: 20px; align-items: start; padding-bottom: 32px; }
+.primary, .sidebar { min-width: 0; display: grid; gap: 17px; }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+.scene-panel { overflow: hidden; }
+.panel-head, .stats-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.panel-head { padding: 11px 15px; }
+h2 { font-size: 17px; font-weight: 900; }
+.panel-head h2 { display: flex; align-items: center; gap: 8px; }
+.heading-icon { color: var(--green); background: #e9f0e3; border-radius: 7px; width: 28px; height: 28px; }
+.status-chip { display: flex; align-items: center; gap: 6px; border-radius: 99px; background: #eaf0e1; color: #41614a; padding: 4px 10px; font-size: 11px; font-weight: 700; }
+.status-chip[data-phase="opportunities"], .status-chip[data-phase="summary"] { background: #f7edcf; color: #74552f; }
+.status-chip[data-phase="opportunities"] i, .status-chip[data-phase="summary"] i { background: #c39236; }
+.street { position: relative; isolation: isolate; aspect-ratio: 1080 / 600; background: #dbeae1; overflow: hidden; }
+.street-art { display: block; width: 100%; height: 100%; }
+.walkers { position: absolute; inset: 0; pointer-events: none; }
+.walker { position: absolute; width: clamp(36px, 7.3%, 73px); aspect-ratio: .72; transform: translate(-50%, -100%); }
+.walker-button { pointer-events: auto; background: transparent; border: 0; padding: 0; overflow: visible; border-radius: 12px; }
+.walker-body { display: block; height: 100%; position: relative; z-index: 1; filter: drop-shadow(0 1px 0 #f9e9bb); }
+.walker::after { position: absolute; content: ""; left: 21%; right: 19%; bottom: 1%; height: 8%; border-radius: 50%; background: #3f52412e; }
+.walker-button .walker-body { animation: stroll 550ms ease-in-out infinite alternate; }
+@keyframes stroll { to { transform: translateY(-4%); } }
+.walker-button:hover .walker-body, .walker-button:focus-visible .walker-body { filter: drop-shadow(0 0 3px #fff9cf) drop-shadow(0 0 4px #fff9cf); }
+.walker-tag { display: flex; align-items: center; justify-content: center; gap: 4px; position: absolute; z-index: 2; left: 50%; bottom: 100%; transform: translateX(-50%); background: #fff9dc; color: #4e4c32; border: 1px solid #d3a652; border-radius: 8px; white-space: nowrap; padding: 2px 6px; font-weight: 900; font-size: clamp(9px, .85vw, 12px); box-shadow: 0 2px 0 #4e4b3824; }
+.walker-tag::after { content: ""; position: absolute; width: 5px; height: 5px; bottom: -4px; left: calc(50% - 3px); transform: rotate(45deg); background: #fff9dc; border-right: 1px solid #d3a652; border-bottom: 1px solid #d3a652; }
+.walker-button[data-kind="support"] .walker-tag { color: #2f584e; background: #e4f4e8; border-color: #83a995; }
+.walker-button[data-kind="support"] .walker-tag::after { background: #e4f4e8; border-color: #83a995; }
+.player .walker-tag { background: #285843; border-color: #285843; color: #fff6d5; }
+.player .walker-tag::after { background: #285843; border-color: #285843; }
+.street-footer { padding: 9px 15px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; font-size: 11px; }
+.street-footer > span { display: flex; align-items: center; gap: 6px; }
+.street-footer strong { color: var(--green); }
+.event-panel .heading-icon { color: #805e29; background: #f7e9c5; }
+.event-badge { border-radius: 99px; background: #f3ebd7; color: #735828; padding: 3px 9px; font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.event-badge[data-active="true"] { background: #f7d486; color: #654921; }
+.event-body { margin: 0 14px 13px; padding: 10px 12px; border: 1px solid #e8e0ca; border-radius: 10px; background: #fbf8ed; }
+.event-body h3 { font-size: 14px; }
+.event-body p { font-size: 12px; color: var(--muted); }
+.event-body h3 + p { margin-top: 3px; }
+.event-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 155px), 1fr)); gap: 7px; margin-top: 8px; }
+.event-choice { padding: 7px 8px; background: var(--paper); border: 1px solid #e3d4aa; border-radius: 8px; text-align: left; font-size: 12px; }
+.event-choice:hover:not(:disabled) { background: #f9edcd; border-color: #c29c53; }
+.event-choice:disabled { background: #efede4; color: #716d62; }
+.event-choice strong, .event-choice small { display: block; }
+.event-choice small, .event-effects { color: #52664e; font-size: 11px; }
+.event-effects { margin-top: 4px; }
+.clock-panel, .stats-panel { padding: 15px; }
+.clock-top { display: flex; justify-content: space-between; align-items: center; }
+.clock-top > span:first-child { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; }
+.clock-year { color: #7e755c; }
+.week-line { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.week-line strong { color: var(--ink); font-size: 25px; font-weight: 900; }
+.clock-box { margin-top: 9px; background: #f2eddb; border: 1px solid #e9e1c7; border-radius: 11px; padding: 10px 11px; }
+.clock-caption { display: flex; align-items: center; gap: 6px; color: #695b3e; font-size: 11px; font-weight: 700; }
+#timer { font: 850 29px/1.23 system-ui, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .045em; }
+.clock-box[data-low="true"] #timer { color: #a34732; }
+.timer-track, .stat-track { overflow: hidden; background: #e5deca; border-radius: 99px; height: 6px; margin-top: 6px; }
+.timer-track span, .stat-track span { display: block; height: 100%; border-radius: inherit; }
+.timer-track span { background: #cfa13f; width: 100%; }
+.week-action { margin-top: 11px; width: 100%; }
+.cash-panel { padding: 13px 15px; background: #eef3e5; border-color: #dce5d3; }
+.cash-main { display: flex; align-items: center; gap: 11px; }
+.cash-icon { width: 39px; height: 39px; border-radius: 11px; background: #dbe9d3; color: #345d49; font-size: 21px; }
+#cash-label { font-size: 11px; color: #4d684f; font-weight: 700; }
+.cash-value { font: 850 26px/1.15 system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.cash-value[data-negative="true"], .shop-balance[data-negative="true"] { color: #8a3a2c; }
+.cash-meter { margin-top: 10px; padding-top: 8px; border-top: 1px solid #d9e4d1; color: #4d684f; }
+.cash-meter div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 3px 6px; font-size: 11px; }
+.cash-meter strong { font: 800 14px system-ui, sans-serif; color: #345d49; }
+.cash-meter small { font-size: 10px; }
+.stats-title span { font-size: 10px; color: var(--muted); }
+.role-summary { margin-block: 10px 13px; padding: 5px 9px; display: flex; align-items: center; gap: 8px; min-height: 43px; background: #f1eee2; border-radius: 9px; font-size: 11px; color: var(--muted); }
+.mini-avatar { width: 27px; height: 34px; flex: none; }
+.role-summary b { display: block; font-size: 12px; color: var(--ink); }
+.stat + .stat { margin-top: 10px; }
+.stat-title { display: flex; align-items: center; gap: 5px; color: #4c584a; font-size: 11px; font-weight: 700; }
+.stat-title strong { margin-left: auto; font: 800 12px system-ui, sans-serif; color: var(--ink); }
+.stat-track { height: 5px; background: #ebe8dc; margin-top: 4px; }
+.stat-track span { background: var(--stat-color); }
+.empty-records { padding: 15px; border: 1px dashed #d9d5c6; border-radius: 10px; color: var(--muted); text-align: center; font-size: 12px; }
+dialog { width: min(92vw, 710px); max-height: calc(100dvh - 36px); padding: 0; color: var(--ink); border: 1px solid #d9d3be; border-radius: 20px; background: var(--paper); box-shadow: 0 12px 0 #263c3929, 0 25px 100px #16231b44; }
+dialog::backdrop { background: #24362b80; backdrop-filter: blur(2px); }
+dialog[data-view="contract"], dialog[data-view="help"], dialog[data-view="reset"] { width: min(92vw, 490px); }
+dialog[data-view="roles"] { width: min(94vw, 748px); }
+.dialog-inner { padding: clamp(19px, 3vw, 30px); }
+.dialog-head { position: relative; padding-right: 38px; margin-bottom: 16px; }
+.dialog-head .icon-button { position: absolute; right: 0; top: 0; }
+.dialog-kicker { display: block; color: #517360; font-size: 11px; font-weight: 900; letter-spacing: .15em; margin-bottom: 4px; }
+.dialog-head h2 { font-size: clamp(22px, 3vw, 32px); line-height: 1.28; letter-spacing: -.025em; }
+.dialog-head p { color: var(--muted); margin-top: 6px; font-size: 13px; }
+.dialog-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 19px; }
+.dialog-actions .push { margin-right: auto; color: var(--muted); font-size: 12px; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 39px; border: 1px solid #d8d1bd; background: #f9f5e9; border-radius: 9px; padding: 7px 14px; font-size: 13px; font-weight: 800; }
+.button:hover { filter: brightness(.97); }
+.button:active { transform: translateY(1px); }
+.button.accent { background: var(--yellow); border-color: #d4a74e; box-shadow: 0 2px 0 #bc8f3c; color: #463713; }
+.button:disabled { background: #eeeade; border-color: #e3dece; box-shadow: none; color: #706f62; filter: none; transform: none; }
+.role-grid, .shop-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+.role-card { min-width: 0; display: flex; flex-direction: column; text-align: left; border: 1px solid var(--line); background: #fcf8ea; border-radius: 13px; padding: 8px 10px 11px; }
+.role-card[aria-pressed="true"] { border-color: #548468; box-shadow: inset 0 0 0 1px #548468; background: #f1f5e9; }
+.role-art { height: 108px; width: 100%; border-radius: 9px; display: grid; place-items: center; background: radial-gradient(circle, #fff5d8 0 36%, transparent 37%), var(--role-color); margin-bottom: 7px; }
+.role-art .sprite { width: 73px; height: 101px; filter: drop-shadow(0 2px 0 #533a2f38); }
+.role-name { font-size: 15px; font-weight: 900; }
+.role-title { color: var(--green); font-size: 11px; font-weight: 800; }
+.role-desc { font-size: 11px; color: var(--muted); margin: 4px 0 6px; }
+.role-bonus { display: block; color: #4f583b; font-size: 10px; font-weight: 800; margin-top: auto; }
+.document { position: relative; border: 1px solid #e5dabd; border-radius: 12px; background: #fbf6e6; padding: 14px; }
+.document h3 { font-size: 13px; margin-bottom: 4px; }
+.document p { color: var(--muted); font-size: 13px; }
+.document-deliverable { margin-top: 10px; padding-top: 9px; border-top: 1px solid #e5dabd; }
+.contract-figures, .summary-figures { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.figure { padding: 9px 11px; background: #f0f2e5; border-radius: 9px; }
+.figure small { display: block; color: #536650; font-size: 11px; }
+.figure strong { font: 850 22px/1.3 system-ui, sans-serif; color: #345d49; }
+.figure[data-risk="high"] strong { color: #a44f3d; }
+.figure[data-risk="medium"] strong { color: #8a6026; }
+.contract-note { color: var(--muted); font-size: 12px; margin-top: 9px; }
+.contract-note strong { color: var(--ink); }
+.result { margin-top: 10px; padding: 9px 11px; border-radius: 8px; color: #345d49; background: #e9f2e1; font-size: 13px; font-weight: 800; }
+.result[data-status="lost"] { color: #7e4535; background: #f5e8de; }
+.result[data-status="expired"] { color: #6c5735; background: #f4ecd6; }
+.shop-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: -4px 0 10px; }
+.monthly-settlement { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-bottom: 14px; padding: 8px 11px; border-radius: 9px; background: #f2eddb; color: #695b3e; font-size: 12px; }
+.shop-balance { color: var(--green); font-size: 13px; font-weight: 800; }
+.shop-balance small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
+.shop-toolbar .button { min-height: 34px; }
+.shop-card { padding: 11px; background: #fbf7ea; border: 1px solid #e7dec8; border-radius: 12px; display: flex; flex-direction: column; gap: 6px; }
+.shop-icon { width: 34px; height: 34px; border-radius: 9px; color: #665024; background: #f3e2af; font-size: 20px; }
+.shop-card h3 { font-size: 14px; }
+.shop-card p { font-size: 12px; color: var(--muted); }
+.shop-card .button { margin-top: auto; padding-inline: 5px; }
+.boosts { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 4px; }
+.boosts span { border-radius: 5px; background: #e6eedc; padding: 2px 5px; font-size: 10px; color: #3e624b; font-weight: 800; }
+.summary-figures { grid-template-columns: repeat(3, 1fr); margin-bottom: 13px; }
+.summary-stats { display: flex; gap: 6px; flex-wrap: wrap; }
+.history-list { list-style: none; padding: 0; margin: 0; max-height: 42vh; overflow: auto; }
+.history-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 4px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.history-list li > strong { max-width: 55%; text-align: right; }
+.history-list small { color: var(--muted); }
+.help-list { margin: 0; padding-left: 20px; color: #46564b; font-size: 13px; }
+.help-list li + li { margin-top: 8px; }
+.toast { position: fixed; z-index: 4; right: 24px; bottom: 22px; color: #fffbed; background: #315641; border-radius: 10px; padding: 10px 14px; box-shadow: 0 4px 16px #263c3933; font-size: 13px; font-weight: 800; }
+@media (max-width: 870px) {
+  .board { gap: 12px; grid-template-columns: minmax(0, 1fr) minmax(194px, 224px); }
+  .topbar-inner, .page { padding-inline: 19px; }
+  .clock-panel, .stats-panel { padding: 12px; }
+}
+@media (max-width: 630px) {
+  .top-actions { gap: 5px; }
+  .top-actions .icon-button { width: 30px; height: 30px; }
+  .brand-sub { letter-spacing: .08em; }
+  .board { grid-template-columns: 1fr; }
+  .sidebar { grid-template-columns: 1fr 1fr; }
+  .cash-panel { align-self: start; }
+  .stats-panel { grid-column: 1 / -1; }
+  .year-tag, .save-status { display: none; }
+  .role-grid, .shop-grid { grid-template-columns: 1fr; }
+  .role-art { height: 75px; }
+  .role-art .sprite { width: 49px; height: 68px; }
+  .summary-figures { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .walker-button .walker-body { animation: none; }
+}
+
+</style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite-library" aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none">
+  <defs>
+    <g id="sprite-contract" stroke="#263943" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round">
+      <path fill="#fff3d6" d="M0 1.5h13l5 5V24H0Z"/>
+      <path fill="#f4cd7c" d="M13 1.5v5h5"/>
+      <path d="M4 7.5h5m-5 4.5h10M4 16h7" fill="none" stroke="#8e8171" stroke-width="1.25"/>
+      <path d="m11 19 1.4 1.5 2.6-2.7" fill="none" stroke="#62927d" stroke-width="1.25"/>
+    </g>
+  </defs>
+
+  <symbol id="player-0" viewBox="0 0 72 100">
+    <g stroke="#253743" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#384d59" d="M23 70h27l1 18-9 2-6-12-3 12-11-2Z"/>
+      <path fill="#fbf0d4" d="M22 87c-3 2-6 4-5 7h15l1-6m9 0 9-2c4 2 6 5 5 8H42Z"/>
+      <path d="M19 94h11m15 0h9" stroke="#6c7a78" stroke-width=".9"/>
+      <path fill="#f4ba56" d="M26 48q-11 1-13 11l-1 9 8 2 4-9-3 14q15 6 29-1l-2-15 5 11 8-4-3-9q-3-8-14-9Z"/>
+      <path fill="#f7dab0" d="M12 68q-2 6 2 7 5 1 6-5m34 0q4 7 7 3 3-3 0-7"/>
+      <path fill="#fbebcc" d="m28 49 8 8 8-8-4 24-7 1Z"/>
+      <path fill="#f0c293" d="M30 42v8l6 5 6-5v-8Z"/>
+      <path d="m26 52-3 8 7 2-5 4m20-13 4 7-7 2 4 5" fill="none" stroke="#b7783a" stroke-width="1.2"/>
+      <path fill="#f5ca9e" d="M19 29c-6-3-6 7 0 8 2 7 8 12 17 12 8 0 15-4 17-12 6-2 5-11 0-8L51 17l-10-6-17 5Z"/>
+      <path fill="#3a393c" d="M18 31c-4-5-3-14 0-19 5-9 15-10 23-7 7-2 13 2 15 8 2 6 1 14-2 18l-4-3-3-11c-6 6-13 6-19 4l-6 10Z"/>
+      <path d="M23 15q6-7 15-6m9 4 4 4" stroke="#766253" stroke-width="1.2" fill="none"/>
+      <path d="M26 32v1m18-1v1m-12 7q4 3 8 0" fill="none"/>
+      <path d="M22 38h3m20 0h3" stroke="#e4a082" stroke-width="2.3"/>
+      <path fill="#fbf0d4" d="m45 58 4 1-1 3-4-1Z" stroke-width="1"/>
+    </g>
+  </symbol>
+
+  <symbol id="player-1" viewBox="0 0 72 100">
+    <g stroke="#253743" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#614644" d="M52 18c9 3 9 11 7 17-1 5 1 8 4 10-9 6-17 0-17-7l1-17Z"/>
+      <path fill="#e6b391" d="M24 73h23l-3 16h-8l-1-12-3 12h-8Z"/>
+      <path fill="#584745" d="m23 87 9 1v6H18c0-3 2-5 5-7Zm13 1 8-1c4 1 6 4 6 7H36Z"/>
+      <path fill="#73926e" d="M27 47c-7 0-12 4-14 12l-2 10 8 2 4-9-3 18q16 5 31-1l-4-18 7 6 5-6-9-10q-3-4-8-4Z"/>
+      <path fill="#e6b391" d="M11 68q-2 6 3 7 4 1 5-4m36-4c4 2 8 0 8-4 0-2-2-3-4-2"/>
+      <path fill="#f2dfbd" d="m26 48 9 10 9-10-5 18h-8Z"/>
+      <path fill="#dbab84" d="M30 43v7l5 5 6-5v-7Z"/>
+      <path fill="#e7b591" d="M19 28c-6-2-6 8 0 9 2 6 7 11 16 11 9 0 15-5 17-12 5-1 6-10 0-9l-3-9-15-6-14 9Z"/>
+      <path fill="#654841" d="M18 30c-5-6-4-15 0-20 4-5 10-7 19-6 8 0 14 5 16 10 2 6 1 12-1 16l-4-6c-8-1-13-5-16-10-3 6-7 8-12 9Z"/>
+      <path d="M22 14q5-5 11-6m6 4q5 2 8 7" stroke="#a4755d" stroke-width="1.2" fill="none"/>
+      <path d="M26 32v1m18-1v1m-13 7q4 3 8 0" fill="none"/>
+      <path d="M22 38h3m20 0h3" stroke="#ce8b7d" stroke-width="2.1"/>
+      <circle cx="19" cy="38" r="2" fill="#f1bf67" stroke-width="1.2"/>
+      <circle cx="51" cy="37" r="2" fill="#f1bf67" stroke-width="1.2"/>
+      <path d="M35 64v16m-10-8h5m11 0h5" stroke="#4f715b" stroke-width="1.1" fill="none"/>
+      <circle cx="36" cy="69" r="1.2" fill="#f1bf67" stroke="none"/>
+    </g>
+  </symbol>
+
+  <symbol id="player-2" viewBox="0 0 72 100">
+    <g stroke="#253743" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#4b5360" d="M21 71h29l-1 17h-9l-4-9-4 9h-9Z"/>
+      <path fill="#fbf0d4" d="M23 86c-5 1-8 4-8 8h17l1-7Zm17 1 9-1c5 1 7 4 7 8H40Z"/>
+      <path d="M21 91h7m17 0h6" stroke="#9e9b8a" stroke-width="1"/>
+      <path fill="#608d92" d="M25 47c-6 1-11 5-13 11l-3 12 9 3 6-11-3 13q16 5 31-1l-4-13 6 10 8-4-4-11q-2-6-14-9Z"/>
+      <path fill="#d5a07d" d="M9 70c-2 5 1 7 4 7 2 0 4-2 5-4m36-2q5 6 8 2 2-3 0-6"/>
+      <path fill="#89b3b0" d="M23 49c1-5 7-7 13-7s12 2 13 7l-5 5-8 4-9-4Z"/>
+      <path fill="#d8a483" d="M30 42v9l6 4 6-4v-9Z"/>
+      <path fill="#deaa84" d="M19 28c-6-3-6 7 0 8 2 7 8 12 17 12 8 0 14-4 17-12 6-1 6-11 0-8L50 15l-13-4-14 5Z"/>
+      <path fill="#323b4c" d="M18 31c-3-6-4-12 0-18-3-4 0-7 4-5 5-6 13-6 16-2 6-3 12 0 13 5 5 1 7 10 2 19l-4-8c-6 1-11-3-13-6-2 5-9 8-15 7Z"/>
+      <path d="M23 16q5 1 9-5m7-1q4-1 7 2" stroke="#586079" stroke-width="1.2" fill="none"/>
+      <path d="M30 39q5 3 10 0" fill="none"/>
+      <path fill="#f6e6c9" fill-opacity=".35" d="M22 28h11v6q-5 4-10 0Zm17 0h11l-1 6q-5 4-10 0Z" stroke-width="1.6"/>
+      <path d="M33 30q3-2 6 0m-12 1v1m17-1v1" fill="none" stroke-width="1.6"/>
+      <path d="M32 56v6m7-6v6m-12 7h18" stroke="#e3e1c2" stroke-width="1.2" fill="none"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-0" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#5b5661" d="M22 71h26l1 17h-9l-6-10-3 10h-9Z"/>
+      <path fill="#3d434c" d="M22 87h9v7H17q0-5 5-7Zm18 0h9q6 2 6 7H40Z"/>
+      <path fill="#c47f65" d="M25 46c-7 1-11 5-13 13l-2 10 8 3 5-12-2 14q15 4 28-1l-2-13 6 9 8-4-4-10q-4-7-12-9Z"/>
+      <path fill="#efccaa" d="M10 68c-2 4 0 8 4 8 2 0 4-2 4-4"/>
+      <path fill="#f5e7cc" d="m25 47 10 8 10-8-5 24-9 1Z"/>
+      <path fill="#e9bd9d" d="M29 41v8l6 4 6-4v-8Z"/>
+      <path fill="#f2c9a5" d="M18 28c-5-3-6 6 0 8 1 7 8 12 17 12 8 0 15-5 17-12 6-2 6-10 0-8L48 14l-15-5-14 8Z"/>
+      <path fill="#403739" d="M16 30c-4-6-4-13 1-18 4-6 13-9 21-8 10 1 15 7 16 13 1 4 0 10-2 13l-5-8-2-6c-5 6-12 9-24 8l-1 5Z"/>
+      <path d="M22 15q8-7 17-6m-13 23v1m18-1v1m-13 7q3 2 7 0" fill="none"/>
+      <use href="#sprite-contract" transform="translate(44 47) rotate(12)"/>
+      <path fill="#f2c9a5" d="M56 64c0-3 3-5 5-3 2 2 2 6 0 7-2 1-5-1-5-4Z"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-1" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#cf9f7d" d="M24 72h22l-2 17h-8l-1-12-3 12h-8Z"/>
+      <path fill="#52475d" d="m23 87 9 1v6H18q0-5 5-7Zm13 1 8-1q6 2 6 7H36Z"/>
+      <path fill="#8d7c9f" d="M25 46c-6 1-10 6-12 13l-3 12 8 2 5-11-3 18q16 4 31-1l-4-18 6 8 8-4-5-11q-3-5-12-8Z"/>
+      <path fill="#d8a986" d="M10 71q-1 6 3 6 3 0 5-4"/>
+      <path fill="#cfa483" d="M29 42v7l6 5 6-5v-7Z"/>
+      <path fill="#ede4d5" d="m25 47 10 7-4 6-7-5Zm20 0-10 7 4 6 7-5Z" stroke-width="1.5"/>
+      <path fill="#d9aa85" d="M18 28c-6-3-6 7 0 8 2 7 8 12 17 12 8 0 15-5 17-12 6-1 6-10 0-8l-3-12-14-5-15 7Z"/>
+      <path fill="#3f3c49" d="M18 32C13 26 12 15 17 10c4-6 12-9 19-8 10 0 16 6 18 13 2 5 2 11-1 17l-4-7c-9 0-14-5-17-11-2 7-8 10-12 11Z"/>
+      <path d="M21 16q2-5 7-7m11 2q7 3 9 8" stroke="#746676" stroke-width="1.2" fill="none"/>
+      <path d="M26 32v1m18-1v1m-13 7q4 3 8 0" fill="none"/>
+      <circle cx="18" cy="37" r="1.8" fill="#f3cb75" stroke-width="1.2"/>
+      <circle cx="52" cy="37" r="1.8" fill="#f3cb75" stroke-width="1.2"/>
+      <use href="#sprite-contract" transform="translate(43 48) rotate(16)"/>
+      <path fill="#d9aa85" d="M56 64q1-4 4-4 3 1 2 5-1 4-4 3-3-1-2-4Z"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-2" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#4d5c61" d="M23 72h25l2 16-10 1-5-10-3 10-11-1Z"/>
+      <path fill="#f4e6cb" d="m21 87 11 1v6H16q0-5 5-7Zm19 1 10-1q5 1 6 7H40Z"/>
+      <path fill="#798e70" d="M24 48q-10 1-13 12l-2 10 8 3 6-10-2 12q14 5 29-1l-2-13 6 10 7-4-3-11q-4-7-13-8Z"/>
+      <path fill="#bd886c" d="M9 70q-1 5 3 6 3 0 5-3"/>
+      <path fill="#e5d5b7" d="m25 48 10 7 10-7-4 25H30Z"/>
+      <path fill="#b98468" d="M29 42v8l6 4 6-4v-8Z"/>
+      <path fill="#c58d6e" d="M18 29c-5-2-6 7 0 8 2 7 9 12 17 12 9 0 15-5 17-12 6-1 6-10 0-8l-3-12-14-5-14 6Z"/>
+      <path fill="#3a3b47" d="M17 30q-5-9 0-15h36q4 7 0 15l-5-3-1-7-24 1-2 7Z"/>
+      <path fill="#e4b266" d="M16 19c-1-7 3-14 11-16 8-2 17 0 22 5 3 3 5 7 4 12-12-2-24-2-37-1Z"/>
+      <path fill="#d19854" d="M16 19q21-5 37 0l5 3q1 2-2 3c-14-4-22-4-36-3q-4 1-4-3Z"/>
+      <path d="M34 5q7 3 9 11" stroke="#bd874d" stroke-width="1.2" fill="none"/>
+      <path d="M26 33v1m18-1v1m-14 7q5 3 9 0" fill="none"/>
+      <use href="#sprite-contract" transform="translate(44 48) rotate(12)"/>
+      <path fill="#c58d6e" d="M56 65q0-3 3-4 4-1 4 4-1 4-4 4-3-1-3-4Z"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-3" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#503d40" d="M17 15C7 23 9 40 13 54q12 5 22 0 11 5 23 0c3-15 4-30-7-40Z"/>
+      <path fill="#f0c1a2" d="M23 76h23l-2 13h-8l-1-10-4 10h-8Z"/>
+      <path fill="#44545b" d="m22 87 9 1v6H17q0-5 5-7Zm14 1 8-1q6 2 6 7H36Z"/>
+      <path fill="#65999a" d="M25 47c-7 1-10 5-13 12l-3 11 9 3 5-11-3 18q17 4 32-1l-5-17 6 9 8-4-4-10c-2-5-7-8-13-10Z"/>
+      <path fill="#f1c6a6" d="M9 70q-1 6 3 6 4 0 6-3"/>
+      <path fill="#e4b391" d="M29 41v8l6 5 6-5v-8Z"/>
+      <path fill="#e3e1c9" d="m25 48 10 6 10-6-2 8-8 5-8-5Z" stroke-width="1.5"/>
+      <path fill="#f1c6a6" d="M18 28c-6-3-6 6 0 8 2 7 8 12 17 12 9 0 15-5 17-12 6-1 6-10 0-8l-4-13-15-5-14 7Z"/>
+      <path fill="#5c4547" d="M16 30c-3-4-4-13 1-19 5-6 10-8 18-8s16 4 19 11c2 5 1 13-2 16l-3-8c-7 0-12-2-16-9-4 7-9 9-14 10Z"/>
+      <path d="M23 14q4-5 8-6m9 2q5 2 8 7" stroke="#9b7166" stroke-width="1.15" fill="none"/>
+      <path d="M25 32v1m19-1v1m-13 7q4 3 8 0" fill="none"/>
+      <path d="M22 38h3m20 0h3" stroke="#d38a7d" stroke-width="2"/>
+      <use href="#sprite-contract" transform="translate(44 49) rotate(14)"/>
+      <path fill="#f1c6a6" d="M55 65q1-4 4-4 4 0 3 5-1 4-4 3-3-1-3-4Z"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-4" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#556575" d="M22 73h28l-1 15h-9l-5-9-3 9-10-1Z"/>
+      <path fill="#423e46" d="m22 86 10 1v7H17q0-5 5-8Zm18 1 9-1q6 2 6 8H40Z"/>
+      <path fill="#b8a275" d="M25 46c-7 1-12 6-14 13l-2 11 9 3 5-12-2 14q15 5 30-1l-4-13 6 9 8-3-4-10q-4-8-13-11Z"/>
+      <path fill="#dcae8b" d="M9 70q-1 5 3 6 4 0 6-3"/>
+      <path fill="#e9e3ce" d="m26 47 9 8 9-8-3 26-11 1Z"/>
+      <path fill="#d1a07e" d="M29 41v8l6 4 6-4v-8Z"/>
+      <path fill="#dfb18e" d="M18 28c-6-3-6 7 0 8 2 7 9 12 17 12 9 0 15-5 17-12 6-2 6-10 0-8l-5-13-12-5-15 8Z"/>
+      <path fill="#5a514e" d="M17 30q-5-8 0-15 2-8 12-10 15-4 21 4c6 3 8 13 3 21l-4-4-1-8q-12 4-21-2l-5 4-1 8Z"/>
+      <path d="M21 14q5-6 16-6m7 2q4 1 7 5" stroke="#968579" stroke-width="1.35" fill="none"/>
+      <path d="M22 29h10v5q-4 4-9 0Zm17 0h10l-1 5q-4 4-9 0Zm-7 1q4-2 7 0" fill="none" stroke-width="1.4"/>
+      <path d="M26 31v1m18-1v1m-13 8q4 3 8 0" fill="none"/>
+      <use href="#sprite-contract" transform="translate(43 48) rotate(15)"/>
+      <path fill="#dfb18e" d="M55 65q0-4 4-4 3 0 3 4-1 4-4 4-3-1-3-4Z"/>
+    </g>
+  </symbol>
+
+  <symbol id="client-5" viewBox="0 0 72 100">
+    <g stroke="#263943" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#3e535d" d="M22 73h27l1 15-10 1-5-10-3 10-11-1Z"/>
+      <path fill="#f3e3c7" d="m21 87 11 1v6H16q0-5 5-7Zm19 1 10-1q5 2 6 7H40Z"/>
+      <path fill="#b86f75" d="M25 47c-6 1-12 5-14 12l-2 11 9 3 5-11-2 13q16 5 30-1l-4-12 6 9 8-4-3-10q-4-8-13-10Z"/>
+      <path fill="#a16f57" d="M9 70q-2 5 3 6 4 0 6-3"/>
+      <path fill="#ead6b6" d="m25 47 10 7 10-7-1 9-9 5-9-5Z" stroke-width="1.5"/>
+      <path fill="#a6775e" d="M29 41v9l6 4 6-4v-9Z"/>
+      <path fill="#b88362" d="M18 27c-5-2-6 7 0 8 2 8 8 13 17 13s15-5 17-13c6-1 6-10 0-8l-3-12-14-4-15 7Z"/>
+      <path fill="#34323e" d="M16 29q-6-3-3-9-2-7 4-10 0-6 8-7 4-4 11-1 7-2 11 3 7 0 8 7 5 3 3 8 1 6-6 10l-4-8q-5 1-8-4-7 4-11-1-3 5-9 5Z"/>
+      <path d="M21 13q2-5 7-6m9 0q5-1 8 4m4 1q4 2 3 7" stroke="#655465" stroke-width="1.2" fill="none"/>
+      <path d="M26 31v1m18-1v1m-13 8q4 3 8 0" fill="none"/>
+      <circle cx="18" cy="37" r="1.9" fill="#efc66e" stroke-width="1.2"/>
+      <circle cx="52" cy="37" r="1.9" fill="#efc66e" stroke-width="1.2"/>
+      <use href="#sprite-contract" transform="translate(44 48) rotate(13)"/>
+      <path fill="#b88362" d="M55 65q1-4 4-4 4 0 3 4-1 4-4 4-3 0-3-4Z"/>
+    </g>
+  </symbol>
+</svg>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img class="brand-mark" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0ibG9nby10aXRsZSI+CiAgPHRpdGxlIGlkPSJsb2dvLXRpdGxlIj5P5LiA5LiLIOS/oeaBr+enkeaKgOaciemZkOWFrOWPuDwvdGl0bGU+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJhZGdlIiB4MT0iNyIgeTE9IjQiIHgyPSI1OCIgeTI9IjYyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMzMjc0NUQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMTczRTMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHJ4PSIxNCIgZmlsbD0idXJsKCNiYWRnZSkiIHN0cm9rZT0iIzU0ODY3MyIvPgogIDxlbGxpcHNlIGN4PSIyOCIgY3k9IjMzLjUiIHJ4PSIxMy4yIiByeT0iMTUuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGM0Q0IiBzdHJva2Utd2lkdGg9IjcuNiIvPgogIDxwYXRoIGQ9Im00Ni41IDcuNSAyLjkgNS45IDYuMSAzLjEtNi4xIDMtMi45IDYtMi45LTYtNi4xLTMgNi4xLTMuMXoiIGZpbGw9IiNGRkNFNkEiLz4KPC9zdmc+" width="40" height="40" alt="">
+        <div><div class="brand-name">O一下 信息科技有限公司</div><div class="brand-sub">SAP CONSULTING &amp; ENTERPRISE AI</div></div>
+      </div>
+      <div class="top-actions">
+        <span class="save-status" id="save-status"><i></i> 本地自动存档</span>
+        <button class="icon-button" data-action="history" aria-label="经营记录" title="经营记录" data-icon="list"></button>
+        <button class="icon-button" data-action="help" aria-label="玩法说明" title="玩法说明" data-icon="help"></button>
+        <button class="icon-button" id="reset-button" data-action="reset" aria-label="重新经营" title="重新经营" data-icon="rotate" hidden></button>
+      </div>
+    </div>
+  </header>
+  <main class="page">
+    <div class="intro">
+      <div>
+        <div class="eyebrow"><span></span> SAP × AI 经营模拟</div>
+        <h1>创业第一年<span>。</span></h1>
+        <p>为企业实施 SAP、集成业务系统，交付可用的 AI 解决方案。</p>
+      </div>
+      <div class="year-tag"><span data-icon="calendar"></span> 第一年 <b>·</b> 52 周挑战</div>
+    </div>
+    <div class="board">
+      <div class="primary">
+        <section class="panel scene-panel" aria-labelledby="scene-title">
+          <div class="panel-head">
+            <h2 id="scene-title"><span class="heading-icon" data-icon="map"></span> 公司街区</h2>
+            <span class="status-chip" id="district-status"><i></i> 等待开业</span>
+          </div>
+          <div class="street" id="street">
+            <img class="street-art" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDgwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDEwODAgNjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgogIDx0aXRsZSBpZD0idGl0bGUiPk/kuIDkuIsg5L+h5oGv56eR5oqA5pyJ6ZmQ5YWs5Y+455qE5Y2h6YCa6KGX5pmvPC90aXRsZT4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2t5IiB4Mj0iMCIgeTI9IjEiIGdyYWRpZW50VW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4KICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI2NiZTVkYyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ViZWFkMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0id2FsayIgeDI9IjAiIHkyPSIxIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNkY2NhOWYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmMWRmYjUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9IndhbGwiIHgyPSIwIiB5Mj0iMSIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjZmZmNGNkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjFkOGEyIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3aW5kb3ciIHgyPSIwIiB5Mj0iMSIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjYTVjYmI1Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZDdkZmI0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPHBhdHRlcm4gaWQ9ImJyaWNrIiB3aWR0aD0iNTYiIGhlaWdodD0iMjUiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8cGF0aCBkPSJNMCAwaDU2TTAgMTIuNWg1Nk0xMCAwdjEyLjVtMzEgMFYyNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmMWM1IiBzdHJva2Utb3BhY2l0eT0iLjE5Ii8+CiAgICA8L3BhdHRlcm4+CiAgICA8cGF0dGVybiBpZD0iZmxvb3IiIHdpZHRoPSI3MCIgaGVpZ2h0PSIyMyIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxwYXRoIGQ9Ik0wIDBoNzBNMCAxMS41aDcwTTE3IDB2MTEuNW0zNSAwVjIzIiBmaWxsPSJub25lIiBzdHJva2U9IiM5Yjg3NWQiIHN0cm9rZS1vcGFjaXR5PSIuMDkiLz4KICAgIDwvcGF0dGVybj4KICAgIDxjbGlwUGF0aCBpZD0ibGVmdC13aW5kb3ciPjxyZWN0IHg9IjMyMyIgeT0iMjk0IiB3aWR0aD0iMTQzIiBoZWlnaHQ9IjEwNCIgcng9IjIiLz48L2NsaXBQYXRoPgogICAgPGNsaXBQYXRoIGlkPSJyaWdodC13aW5kb3ciPjxyZWN0IHg9IjYxMCIgeT0iMjk0IiB3aWR0aD0iMTQzIiBoZWlnaHQ9IjEwNCIgcng9IjIiLz48L2NsaXBQYXRoPgogICAgPGNsaXBQYXRoIGlkPSJkb29yLXdpbmRvdyI+PHJlY3QgeD0iNDkxIiB5PSIyOTUiIHdpZHRoPSI5NCIgaGVpZ2h0PSIxMTMiIHJ4PSIzIi8+PC9jbGlwUGF0aD4KICAgIDxnIGlkPSJwbGFudCIgc3Ryb2tlPSIjNDg2MjRiIiBzdHJva2Utd2lkdGg9IjIuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgICAgPHBhdGggZD0iTTAgMXEtMTgtMTEtMTctMjRRLTEtMjMgMS00US0zLTIyIDMtMzJxMTIgMTQgMCAyOHE2LTE2IDE5LTE3UTIxLTggNSAxIiBmaWxsPSIjNzk5OTZhIi8+CiAgICAgIDxwYXRoIGQ9Ik0tMTEgMGgyM0w4IDE4SC03eiIgZmlsbD0iI2I1NzU1NSIvPgogICAgICA8cGF0aCBkPSJNLTEyIDBoMjV2NWgtMjV6IiBmaWxsPSIjZDc5MDY4Ii8+CiAgICA8L2c+CiAgICA8ZyBpZD0iZ3Jhc3MiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdjOTg2YyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgICA8cGF0aCBkPSJNMCAwcS0yLTUtNi02TTAgMHEwLTcgMi0xMU0xIDBxMy01IDctNSIvPgogICAgPC9nPgogICAgPGcgaWQ9InNoaW5lIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYxY2EiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgICA8cGF0aCBkPSJNMC05djE4bS05LTlIOSIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyIiBmaWxsPSIjZmZmMWNhIi8+CiAgICA8L2c+CiAgPC9kZWZzPgoKICA8cGF0aCBmaWxsPSJ1cmwoI3NreSkiIGQ9Ik0wIDBoMTA4MHY0MTlIMHoiLz4KICA8Y2lyY2xlIGN4PSI4NzkiIGN5PSIxMDkiIHI9IjU3IiBmaWxsPSIjZjhlZmM0IiBvcGFjaXR5PSIuODEiLz4KICA8Y2lyY2xlIGN4PSI4NzkiIGN5PSIxMDkiIHI9IjcxIiBmaWxsPSJub25lIiBzdHJva2U9IiNmYWYyY2UiIHN0cm9rZS1vcGFjaXR5PSIuNTYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIGZpbGw9IiNmZmY2ZGUiIG9wYWNpdHk9Ii43OCI+CiAgICA8cGF0aCBkPSJNNjIgMTA5cTAtOSAxNi0xMCAzLTEzIDE4LTEyIDEwLTE4IDMxLTkgOCAzIDEyIDExIDE0LTQgMjMgNyAyMS0yIDI1IDEzeiIvPgogICAgPHBhdGggZD0iTTIxMiA1NXE0LTcgMTYtNiA5LTExIDIxLTMgMTAtNCAxNyA5eiIvPgogICAgPHBhdGggZD0iTTkzNCAxNDhxMy05IDE3LTEwIDQtMTMgMTktMTAgMTEtMTUgMjYtNyA1IDIgOCA5IDE1LTMgMjEgOCAxMyAwIDE5IDEweiIvPgogICAgPHBhdGggZD0iTTY5MCA1OHE3LTEwIDIwLTcgOS0xNSAyMy02IDE1LTUgMjMgMTN6Ii8+CiAgPC9nPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY1OGM4MSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii41NSI+CiAgICA8cGF0aCBkPSJNMTg4IDExN3E2LTQgMTMgMyA3LTUgMTMtM20xNCAxN3E1LTMgMTAgMSA1LTQgMTAtMm01NTMtMzBxNi00IDEzIDMgNy02IDE0LTMiLz4KICA8L2c+CiAgPHBhdGggZD0iTTAgMjgydi04N2gzOHYtNDJoMzB2MjFoMjl2LTMxaDQ0djYzaDI4di0zN2gzN3YtMTRoMzZ2MjloMzJ2LTUyaDMydjI2aDQydjIxaDMxdjM5aDU3di02NWgzMXYtMjRoMzJ2NTNoMjh2LTE5aDU4djMyaDQ0di02NGgzNnYxNmgzMXYyN2gzNnYtMzVoMzd2LTMwaDI3djI3aDI4djIyaDQ0di02MWgzMnYzNWgzM3YxOGgyOXYtMjBoMzF2LTI3aDI5djU1aDMxdi0yN2gzN3YxMzlIMHoiIGZpbGw9IiNhZWM4YjQiIG9wYWNpdHk9Ii42NiIvPgogIDxnIHN0cm9rZT0iI2YzZWFkMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii41NSI+CiAgICA8cGF0aCBkPSJNNDggMTc4aDltLTkgMTBoOW01MS0yNWgxOW0tMTkgMTJoMTltLTE5IDEyaDE5bTYzLTEwdjIxbTExLTIxdjIxbTk1LTMwaDEwbTUxMC0xaDEzbS0xMyAxMWgxM20xMDctMTFoMTdtLTE3IDExaDE3bTUzLTF2MThtMTItMTh2MTgiLz4KICA8L2c+CiAgPHBhdGggZD0iTTAgMzQ4cTQ2LTc3IDEwNi01NSA0NC00MyA4OS05IDQ4LTE4IDc1IDI3IDQxLTI5IDkyIDE1IDQ4LTU1IDExNi0xNiA1NC0yNyA5MiAxOCA1Mi0zOSAxMDMtOCA0MC0zNyA5MSAwIDM3LTM3IDk2LTkgNDAtNTggODgtMzEgNTUtNDkgMTMyIDMydjExM0gweiIgZmlsbD0iIzlkYjY5OCIgb3BhY2l0eT0iLjY0Ii8+CgogIDwhLS0gU3RyZWV0IHBsYW5lIGFuZCBjdXJiIC0tPgogIDxwYXRoIGQ9Ik0wIDM2OWgxMDgwdjIwOEgweiIgZmlsbD0idXJsKCN3YWxrKSIvPgogIDxwYXRoIGQ9Ik0wIDM5MGgxMDgwdjE3OEgweiIgZmlsbD0idXJsKCNmbG9vcikiIG9wYWNpdHk9Ii42MSIvPgogIDxwYXRoIGQ9Ik0wIDQ0MWgxMDgwTTAgNDg2aDEwODBNMCA1MzhoMTA4ME00NCA0NDFsLTQ0IDQzbTE5Mi00My00MSA0NW0xODktNDUtMjQgNDVtMTY1LTQ1LTcgNDVtMTU1LTQ1IDEwIDQ1bTEzOC00NSAyOCA0NW0xMjAtNDUgNDUgNDVtLTkxOCAwLTQ4IDUybTIxOC01Mi0yOSA1Mm0xOTQtNTItMTMgNTJtMTc4LTUyIDcgNTJtMTU4LTUyIDI0IDUybTEzOS01MiA0MiA1Mm0xMjEtNTIgNDcgNDgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E4OGQ2MSIgc3Ryb2tlLXdpZHRoPSIxLjQiIG9wYWNpdHk9Ii4yNCIvPgogIDxwYXRoIGQ9Ik0wIDU0MGgxMDgwdjI0SDB6IiBmaWxsPSIjZTJjOTlmIiBvcGFjaXR5PSIuNzEiLz4KICA8cGF0aCBkPSJNMCA1NDhoMTA4MG0wIDExSDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y1ZTViZiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIuNzciLz4KICA8cGF0aCBkPSJNMCA1NjZoMTA4MHYzNEgweiIgZmlsbD0iI2FhYjhhMCIvPgogIDxwYXRoIGQ9Ik0wIDU2NWgxMDgwdjdIMHoiIGZpbGw9IiNhMzk3NzUiLz4KICA8cGF0aCBkPSJNMCA1NjVoMTA4MCIgc3Ryb2tlPSIjZjdlNWJkIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNLTEyIDU4OWgxMjRtNTQgMGgxMjVtNTQgMGgxMjVtNTQgMGgxMjVtNTQgMGgxMjVtNTQgMGgxMjVtNTQgMGgxMjUiIHN0cm9rZT0iI2Q5ZDVhYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii44MiIvPgogIDxnIGZpbGw9IiNiN2ExNzQiIG9wYWNpdHk9Ii40MyI+CiAgICA8ZWxsaXBzZSBjeD0iMTUxIiBjeT0iNDY5IiByeD0iNSIgcnk9IjEuOCIvPjxlbGxpcHNlIGN4PSIyMzciIGN5PSI0OTgiIHJ4PSI3IiByeT0iMiIvPjxlbGxpcHNlIGN4PSI4MjgiIGN5PSI1MTQiIHJ4PSI1IiByeT0iMiIvPjxlbGxpcHNlIGN4PSI4NzAiIGN5PSI0NjciIHJ4PSI4IiByeT0iMiIvPjxlbGxpcHNlIGN4PSIxMDUwIiBjeT0iNTEyIiByeD0iNiIgcnk9IjIiLz48ZWxsaXBzZSBjeD0iMzMiIGN5PSI1MjAiIHJ4PSI3IiByeT0iMiIvPjxlbGxpcHNlIGN4PSI5NjciIGN5PSI1MzUiIHJ4PSI0IiByeT0iMS43Ii8+CiAgPC9nPgoKICA8IS0tIFF1aWV0IG5laWdoYm9yaW5nIHNob3Bmcm9udHMgLS0+CiAgPGVsbGlwc2UgY3g9IjExMSIgY3k9IjQxNCIgcng9IjE1NyIgcnk9IjE1IiBmaWxsPSIjYTE4ZDY1IiBvcGFjaXR5PSIuMjIiLz4KICA8ZyBzdHJva2U9IiM2Yjg1NzgiIHN0cm9rZS13aWR0aD0iMi43IiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0tMTUgMTkyaDIxMGwyNSAyMHYxODVsLTI1IDEzSC0xNXoiIGZpbGw9IiM5YmI1YTEiLz4KICAgIDxwYXRoIGQ9Ik0xOTQgMjAybDI1IDEzdjE4MWwtMjUgMTN6IiBmaWxsPSIjOGRhODhlIi8+CiAgICA8cGF0aCBkPSJNLTE1IDE5M2wyNS0xM2gxOTdsMTMgMTN2MTlILTE1eiIgZmlsbD0iI2I2YzdhNiIvPgogICAgPHBhdGggZD0iTS0xNSAyMTBoMjEwdjIwMEgtMTV6IiBmaWxsPSIjYjJjMGExIi8+CiAgICA8cGF0aCBkPSJNLTE1IDIxMWgyMTB2MTk5SC0xNXoiIGZpbGw9InVybCgjYnJpY2spIiBzdHJva2U9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0tMTIgMjI1aDIxMHYxNUgtMTJ6IiBmaWxsPSIjOGNhODhlIi8+CiAgICA8cGF0aCBkPSJNOSAyNTJoMTY5djMwSDl6IiBmaWxsPSIjZTBkNWFiIi8+CiAgICA8cGF0aCBkPSJNMTUgMjk0aDg5djEwMUgxNXptMTA0IDBoNTR2MTE2aC01NHoiIGZpbGw9IiM4ZWE5OWEiLz4KICAgIDxwYXRoIGQ9Ik0yMCAzMDJoNzl2NjBIMjB6bTEwNS0yaDQydjc3aC00MnoiIGZpbGw9IiNjMmQyYWEiLz4KICAgIDxwYXRoIGQ9Ik0xOSAzNTFoODJtLTQwLTUwdjU5bTY1IDE2aDQyIiBmaWxsPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMzcgMzAzbC0xNyAyMHYxOGwzMS0zOG0zNSAwLTUyIDU4aDE1bDQ4LTU0di00em01My0yLTE0IDIydjE4bDI3LTQwIiBmaWxsPSIjZTVlNGJiIiBzdHJva2U9Im5vbmUiIG9wYWNpdHk9Ii41MiIvPgogICAgPHBhdGggZD0iTS0xNiAzOTloMjExdjExSC0xNnoiIGZpbGw9IiM5MWFhODkiLz4KICA8L2c+CiAgPHRleHQgeD0iOTQiIHk9IjI3MiIgZmlsbD0iIzY2N2I2NCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5HUkVFTiBNQVJLRVQ8L3RleHQ+CiAgPGcgc3Ryb2tlPSIjNmY4Yzc0IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBhdGggZD0iTS0xMCAyODNoMjA0bC04IDI1SC0xM3oiIGZpbGw9IiNiNGI2ODYiLz4KICAgIDxwYXRoIGQ9Ik0tMTMgMzA4aDE5OWwtMiA4cS0xMSA2LTIxIDAtMTEgNy0yMiAwLTEwIDYtMjEgMC0xMSA3LTIyIDAtMTEgNi0yMiAwLTExIDctMjEgMC0xMSA2LTIyIDAtMTEgNy0yMyAwLTEwIDctMjMgMHoiIGZpbGw9IiNhMWE5NzciLz4KICAgIDxwYXRoIGQ9Ik0xNiAyODNoMjFsLTMgMjVIMTN6bTQ0IDBoMjJsLTIgMjVINTZ6bTQ1IDBoMjFsLTQgMjVoLTIxem00NCAwaDIxbC02IDI1aC0yMHoiIGZpbGw9IiNlMWQ0YTYiIHN0cm9rZT0ibm9uZSIvPgogIDwvZz4KICA8ZWxsaXBzZSBjeD0iOTkxIiBjeT0iNDE2IiByeD0iMTQzIiByeT0iMTMiIGZpbGw9IiNhMThkNjUiIG9wYWNpdHk9Ii4yMiIvPgogIDxnIHN0cm9rZT0iIzlhOGE2YiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBhdGggZD0iTTg3NCAyNDFsMzItMTdoMTkwdjE4MEg4NzR6IiBmaWxsPSIjY2FiMjg3Ii8+CiAgICA8cGF0aCBkPSJNOTAxIDI0OWgxODV2MTU2SDkwMXoiIGZpbGw9IiNkYmJlOTEiLz4KICAgIDxwYXRoIGQ9Ik05MDEgMjQ5aDE4NXYxNTZIOTAxeiIgZmlsbD0idXJsKCNicmljaykiIHN0cm9rZT0ibm9uZSIvPgogICAgPHBhdGggZD0iTTg3MCAyMzNsMzAtMTdoMTg4djMzSDg3MHoiIGZpbGw9IiNkOWMzOWIiLz4KICAgIDxwYXRoIGQ9Ik04NzQgMjQwaDIxNHYxMEg4NzR6IiBmaWxsPSIjZTZkMWE5Ii8+CiAgICA8cGF0aCBkPSJNOTIwIDI3NGgxNDV2MjNIOTIweiIgZmlsbD0iI2ViZDhhZCIvPgogICAgPHBhdGggZD0iTTkyMiAzMDZoNzZ2ODFoLTc2em04NyAwaDU1djk5aC01NXoiIGZpbGw9IiM4ZmE4OTciLz4KICAgIDxwYXRoIGQ9Ik05MjggMzExaDY0djUzaC02NHptODcgMGg0M3Y2OGgtNDN6IiBmaWxsPSIjYzNjZmE4Ii8+CiAgICA8cGF0aCBkPSJNOTI4IDM1NWg2NW0tMzEtNDR2NTJtNTQgMTVoNDEiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik05MzAgMzQ1bDI0LTM0aDE0bC0zNiA0OXptODctMTYgMTQtMThoMTBsLTI0IDM1eiIgZmlsbD0iI2U4ZGVhZSIgc3Ryb2tlPSJub25lIiBvcGFjaXR5PSIuNjUiLz4KICAgIDxwYXRoIGQ9Ik05MDYgMjk1aDE3NGwtNSAyNHEtOSA1LTE5IDAtMTEgNi0yMiAwLTExIDYtMjMgMC0xMCA2LTIyIDAtMTEgNS0yMiAwLTExIDYtMjIgMC0xMSA2LTIyIDAtMTAgNi0yMSAweiIgZmlsbD0iI2M3OTg3NyIvPgogICAgPHBhdGggZD0iTTkyOSAyOTZoMTlsLTQgMjJoLTIwem00MyAwaDE5bC0yIDIyaC0yMnptNDQgMGgxOWwtMiAyMmgtMjB6bTQzIDBoMTlsLTMgMjJoLTIweiIgZmlsbD0iI2VhZDBhMSIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNODcyIDM5OWgyMTR2MTBIODcyeiIgZmlsbD0iI2JjOWU3NCIvPgogIDwvZz4KICA8dGV4dCB4PSI5OTMiIHk9IjI4OSIgZmlsbD0iIzljODA2MSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5DQUbDiSDCtyAwOTwvdGV4dD4KCiAgPCEtLSBUaGUgb2ZmaWNlLiBGcm9udCBhbmQgdmlzaWJsZSByZXR1cm4gd2FsbCAtLT4KICA8cGF0aCBkPSJNMjY4IDQxOGw3MC0xMmg0NTRsNjUgMTYtNDggMjFIMjc2cS0xOS02LTgtMjV6IiBmaWxsPSIjNzU2OTRlIiBvcGFjaXR5PSIuMjEiLz4KICA8ZyBzdHJva2U9IiMzNTQ4M2MiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik03NjIgMTM0bDYxLTMydjI4NWwtNjEgMzR6IiBmaWxsPSIjYzVhMjZhIi8+CiAgICA8cGF0aCBkPSJNNzYyIDEzNGw2MS0zMnYyODVsLTYxIDM0eiIgZmlsbD0idXJsKCNicmljaykiIHN0cm9rZT0ibm9uZSIvPgogICAgPHBhdGggZD0iTTc3MiAxNTdsNTEtMjh2MTNsLTUxIDI4em0wIDkwIDUxLTI4djExbC01MSAyOHptMCAxNDggNTEtMjh2MjBsLTUxIDI4eiIgZmlsbD0iI2FlOGU1ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz4KICAgIDxwYXRoIGQ9Ik0yNzggMTE3aDQ5NHYzMDVIMjc4eiIgZmlsbD0idXJsKCN3YWxsKSIvPgogICAgPHBhdGggZD0iTTI3OSAxMThoNDkzdjMwM0gyNzl6IiBmaWxsPSJ1cmwoI2JyaWNrKSIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMjYzIDExMmw1OC0zM2g0NTJsNjUgMjEtNTggMzVIMjYzeiIgZmlsbD0iIzgwOTc3YyIvPgogICAgPHBhdGggZD0iTTI2OSAxMTJsNTYtMjhoNDQ2bDU2IDE3LTUxIDI5eiIgZmlsbD0iI2E1YWE3OSIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMzIyIDk1aDQ1MW0tNDcyIDEwaDQ4NG0tNTAyIDEwaDUwMm0tNTI5IDEwaDUxOW0xNC0zNC02MiA0MG03LTQzLTY3IDQzbTMtNDMtNjUgNDNtMi00My02NyA0M200LTQzLTY4IDQzbTUtNDMtNjkgNDNtNy00My03MSA0M203LTQzLTcyIDQzbTctNDMtNzEgNDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc3ODU2NiIgc3Ryb2tlLXdpZHRoPSIxLjciIG9wYWNpdHk9Ii41MyIvPgogICAgPHBhdGggZD0iTTI2MyAxMTJoNTE3djIySDI2M3oiIGZpbGw9IiM2MDdjNjgiLz4KICAgIDxwYXRoIGQ9Ik03ODAgMTEybDU4LTEydjE3bC01OCAyM3oiIGZpbGw9IiM1MTZlNWUiLz4KICAgIDxwYXRoIGQ9Ik0yNjUgMTE0aDUxM20tNDk2IDI2aDQ4NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDNkMmE0IiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDxwYXRoIGQ9Ik0yNzggMTQ4aDQ5NHY2NkgyNzh6IiBmaWxsPSIjZjhlNWFlIiBzdHJva2U9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0yOTQgMTUwaDMxdjc1aC0zMXptNDQwIDBoMjN2NzVoLTIzeiIgZmlsbD0iI2U3Yzc4ZSIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMjg0IDE1NHY2Mm00ODQtNjJ2NjIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjJjOSIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICA8cGF0aCBkPSJNMzAwIDE1NGg0NTB2NjdIMzAweiIgZmlsbD0iIzk0N2I1MiIgb3BhY2l0eT0iLjM1IiBzdHJva2U9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0zMDAgMTUxcTAtNyA3LTdoNDM1cTcgMCA3IDd2NjJxMCA3LTcgN0gzMDdxLTcgMC03LTd6IiBmaWxsPSIjMzY1ODQ5Ii8+CiAgICA8cGF0aCBkPSJNMzA3IDE1Mmg0MzV2NjBIMzA3eiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTNhNzc5IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogICAgPHBhdGggZD0iTTMxMyAxNTZoNDIzdjUySDMxM3oiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzU2NzY2MCIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0MiAxODEpIj4KICAgIDxwYXRoIGQ9Ik0tMTcgMTR2LTIybDE2LTEwIDE2IDEwdjIySDdWMUgtNnYxM3oiIGZpbGw9IiNlN2JkNzEiIHN0cm9rZT0iI2ZmZTZhYSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDxwYXRoIGQ9Ik0tMjEtNyAwLTIxIDIxLTdNLTEyLTJoNG0xMS0xMGg1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmU2YWEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjUzNSIgeT0iMTgyIiBmaWxsPSIjZmZmMGM1IiBmb250LWZhbWlseT0iJ01pY3Jvc29mdCBZYUhlaScsICdQaW5nRmFuZyBTQycsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5P5LiA5LiLIOS/oeaBr+enkeaKgOaciemZkOWFrOWPuDwvdGV4dD4KICA8dGV4dCB4PSI1MzUiIHk9IjIwMiIgZmlsbD0iI2U4Yzg4MiIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iOS42IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMi42Ij5TQVAgQ09OU1VMVElORyDCtyBFTlRFUlBSSVNFIEFJPC90ZXh0PgogIDx1c2UgaHJlZj0iI3NoaW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MTIgMTc5KSBzY2FsZSguNzUpIi8+CiAgPHVzZSBocmVmPSIjc2hpbmUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY5OCAxODkpIHNjYWxlKC40KSIvPgoKICA8IS0tIFN0b3JlIGdsYXppbmcgYW5kIHRpbnkgaW50ZXJpb3JzIC0tPgogIDxwYXRoIGQ9Ik0yODQgMjY0aDQ4M3YxOEgyODR6IiBmaWxsPSIjYjk5YjY3IiBvcGFjaXR5PSIuNDEiLz4KICA8ZyBzdHJva2U9IiMzODUzNDgiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMzExIDI4MWgxNjd2MTI1SDMxMXptMjg4IDBoMTY2djEyNUg1OTl6IiBmaWxsPSIjNTI3NTY0Ii8+CiAgICA8cGF0aCBkPSJNMzE4IDI4OGgxNTJ2MTE0SDMxOHptMjg2IDBoMTU1djExNEg2MDR6IiBmaWxsPSIjZWRkYmE4Ii8+CiAgICA8cmVjdCB4PSIzMjMiIHk9IjI5NCIgd2lkdGg9IjE0MyIgaGVpZ2h0PSIxMDQiIHJ4PSIyIiBmaWxsPSJ1cmwoI3dpbmRvdykiLz4KICAgIDxyZWN0IHg9IjYxMCIgeT0iMjk0IiB3aWR0aD0iMTQzIiBoZWlnaHQ9IjEwNCIgcng9IjIiIGZpbGw9InVybCgjd2luZG93KSIvPgogICAgPHBhdGggZD0iTTQ3OCAyODFoMTIwdjE0MUg0Nzh6IiBmaWxsPSIjNDI2NjU4Ii8+CiAgICA8cGF0aCBkPSJNNDg3IDI4N2gxMDJ2MTM1SDQ4N3oiIGZpbGw9IiM2ZThkNzAiLz4KICAgIDxyZWN0IHg9IjQ5MSIgeT0iMjk1IiB3aWR0aD0iOTQiIGhlaWdodD0iMTEzIiByeD0iMyIgZmlsbD0idXJsKCN3aW5kb3cpIi8+CiAgPC9nPgogIDxnIGNsaXAtcGF0aD0idXJsKCNsZWZ0LXdpbmRvdykiPgogICAgPHBhdGggZD0iTTMyMiAyOTVoMTQ1djI5SDMyMnoiIGZpbGw9IiM3MTk0ODIiIG9wYWNpdHk9Ii41MyIvPgogICAgPHBhdGggZD0iTTMzNSAzNDJoMTE2bS0xMTUgMjhoMTE1IiBmaWxsPSJub25lIiBzdHJva2U9IiM2ZjhjNzEiIHN0cm9rZS13aWR0aD0iMyIgb3BhY2l0eT0iLjciLz4KICAgIDxwYXRoIGQ9Ik0zNDEgMzI0aDd2MThoLTd6bTgtM2g4djIxaC04em0xMCA1aDd2MTZoLTd6bTU5LTJoOXYxOGgtOXptMTAtM2g2djIxaC02em03IDZoN3YxNWgtN3oiIGZpbGw9IiNkNGIxNzciLz4KICAgIDxwYXRoIGQ9Ik0zNDQgMzUxaDl2MTloLTl6bTExIDRoOHYxNWgtOHptNTQtNGg3djE5aC03em04LTNoOHYyMmgtOHoiIGZpbGw9IiM4NzljNzUiLz4KICAgIDxwYXRoIGQ9Ik0zMjMgMzgzaDE0NHYxNUgzMjN6IiBmaWxsPSIjN2Y5YTcyIi8+CiAgICA8cGF0aCBkPSJNMzY0IDM3NGgzMXYxMGgtMzF6IiBmaWxsPSIjYmI5NzY4Ii8+CiAgICA8cGF0aCBkPSJNMzcxIDM1M2gyN3YxOWgtMjd6IiBmaWxsPSIjNTI3YjcwIiBzdHJva2U9IiM0ZTcwNjIiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgICA8cGF0aCBkPSJNMzc1IDM1NmgxOXYxMmgtMTl6IiBmaWxsPSIjZDRlM2I3Ii8+CiAgICA8cGF0aCBkPSJNMzgyIDM3M3Y2bS03IDBoMTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzU3N2M2OSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDx1c2UgaHJlZj0iI3BsYW50IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NDAgMzc1KSBzY2FsZSguNTIpIi8+CiAgICA8cGF0aCBkPSJNMzI2IDM2NWw1MS03MWgyMGwtNzEgOTV6bTQ3IDMzIDc1LTEwNGgxNGwtNzQgMTA0eiIgZmlsbD0iI2YxZjJjNiIgb3BhY2l0eT0iLjM1Ii8+CiAgPC9nPgogIDxnIGNsaXAtcGF0aD0idXJsKCNyaWdodC13aW5kb3cpIj4KICAgIDxwYXRoIGQ9Ik02MDggMjk1aDE0NnYyOEg2MDh6IiBmaWxsPSIjN2E5ZDg2IiBvcGFjaXR5PSIuNiIvPgogICAgPHBhdGggZD0iTTYyOCAzMTJ2MjJtNTAtMjV2MThtNTMtMTZ2MjIiIHN0cm9rZT0iIzY2OGM3NSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgICA8cGF0aCBkPSJNNjIxIDMzNXEwLTcgNy04IDYgMCA4IDh6bTQ3LTdxMS05IDEwLTEwIDkgMCAxMSAxMHptNTYgNnEwLTcgNy03IDYgMCA4IDd6IiBmaWxsPSIjZWZjYjgzIiBzdHJva2U9IiM4Nzk3NzgiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgICA8cGF0aCBkPSJNNjQyIDM0NmgzMnYyNGgtMzJ6IiBmaWxsPSIjZTJkNmE1IiBzdHJva2U9IiM3NThmNzMiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHBhdGggZD0iTTY0NiAzNjVsNi02IDQgMiA3LTggNi0yIiBmaWxsPSJub25lIiBzdHJva2U9IiM3ODk4NzMiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxwYXRoIGQ9Ik03MDYgMzQ5aDMwdjE4aC0zMHoiIGZpbGw9IiNlOGQyYTEiIHN0cm9rZT0iIzc1OGY3MyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgIDxwYXRoIGQ9Ik03MTIgMzU0aDE3bS0xNyA0aDExbS0xMSA0aDE0IiBzdHJva2U9IiM4ZmEzN2MiIHN0cm9rZS13aWR0aD0iMS4yIi8+CiAgICA8cGF0aCBkPSJNNjEwIDM4MmgxNDN2MTVINjEweiIgZmlsbD0iIzhmYTY3YSIvPgogICAgPHVzZSBocmVmPSIjcGxhbnQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYyNyAzNzQpIHNjYWxlKC42KSIvPgogICAgPHBhdGggZD0iTTY3NyAzODJoNDd2MTVoLTQ3eiIgZmlsbD0iI2IxOGQ2MyIvPgogICAgPHBhdGggZD0iTTY4MyAzNzhoMzJsLTIgNWgtMjh6IiBmaWxsPSIjNTI3YjcwIi8+CiAgICA8cGF0aCBkPSJNNjkwIDM2M2gyNHYxNmgtMjR6IiBmaWxsPSIjNTg3ZjcwIiBzdHJva2U9IiM0ZTcwNjIiIHN0cm9rZS13aWR0aD0iMS40Ii8+CiAgICA8cGF0aCBkPSJNNjkzIDM2NmgxOHYxMGgtMTh6IiBmaWxsPSIjZDZlMmI1Ii8+CiAgICA8cGF0aCBkPSJNNjExIDM2Nmw1MC03MmgyMmwtNzIgOTh6bTQ3IDMyIDc0LTEwNGgxM2wtNzQgMTA0eiIgZmlsbD0iI2YxZjJjNiIgb3BhY2l0eT0iLjMxIi8+CiAgPC9nPgogIDxnIGNsaXAtcGF0aD0idXJsKCNkb29yLXdpbmRvdykiPgogICAgPHBhdGggZD0iTTQ5MSAzNzloOTV2MzFoLTk1eiIgZmlsbD0iIzkxYWE4MCIvPgogICAgPHBhdGggZD0iTTQ5MyAzNzBsNTktNzVoMThsLTc4IDEwMHptNDMgNDAgNTEtNjh2MTNsLTQzIDU1eiIgZmlsbD0iI2VlZjBjMSIgb3BhY2l0eT0iLjQ3Ii8+CiAgICA8cGF0aCBkPSJNNTIxIDMzNGwxNy0xNSAxNiAxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM3NzU4IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogICAgPHJlY3QgeD0iNTE3IiB5PSIzMzMiIHdpZHRoPSI0MiIgaGVpZ2h0PSIxNSIgcng9IjIiIGZpbGw9IiNmMmRmYWIiIHN0cm9rZT0iIzZkODM1ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgIDx0ZXh0IHg9IjUzOCIgeT0iMzQ0IiBmaWxsPSIjNTU3NDUzIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3LjYiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxLjIiPk9QRU48L3RleHQ+CiAgPC9nPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzUzNzQ2MiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPHBhdGggZD0iTTM5NCAyOTV2MTAzbTI4Ny0xMDN2MTAzbS0zNTctMjFoMTQybTE0NSAwaDE0Mm0tMjE2LTgydjExMyIvPgogICAgPHBhdGggZD0iTTUzMCAzNjR2MTRtMTUtMTR2MTQiIHN0cm9rZT0iI2VkYzY4MCIgc3Ryb2tlLXdpZHRoPSIzLjUiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjNDA1NzQ5IiBzdHJva2Utd2lkdGg9IjIuMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMzA3IDQwMmgxNjZ2OEgzMDd6bTI5MCAwaDE2OXY4SDU5N3oiIGZpbGw9IiM2ZDhhNzEiLz4KICAgIDxwYXRoIGQ9Ik0yNzkgNDEwaDE5NnYxMkgyNzl6bTMyMiAwaDE3MXYxMkg2MDF6IiBmaWxsPSIjYzRhZDdkIi8+CiAgICA8cGF0aCBkPSJNNDgzIDQxNmgxMTBsMTEgOHY3SDQ3MHYtN3oiIGZpbGw9IiNiMjlhNzAiLz4KICAgIDxwYXRoIGQ9Ik00ODMgNDE2aDExMGwxMSA4SDQ3MHoiIGZpbGw9IiNkZWQyYTQiLz4KICAgIDxwYXRoIGQ9Ik00OTcgNDE2aDc5bDYgNGgtOTB6IiBmaWxsPSIjNzg5MTc5IiBzdHJva2U9Im5vbmUiLz4KICA8L2c+CgogIDwhLS0gR29sZGVuIGNhbnZhcyBhd25pbmcgLS0+CiAgPGcgc3Ryb2tlPSIjNDg1NDQzIiBzdHJva2Utd2lkdGg9IjIuOCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMjkzIDIyNGg0NjhsMjQgMzhIMjY2eiIgZmlsbD0iI2VmYzM2MiIvPgogICAgPHBhdGggZD0iTTI5MyAyMjRoNDY4bDMgNUgyOTB6IiBmaWxsPSIjZmZlMGExIiBzdHJva2U9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0zMjggMjI1aDM1bC0xMyAzN2gtNDV6bTcxIDBoMzVsLTggMzdoLTQ1em03MSAwaDM2bC0yIDM3aC00NXptNzEgMGgzNmwzIDM3aC00NXptNzEgMGgzNmw5IDM3aC00NXptNzEgMGgzNmwxNSAzN2gtNDV6bTcxIDBoN2wyNCAzN2gtMTR6IiBmaWxsPSIjZjlkODhjIiBzdHJva2U9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0yNjcgMjYyaDUxOHYxMHEtNyA4LTE5IDgtMTIgMC0xOS03LTkgOC0yMiA4LTEyIDAtMjEtOC04IDgtMjEgOC0xMiAwLTIxLTgtMTAgOC0yMiA4LTEyIDAtMjAtOC05IDgtMjMgOC0xMiAwLTIwLTgtOSA4LTIyIDgtMTIgMC0yMS04LTkgOC0yMSA4LTEzIDAtMjItOC05IDgtMjEgOC0xMyAwLTIxLTgtOSA4LTIyIDgtMTIgMC0yMS04LTkgOC0yMSA4LTEzIDAtMjItOC05IDgtMjEgOC0xMyAwLTIxLTgtOSA4LTIyIDgtMTIgMC0yMS04LTkgOC0yMSA4LTEyIDAtMjItOHYtMTF6IiBmaWxsPSIjZTZhZDU0Ii8+CiAgICA8cGF0aCBkPSJNMzA1IDI2NGg0NXY5cS04IDYtMjMgNi0xMyAwLTIyLTd6bTg2IDBoNDJ2OXEtOSA2LTIyIDYtMTIgMC0yMC03em04NSAwaDQzdjlxLTkgNi0yMiA2LTEyIDAtMjEtN3ptODUgMGg0M3Y5cS04IDYtMjEgNi0xMiAwLTIyLTd6bTg1IDBoNDN2OXEtOCA2LTIxIDYtMTMgMC0yMi03em04NiAwaDQzdjlxLTggNi0yMSA2LTEyIDAtMjItN3oiIGZpbGw9IiNmNGM5N2IiIHN0cm9rZT0ibm9uZSIvPgogICAgPHBhdGggZD0iTTI3MSAyNjJoNTA5IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYwYmQiIHN0cm9rZS13aWR0aD0iMS4yIiBvcGFjaXR5PSIuNzIiLz4KICA8L2c+CgogIDwhLS0gU2lnbiwgcG90cywgYW5kIGNvcm5lcnMgb2YgdGhlIGJsb2NrIC0tPgogIDxlbGxpcHNlIGN4PSIyNjYiIGN5PSI0MzUiIHJ4PSI0OCIgcnk9IjciIGZpbGw9IiM4ZjgyNWUiIG9wYWNpdHk9Ii4xOSIvPgogIDx1c2UgaHJlZj0iI3BsYW50IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNTggNDA0KSBzY2FsZSgxLjU4KSIvPgogIDx1c2UgaHJlZj0iI3BsYW50IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyOTcgNDE2KSBzY2FsZSguOSkiLz4KICA8dXNlIGhyZWY9IiNwbGFudCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzc0IDQxNCkgc2NhbGUoMS4wMikiLz4KICA8ZyBzdHJva2U9IiM1MzY4NGUiIHN0cm9rZS13aWR0aD0iMi4xIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPHBhdGggZD0iTTc5MCAxNzVxMjAtMjMgMjYtMTIgNCA3LTEgMTAiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik04MTQgMTY5djEzIiBmaWxsPSJub25lIi8+CiAgICA8cGF0aCBkPSJNODA0IDE4MnExMi04IDI0IDBsLTEgMTdoLTIyeiIgZmlsbD0iI2Y0ZDY5NCIvPgogICAgPHBhdGggZD0iTTgwOCAyMDBoMTZsLTEgNWgtMTR6IiBmaWxsPSIjZDdhZDY5Ii8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgxNSAzODMpIiBzdHJva2U9IiM1OTY2NGMiIHN0cm9rZS13aWR0aD0iMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPGVsbGlwc2UgY3g9IjEzIiBjeT0iNTMiIHJ4PSIyNyIgcnk9IjQuOCIgZmlsbD0iIzlkOGE2MyIgc3Ryb2tlPSJub25lIiBvcGFjaXR5PSIuMjUiLz4KICAgIDxwYXRoIGQ9Ik0yMiA0bDEzIDQ3aC00TDE5IDEweiIgZmlsbD0iIzk0N2I1NyIvPgogICAgPHBhdGggZD0iTTEgNGgyNWw1IDQ1SC02eiIgZmlsbD0iI2QxYTE2ZCIvPgogICAgPHBhdGggZD0iTTMgOGgyMGw0IDM1SC0yeiIgZmlsbD0iIzU0NzM2MSIvPgogICAgPHBhdGggZD0iTTMgMjFxNy03IDEzLTFtLTExIDdoMTRtLTEzIDVoMTFtLTExIDVoOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWRkZGE2IiBzdHJva2Utd2lkdGg9IjEuMyIvPgogICAgPHBhdGggZD0iTS01IDQ4djVtMzUtNXY1IiBmaWxsPSJub25lIi8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzZkODA2MSIgc3Ryb2tlLXdpZHRoPSIyLjIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8ZWxsaXBzZSBjeD0iMTAwNyIgY3k9IjQzOSIgcng9IjYwIiByeT0iMTAiIGZpbGw9IiM4ODdhNTQiIG9wYWNpdHk9Ii4yMSIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNOTYyIDQxOWg4N2wtMTAgMThoLTY3eiIgZmlsbD0iI2FhOWI3MCIvPgogICAgPHBhdGggZD0iTTk2MCA0MTZoOTF2N2gtOTF6IiBmaWxsPSIjY2JjMDhkIi8+CiAgICA8cGF0aCBkPSJNMTAwMyA0MTdxNC0yOSAxLTYwbC0xMy0yNCA5LTMgOSAxNyA5LTIwIDYgNC0xMCAyNnEtNCAzMyAxIDYweiIgZmlsbD0iI2EzOGM2MCIvPgogICAgPHBhdGggZD0iTTk3MCAzNDdxLTEyLTgtMTAtMjMtOC0xNiAxMC0yNC0zLTE4IDE1LTIyIDUtMTUgMjYtMTQgMTcgMCAyMyAxMiAxOCAyIDIwIDIwIDE3IDEwIDEwIDI1IDYgMTctMTMgMjItNyAxNi0yMyAxMC0xMSAxMC0yMi0xLTE3IDktMjQtMy03IDItMTItMnoiIGZpbGw9IiM4NmE1NzUiLz4KICAgIDxwYXRoIGQ9Ik05NjggMzExcTktMTAgMjEtNS0zLTEzIDgtMjEgMTEtNyAyNCAyIDE3LTUgMjMgOW0tNjUgMzBxOS05IDE5LTJtMzItMTFxMTEtNCAxNyA0IiBmaWxsPSJub25lIiBzdHJva2U9IiNhNWI5OGEiIHN0cm9rZS13aWR0aD0iMi41Ii8+CiAgICA8cGF0aCBkPSJNOTkxIDMzNXExMy0xMSAyMi02bS0yMSA4N3E0LTggOCAwbTIwIDBxNC03IDcgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmQ4YzYzIi8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUyIDMyMykiIHN0cm9rZT0iIzY3N2E1ZSIgc3Ryb2tlLXdpZHRoPSIyLjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8ZWxsaXBzZSBjeD0iNSIgY3k9IjExNyIgcng9IjI3IiByeT0iNSIgZmlsbD0iIzk5ODg2MCIgc3Ryb2tlPSJub25lIiBvcGFjaXR5PSIuMjQiLz4KICAgIDxwYXRoIGQ9Ik0yIDExM1YxOVEyIDIgMTggMnExMiAwIDEzIDExIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjQiLz4KICAgIDxwYXRoIGQ9Ik0yMCAxNnExMi0xMSAyMyAwbC0xIDEzSDIyeiIgZmlsbD0iI2VjZDI5OCIvPgogICAgPHBhdGggZD0iTTE4IDE3aDI3bS0yMCAxMyAzIDRoOGw0LTQiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0tNiAxMTFoMTZ2NkgtNnoiIGZpbGw9IiM3ZDg3NjYiLz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIzIDM5OSkiIHN0cm9rZT0iIzdjODk2NiIgc3Ryb2tlLXdpZHRoPSIyLjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8ZWxsaXBzZSBjeD0iMzAiIGN5PSIzNSIgcng9IjQxIiByeT0iNSIgZmlsbD0iI2E0OGQ2NSIgb3BhY2l0eT0iLjIiIHN0cm9rZT0ibm9uZSIvPgogICAgPHBhdGggZD0iTTEgMTFoNTd2N0gxem0tNCAxMGg2NnY2SC0zeiIgZmlsbD0iI2I2OWY3NCIvPgogICAgPHBhdGggZD0iTTIgMjZsLTQgOW01OS05IDUgOU03IDExdjE1bTQ2LTE1djE1IiBmaWxsPSJub25lIi8+CiAgPC9nPgogIDx1c2UgaHJlZj0iI2dyYXNzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OCA0NDYpIi8+PHVzZSBocmVmPSIjZ3Jhc3MiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwNTMgNDUzKSBzY2FsZSguOCkiLz48dXNlIGhyZWY9IiNncmFzcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE4IDQzMykgc2NhbGUoLjcpIi8+PHVzZSBocmVmPSIjZ3Jhc3MiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkzNiA0MzApIHNjYWxlKC44KSIvPgo8L3N2Zz4K" alt="O一下 信息科技有限公司的黄色雨棚店面和周围的卡通街区">
+            <div class="walkers" id="walkers"><div id="founder"></div><div id="traffic"></div></div>
+          </div>
+          <div class="street-footer">
+            <span><span data-icon="pointer"></span> 点击路过的客户，离开街区后合同失效</span>
+            <strong id="street-caption">选好角色，即可开门营业</strong>
+          </div>
+        </section>
+        <section class="panel event-panel" aria-labelledby="event-title">
+          <div class="panel-head">
+            <h2 id="event-title"><span class="heading-icon" data-icon="bolt"></span> 突发事件</h2>
+            <span class="event-badge" id="event-badge">街区动态</span>
+          </div>
+          <div class="event-body" id="event-body" aria-live="polite"></div>
+        </section>
+      </div>
+      <aside class="sidebar" aria-label="经营面板">
+        <section class="panel clock-panel" aria-labelledby="clock-label">
+          <div class="clock-top">
+            <span id="clock-label"><span data-icon="calendar"></span> 营业日历</span>
+            <span class="clock-year">YEAR 01</span>
+          </div>
+          <div class="week-line"><strong id="week-text">第 01 周</strong><span> / 52 周</span></div>
+          <div class="clock-box">
+            <div class="clock-caption"><span data-icon="clock"></span> <span id="clock-caption">签约窗口</span></div>
+            <b id="timer" role="timer">00:30</b>
+            <div class="timer-track" role="presentation"><span id="timer-fill"></span></div>
+          </div>
+          <button class="button accent week-action" id="week-action" hidden></button>
+        </section>
+        <section class="panel cash-panel" aria-labelledby="cash-label">
+          <div class="cash-main">
+            <div class="cash-icon" data-icon="wallet"></div>
+            <div><div id="cash-label">可用资金</div><div class="cash-value" id="cash-value">¥30,000</div></div>
+          </div>
+          <div class="cash-meter" id="support-meter" hidden></div>
+          <div class="cash-meter" id="cost-meter" hidden></div>
+        </section>
+        <section class="panel stats-panel" aria-labelledby="stats-title">
+          <div class="stats-title"><h2 id="stats-title">公司属性</h2><span>满值 100</span></div>
+          <div id="role-summary" class="role-summary"></div>
+          <div id="stats"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script>
+(function () {
+  'use strict';
+
+  const startCash = 30000;
+  const weeksPerYear = 52;
+  const weekSeconds = 30;
+  const legacyWeekSeconds = 60;
+  const monthEndWeeks = [4, 8, 13, 17, 21, 26, 30, 34, 39, 43, 47, 52];
+  const monthlyPayroll = 12000;
+  const monthlyOperatingCost = 4000;
+  const opportunityRefreshCost = 2500;
+
+  const statLabels = {
+    reputation: '公司名声',
+    relationships: '公司关系',
+    sap: 'SAP 专业技能',
+    ai: 'AI 技能',
+  };
+  const statKeys = Object.keys(statLabels);
+
+  const roles = [
+    {
+      id: 'strategist', name: '林小满', title: '品牌策划', color: '#da845e',
+      description: '擅长把复杂的服务讲成简单的故事，让街坊记住公司的名字。',
+      bonus: '公司名声起步领先',
+      stats: { reputation: 32, relationships: 20, sap: 16, ai: 16 },
+    },
+    {
+      id: 'connector', name: '周有邻', title: '客户顾问', color: '#6b9d82',
+      description: '喜欢和客户边喝咖啡边聊业务，擅长把一次合作变成长期关系。',
+      bonus: '公司关系起步领先',
+      stats: { reputation: 18, relationships: 34, sap: 17, ai: 15 },
+    },
+    {
+      id: 'technologist', name: '陈星野', title: '技术合伙人', color: '#738cb5',
+      description: '既能搭好 SAP 流程，也乐于做出一个当天就能试用的 AI 原型。',
+      bonus: 'SAP 与 AI 技能起步领先',
+      stats: { reputation: 13, relationships: 15, sap: 29, ai: 27 },
+    },
+  ];
+
+  const contractTemplates = [
+    {
+      client: '河畔制造', title: 'SAP S/4HANA 采购库存实施', focus: 'sap', amount: 17200, baseChance: 27,
+      description: '客户要给新工厂上线 SAP，先覆盖一个工厂的采购、入库和库存盘点。',
+      deliverable: '交付流程配置和初始库存迁移结果，陪关键用户跑通采购订单、收货、退货和盘点差异处理。',
+    },
+    {
+      client: '星桥物流', title: 'SAP BTP 物流接口接入', focus: 'sap', amount: 11400, baseChance: 40,
+      description: '承运商仍靠邮件反馈签收。客户希望 SAP 发出发运数据，并自动接收运单号和签收状态。',
+      deliverable: '用 SAP Integration Suite 交付双向接口和字段映射，联测超时重试、重复回执和失败补发。',
+    },
+    {
+      client: '晴天百货', title: 'SAP FI 银行对账', focus: 'sap', amount: 8700, baseChance: 54,
+      description: '财务每天从网银下载流水，逐笔找出应收发票并核销。先试点一个银行账户。',
+      deliverable: '交付电子银行对账单导入和自动清账规则，验证正常到账、部分付款和未匹配款项。',
+    },
+    {
+      client: '雨燕设计', title: 'AI 企业知识库', focus: 'ai', amount: 9400, baseChance: 53,
+      description: '员工找不到最新的制度和项目模板，常把旧版本发给同事。客户想先接入已批准的文档。',
+      deliverable: '交付带出处的问答助手，用样题检查引用正确性、权限隔离和无依据时的拒答。',
+    },
+    {
+      client: '海角家居', title: 'SAP 采购流程诊断', focus: 'reputation', amount: 4200, baseChance: 73,
+      description: '采购主管想评估现有流程，优先解决无订单收货和审批反复退回的问题。',
+      deliverable: '主持一次业务访谈，交付现状流程图、问题优先级和下一阶段实施范围。',
+    },
+    {
+      client: '麦田食品', title: 'AI 发票识别与校验', focus: 'ai', amount: 10400, baseChance: 44,
+      description: '财务每天手工录入供应商 PDF 发票，希望先把可识别字段预填到审核工作台。',
+      deliverable: '识别发票号、金额和税额，与 SAP 采购单及收货记录比对，差异交人工复核。',
+    },
+    {
+      client: '北辰零售', title: 'SAP Fiori 权限梳理', focus: 'relationships', amount: 5800, baseChance: 64,
+      description: '新门店常拿不到岗位需要的应用，财务和门店对角色边界也有分歧。',
+      deliverable: '与岗位负责人确认权限矩阵，使用收银、店长和财务三类测试账号验收。',
+    },
+    {
+      client: '南风电器', title: 'AI 售后工单分流', focus: 'ai', amount: 7200, baseChance: 66,
+      description: '售后邮件混着换货、安装和保修咨询，客服主管想减少手动分派。',
+      deliverable: '交付分类与转派试点，用标注工单验收，并将低置信度请求留在人工队列。',
+    },
+    {
+      client: '杉谷仪器', title: 'SAP HANA 升级演练', focus: 'sap', amount: 9600, baseChance: 48,
+      description: '客户计划升级 HANA 2.0 数据库，想先确认兼容性、停机时间和恢复能力。',
+      deliverable: '在测试环境完成升级与恢复演练，记录耗时，复测关键交易和报表。',
+    },
+    {
+      client: '海风汽配', title: 'SAP HANA 生产库升级', focus: 'sap', amount: 17600, baseChance: 22,
+      description: '生产系统的 HANA 2.0 数据库需要升级，工厂只批准了周末停机窗口。',
+      deliverable: '核对兼容性和系统复制状态，完成备份恢复演练与切换预案，在生产升级后验证订单和过账。',
+    },
+    {
+      client: '云帆纺织', title: 'SAP FI/CO 成本月结', focus: 'sap', amount: 15600, baseChance: 28,
+      description: '生产订单的实际成本和差异对不上，财务希望试点一条产线的月结流程。',
+      deliverable: '交付在制品、生产差异和订单结算检查清单，用样本单据复核成本与总账。',
+    },
+    {
+      client: '铂川工业', title: 'AI 销售订单录入', focus: 'ai', amount: 10800, baseChance: 46,
+      description: '销售内勤每天从客户邮件和附件抄录物料与交期，经常漏掉包装单位。',
+      deliverable: '从订单附件提取行项目，对照 SAP 物料编码并生成订单草稿，用历史样本检查字段准确率。',
+    },
+    {
+      client: '晨港供应链', title: 'SAP EWM 仓储实施', focus: 'sap', amount: 16800, baseChance: 25,
+      description: '客户准备给一个配送中心上线 SAP EWM，先覆盖托盘收货、上架和出库拣配。',
+      deliverable: '交付仓位和仓库作业配置，联测入出库交货、拣货差异及 SAP 库存回传。',
+    },
+    {
+      client: '双叶商联', title: 'SAP BTP 审批流程自动化', focus: 'relationships', amount: 8300, baseChance: 51,
+      description: '采购、财务和信息部门需要统一临时采购审批，当前常因职责不清而卡单。',
+      deliverable: '用 SAP Build Process Automation 交付表单和审批流，验证金额分级、驳回和超时提醒。',
+    },
+    {
+      client: '锦河会展', title: 'SAP 上线切换评审', focus: 'reputation', amount: 5300, baseChance: 67,
+      description: '客户准备上线 SAP，管理层希望有一份能判断是否具备切换条件的评审。',
+      deliverable: '复核冻结窗口、迁移依赖和回退条件，主持切换桌面演练并提交风险清单。',
+    },
+    {
+      client: '银杏工场', title: 'AI 视觉质检试点', focus: 'ai', amount: 12400, baseChance: 34,
+      description: '质检组想在一条产线识别划痕和缺角，现有缺陷样本不均衡。',
+      deliverable: '交付缺陷识别试点，用独立样本验收误报与漏检，并保留人工复判。',
+    },
+    {
+      client: '赤陶建材', title: 'SAP 主数据迁移', focus: 'sap', amount: 8900, baseChance: 53,
+      description: '新系统上线前要整理物料和供应商资料，旧系统有重复编码和缺失字段。',
+      deliverable: '交付字段映射与清洗规则，在 SAP S/4HANA 中试迁移，核对数量和异常清单。',
+    },
+    {
+      client: '远航设备', title: 'AI 供应链交付预警', focus: 'ai', amount: 11800, baseChance: 38,
+      description: '采购团队想提前发现供应商可能延迟交付的订单。',
+      deliverable: '结合 SAP 采购订单与收货记录生成预警，用历史订单回测命中率并解释高风险原因。',
+    },
+    {
+      client: '长桥工业', title: 'SAP ECC 转 S/4HANA 评估', focus: 'reputation', amount: 8600, baseChance: 46,
+      description: '集团仍运行 SAP ECC，立项前需要了解转换的主要风险和工作量。',
+      deliverable: '交付业务范围、关键简化项、自开发与接口影响清单，并提出分阶段转换计划。',
+    },
+    {
+      client: '泉桥物流', title: 'SAP BTP API 管理', focus: 'sap', amount: 10200, baseChance: 41,
+      description: '合作仓库直接调用多个内部接口，信息部门希望统一认证、流量限制与调用审计。',
+      deliverable: '在 SAP Integration Suite 中配置 API 代理和访问策略，验证授权、限流和异常追踪。',
+    },
+    {
+      client: '云栖商贸', title: 'SAP 跨公司往来对账', focus: 'sap', amount: 11500, baseChance: 39,
+      description: '集团内部交易在不同公司账上常因日期或币种不同而对不上。',
+      deliverable: '配置并试跑内部往来匹配，交付未匹配项清单，验证跨币种和跨期差异。',
+    },
+    {
+      client: '松林物业', title: 'AI 费用单据预审', focus: 'ai', amount: 7600, baseChance: 59,
+      description: '财务希望在人工审批前发现重复报销、缺少附件和单据金额不一致。',
+      deliverable: '交付单据提取和规则核验试点，标出异常原因，把边界案例转给审核员。',
+    },
+    {
+      client: '九号工坊', title: 'SAP 与 MES 报工集成', focus: 'sap', amount: 13200, baseChance: 32,
+      description: '车间在 MES 完工后还要到 SAP 重录产量和废品，导致库存更新滞后。',
+      deliverable: '打通生产订单下发与完工确认回传，验证部分报工、撤销以及重复消息处理。',
+    },
+    {
+      client: '临港机电', title: 'AI 采购询价比对', focus: 'ai', amount: 9800, baseChance: 51,
+      description: '采购员收到的报价单规格和单位各异，想先自动整理同一物料的候选报价。',
+      deliverable: '从报价附件抽取规格、单价和交期，保留原文引用，交由采购员确认不一致项。',
+    },
+    {
+      client: '潮汐零售', title: 'SAP SD 退货流程改造', focus: 'relationships', amount: 9500, baseChance: 48,
+      description: '门店、仓库和财务对退货收货与贷项处理的时点有争议。',
+      deliverable: '确认跨部门流程并调整试点配置，用正常退货、部分退货和退款异常验收。',
+    },
+    {
+      client: '灯塔科技', title: 'AI 月结异常助手', focus: 'ai', amount: 6500, baseChance: 62,
+      description: '财务团队想更快了解哪些 SAP 月结作业失败，以及该把问题交给谁排查。',
+      deliverable: '只读接入样例日志，生成附原始记录的异常摘要和排查建议，用历史案例验证并交财务复核。',
+    },
+    {
+      client: '北陆医材', title: 'SAP S/4HANA 财务实施', focus: 'sap', amount: 17800, baseChance: 24,
+      description: '新子公司要上线总账、应收和应付，切换前需核对期初余额与未清项。',
+      deliverable: '交付单公司代码的流程配置和初始数据迁移，验收开票、收付款、清账及试结账。',
+    },
+  ];
+
+  const supportTemplates = [
+    {
+      client: '海风汽配', title: 'SAP HANA 月度巡检', focus: 'sap', amount: 3600, months: 6, baseChance: 24,
+      description: '客户需要持续跟踪 HANA 生产库的容量、备份和系统复制状态。',
+      deliverable: '每月核查备份结果和复制告警，提交巡检报告及容量、性能风险处理建议。',
+    },
+    {
+      client: '云岭工程', title: 'AI 企业知识库运维', focus: 'ai', amount: 2500, months: 4, baseChance: 33,
+      description: '制度和模板每月都在更新，客户希望员工查到的答案及时反映最新版本。',
+      deliverable: '每月同步已审核文档，抽测引用正确性和权限，记录需人工修正的问题。',
+    },
+    {
+      client: '赤陶建材', title: 'SAP 采购库存月度支持', focus: 'relationships', amount: 4100, months: 6, baseChance: 20,
+      description: '采购和仓库希望有人持续协调收货、退货和库存差异工单。',
+      deliverable: '每月协助处理异常单据，和业务团队回顾处理时效及反复出现的问题。',
+    },
+    {
+      client: '北陆医材', title: 'SAP FI/CO 月结值守', focus: 'sap', amount: 4700, months: 6, baseChance: 18,
+      description: '财务需要在结账窗口有人协助定位订单结算失败和总账差异。',
+      deliverable: '每个月末跟进结账工单，复核成本差异，更新异常处理手册。',
+    },
+    {
+      client: '星桥物流', title: 'SAP BTP 接口运维', focus: 'sap', amount: 3200, months: 5, baseChance: 27,
+      description: '承运商接口上线后，证书到期或报文格式变更都会造成回执积压。',
+      deliverable: '每月检查失败消息和证书有效期，协助安全补发，向物流团队提交运行月报。',
+    },
+    {
+      client: '河畔制造', title: 'AI 质检模型维护', focus: 'ai', amount: 5200, months: 6, baseChance: 17,
+      description: '产线更换材料或灯光后，质检模型的误报开始波动。',
+      deliverable: '每月复查误报与漏检，补充标注样本，验证后才建议替换生产模型。',
+    },
+    {
+      client: '晨港供应链', title: 'SAP EWM 仓库运维', focus: 'sap', amount: 3800, months: 5, baseChance: 23,
+      description: '仓库上线后仍会碰到任务卡住和交货状态不一致，影响班次交接。',
+      deliverable: '每月排查仓库任务、交货和库存回传异常，汇总解决记录及改进建议。',
+    },
+    {
+      client: '铂川工业', title: 'AI 单据识别运维', focus: 'ai', amount: 2300, months: 3, baseChance: 34,
+      description: '订单识别上线后，客户经常更换附件模板，业务希望及时跟进识别错误。',
+      deliverable: '每月抽查订单字段和人工修正记录，为高频模板补充回归样本。',
+    },
+    {
+      client: '河畔制造', title: 'SAP 上线后业务支持', focus: 'relationships', amount: 3000, months: 4, baseChance: 31,
+      description: '关键用户熟悉了日常录入，跨部门疑难工单仍需要顾问协调。',
+      deliverable: '每月主持问题复盘，按业务影响分级处理工单，向关键用户移交操作指引。',
+    },
+  ];
+
+  const opportunityTemplates = [
+    { title: 'S/4HANA 转型公开课', icon: 'megaphone', cost: 4800, boosts: { reputation: 6 }, description: '为准备更换 ERP 的企业讲解转型范围、试迁移和上线验收，分享一份上线准备清单。' },
+    { title: '仓库流程共创会', icon: 'coffee', cost: 3200, boosts: { relationships: 5 }, description: '请客户的仓库主管和 IT 团队一起走查出库与签收，明确异常交接由谁负责。' },
+    { title: 'SAP FI/CO 月结训练营', icon: 'training', cost: 5700, boosts: { sap: 7 }, description: '在练习系统跑完生产差异分析、订单结算和总账核对，复盘常见月结失败。' },
+    { title: '企业数字化展台', icon: 'exhibition', cost: 9800, boosts: { reputation: 8, relationships: 3 }, description: '带着 BTP 物流接口和 AI 发票预审的演示参展，现场与企业负责人聊试点范围。' },
+    { title: '企业 AI 评测工作坊', icon: 'sparkles', cost: 6200, boosts: { ai: 7 }, description: '用脱敏发票与内部制度样本检验字段识别、答案出处和人工接管，建立试点验收清单。' },
+    { title: '上线复盘与交接', icon: 'gift', cost: 3700, boosts: { relationships: 5, reputation: 1 }, description: '请客户关键用户复盘 SAP 上线，交付常见问题手册和运维联系表，逐项确认遗留问题。' },
+    { title: '企业 AI 演示开放日', icon: 'exhibition', cost: 7300, boosts: { reputation: 5, relationships: 3 }, description: '邀请财务、采购和质检团队体验 AI 样例，现场讨论权限边界与人工复核。' },
+    { title: 'BTP 与 AI 联调训练', icon: 'training', cost: 8500, boosts: { sap: 5, ai: 4 }, description: '让集成顾问和 AI 同事联调发票预审，把异常送进人工审核，演练失败告警和补发。' },
+    { title: 'HANA 升级案例分享', icon: 'megaphone', cost: 4300, boosts: { reputation: 5 }, description: '经客户同意发布匿名复盘，说明如何安排升级演练、验证备份恢复与核对关键交易。' },
+    { title: '财务负责人圆桌会', icon: 'coffee', cost: 6600, boosts: { relationships: 7, reputation: 2 }, description: '邀请客户交流银行对账、跨公司往来和月结难点，汇总下一轮适合试点的场景。' },
+    { title: 'HANA 升级沙盘', icon: 'training', cost: 5100, boosts: { sap: 6 }, description: '租用测试环境，演练升级前兼容性检查、备份恢复和升级后的应用验证。' },
+    { title: '工业 AI 质检交流', icon: 'sparkles', cost: 4600, boosts: { ai: 5, relationships: 1 }, description: '与工厂质检团队交流样本标注，用光照变化的样本复查误报、漏检与人工复判。' },
+  ];
+
+  function roundPrice(value) {
+    return Math.round(value / 100) * 100;
+  }
+
+  // Rotation keeps each group of offers off the street for two full weeks.
+  const rotationLength = 3;
+  const visitWindows = [
+    [0, 7], [0, 9], [1, 11], [2, 13], [7, 17], [9, 19],
+    [11, 21], [13, 23], [17, 28], [19, 29], [21, 30], [23, 30],
+  ];
+  const supportSlots = [2, 6, 9];
+
+  function makeContracts(week) {
+    const group = (week - 1) % rotationLength;
+    const round = Math.floor((week - 1) / rotationLength);
+    const projectCount = contractTemplates.length / rotationLength;
+    const supportCount = supportTemplates.length / rotationLength;
+    const scale = 1 + Math.floor((week - 1) / 13) * 0.12;
+    let projectIndex = round * 4;
+    let supportIndex = round;
+    return visitWindows.map(([arrivesAt, leavesAt], index) => {
+      const support = supportSlots.includes(index);
+      const template = support
+        ? supportTemplates[group * supportCount + supportIndex++ % supportCount]
+        : contractTemplates[group * projectCount + projectIndex++ % projectCount];
+      return {
+        ...template,
+        id: `w${week}-c${index + 1}`,
+        kind: support ? 'support' : 'project',
+        amount: roundPrice(template.amount * scale),
+        arrivesAt,
+        leavesAt,
+        status: 'open',
+      };
+    });
+  }
+
+  function weekAge(state, now) {
+    return state.weekDuration - (state.deadline - now) / 1000;
+  }
+
+  function isContractAvailable(state, contract, now = Date.now()) {
+    if (state.phase !== 'week' || contract?.status !== 'open') return false;
+    const age = weekAge(state, now);
+    return age >= (contract.arrivesAt ?? 0) && age < (contract.leavesAt ?? state.weekDuration);
+  }
+
+  function contractVisitProgress(state, contract, now = Date.now()) {
+    if (state.phase !== 'week' || !Number.isFinite(contract?.arrivesAt)) return null;
+    const progress = (weekAge(state, now) - contract.arrivesAt) / (contract.leavesAt - contract.arrivesAt);
+    return Math.min(1, Math.max(0, progress));
+  }
+
+  function opportunityCards(week, templates, refreshCount = 0) {
+    const scale = 1 + Math.floor((week - 1) / 13) * 0.15;
+    const prefix = refreshCount ? `w${week}-r${refreshCount}` : `w${week}`;
+    return templates.map((template, index) => ({
+      ...template,
+      id: `${prefix}-o${index + 1}`,
+      cost: roundPrice(template.cost * scale),
+      boosts: { ...template.boosts },
+      purchased: false,
+    }));
+  }
+
+  function makeOpportunities(week) {
+    const start = ((week - 1) * 5) % opportunityTemplates.length;
+    const templates = Array.from({ length: 3 }, (_, index) =>
+      opportunityTemplates[(start + index) % opportunityTemplates.length]);
+    return opportunityCards(week, templates);
+  }
+
+  function getOpportunityRefreshCost(state) {
+    const refreshedThisWeek = state.opportunityRefreshes.some(record => record.week === state.week);
+    return refreshedThisWeek ? opportunityRefreshCost : 0;
+  }
+
+  function canRefreshOpportunities(state) {
+    return state.phase === 'opportunities' && Math.max(0, state.cash) >= getOpportunityRefreshCost(state);
+  }
+
+  function refreshOpportunities(state, random = Math.random) {
+    if (!canRefreshOpportunities(state)) return state;
+    const visibleTitles = new Set(state.opportunities.map(card => card.title));
+    const pool = opportunityTemplates.filter(template => !visibleTitles.has(template.title));
+    const refreshCount = state.opportunityRefreshes.filter(record => record.week === state.week).length + 1;
+    const templates = Array.from({ length: 3 }, () =>
+      pool.splice(Math.floor(random() * pool.length), 1)[0]);
+    const record = {
+      week: state.week, id: `w${state.week}-r${refreshCount}`, cost: getOpportunityRefreshCost(state),
+    };
+    return {
+      ...state,
+      cash: state.cash - record.cost,
+      opportunities: opportunityCards(state.week, templates, refreshCount),
+      opportunityRefreshes: [...state.opportunityRefreshes, record],
+    };
+  }
+
+  function openWeek(state, week, now) {
+    return {
+      ...state,
+      week,
+      phase: 'week',
+      weekDuration: weekSeconds,
+      deadline: now + weekSeconds * 1000,
+      contracts: makeContracts(week),
+      opportunities: [],
+    };
+  }
+
+  function createGame(roleId, now = Date.now()) {
+    const role = roles.find(item => item.id === roleId) || roles[0];
+    return openWeek({
+      version: 2,
+      roleId: role.id,
+      cash: startCash,
+      stats: { ...role.stats },
+      history: [],
+      weekResults: [],
+      opportunityPurchases: [],
+      opportunityRefreshes: [],
+      supportContracts: [],
+      supportPayments: [],
+      eventHistory: [],
+    }, 1, now);
+  }
+
+  function restoreGame(saved) {
+    const baseArrays = ['contracts', 'opportunities', 'history', 'weekResults', 'opportunityPurchases'];
+    if (!saved || ![1, 2].includes(saved.version)
+      || !roles.some(role => role.id === saved.roleId)
+      || !['week', 'opportunities', 'summary'].includes(saved.phase)
+      || !Number.isInteger(saved.week) || saved.week < 1 || saved.week > weeksPerYear
+      || !Number.isFinite(saved.cash)
+      || (saved.phase === 'week' && !Number.isFinite(saved.deadline))
+      || !saved.stats || !statKeys.every(key => Number.isFinite(saved.stats[key])
+        && saved.stats[key] >= 0 && saved.stats[key] <= 100)
+      || !baseArrays.every(key => Array.isArray(saved[key]))
+      || (saved.eventHistory !== undefined && !Array.isArray(saved.eventHistory))) return null;
+
+    const eventHistory = saved.eventHistory ?? [];
+    const weekDuration = Number.isFinite(saved.weekDuration) && saved.weekDuration > 0
+      ? saved.weekDuration : legacyWeekSeconds;
+    if (saved.version === 2) {
+      const newArrays = ['opportunityRefreshes', 'supportContracts', 'supportPayments'];
+      if (!newArrays.every(key => Array.isArray(saved[key]))) return null;
+      return { ...saved, eventHistory, weekDuration };
+    }
+    return {
+      ...saved,
+      version: 2,
+      weekDuration,
+      contracts: saved.contracts.map(contract => ({ ...contract, kind: 'project' })),
+      history: saved.history.map(record => ({ ...record, kind: 'project' })),
+      weekResults: saved.weekResults.map(record => ({
+        ...record,
+        projectRevenue: record.revenue,
+        supportRevenue: 0,
+        eventRevenue: 0,
+        eventSpent: 0,
+      })),
+      opportunityRefreshes: [],
+      supportContracts: [],
+      supportPayments: [],
+      eventHistory,
+    };
+  }
+
+  function firstSupportPaymentWeek(week) {
+    const yearStart = Math.floor((week - 1) / weeksPerYear) * weeksPerYear;
+    const monthEnd = monthEndWeeks.find(end => end > week - yearStart);
+    return yearStart + (monthEnd ?? weeksPerYear + monthEndWeeks[0]);
+  }
+
+  function getMonthlyCostsSchedule(state) {
+    if (state.phase === 'summary') return null;
+    const firstUnsettledWeek = state.week + (state.phase === 'opportunities' ? 1 : 0);
+    return monthEndWeeks.find(week => week >= firstUnsettledWeek) ?? null;
+  }
+
+  function getSupportSchedule(state) {
+    const active = state.supportContracts.filter(contract => contract.remainingMonths > 0);
+    const nextWeek = active.reduce((next, contract) =>
+      Math.min(next, contract.nextPaymentWeek), Infinity);
+    const dueThisYear = nextWeek <= weeksPerYear;
+    return {
+      monthlyIncome: active.reduce((sum, contract) => sum + contract.amount, 0),
+      nextWeek: dueThisYear ? nextWeek : null,
+      nextAmount: dueThisYear ? active.reduce((sum, contract) =>
+        sum + (contract.nextPaymentWeek === nextWeek ? contract.amount : 0), 0) : 0,
+      activeCount: active.length,
+    };
+  }
+
+  function settleSupportPayments(state) {
+    const payments = [];
+    const contracts = state.supportContracts.map(contract => {
+      if (contract.remainingMonths === 0 || contract.nextPaymentWeek !== state.week) return contract;
+      const { id, title, client, amount } = contract;
+      payments.push({ week: state.week, id, title, client, amount });
+      const remainingMonths = contract.remainingMonths - 1;
+      return {
+        ...contract,
+        remainingMonths,
+        nextPaymentWeek: remainingMonths ? firstSupportPaymentWeek(state.week) : null,
+      };
+    });
+    return { contracts, payments };
+  }
+
+  function eventTotals(events = []) {
+    return events.reduce((totals, event) => {
+      totals.eventRevenue += Math.max(0, event.cash);
+      totals.eventSpent += Math.max(0, -event.cash);
+      return totals;
+    }, { eventRevenue: 0, eventSpent: 0 });
+  }
+
+  function calcChance(state, contract) {
+    const average = statKeys.reduce((sum, key) => sum + state.stats[key], 0) / statKeys.length;
+    const eventBonus = state.eventChanceWeek === state.week ? state.eventChanceBonus || 0 : 0;
+    const chance = Math.round(contract.baseChance + state.stats[contract.focus] * 0.32 + average * 0.1 + eventBonus);
+    return Math.max(5, Math.min(96, chance));
+  }
+
+  function tick(state, now = Date.now()) {
+    if (state.phase !== 'week' || now < state.deadline) return state;
+
+    const won = state.contracts.filter(contract => contract.status === 'won');
+    const lost = state.contracts.filter(contract => contract.status === 'lost').length;
+    const signed = won.length + lost;
+    const { contracts, payments } = settleSupportPayments(state);
+    const projectRevenue = won.reduce((sum, contract) =>
+      sum + (contract.kind === 'support' ? 0 : contract.amount), 0);
+    const supportRevenue = payments.reduce((sum, payment) => sum + payment.amount, 0);
+    const isMonthEnd = monthEndWeeks.includes(state.week);
+    const payroll = isMonthEnd ? monthlyPayroll : 0;
+    const operatingCost = isMonthEnd ? monthlyOperatingCost : 0;
+    const events = (state.eventHistory || []).filter(event => event.week === state.week);
+    const { eventRevenue, eventSpent } = eventTotals(events);
+    const result = {
+      week: state.week,
+      revenue: projectRevenue + supportRevenue + eventRevenue,
+      projectRevenue,
+      supportRevenue,
+      payroll,
+      operatingCost,
+      eventRevenue,
+      eventSpent,
+      signed,
+      won: won.length,
+      lost,
+      expired: state.contracts.length - signed,
+    };
+    return {
+      ...state,
+      phase: 'opportunities',
+      deadline: null,
+      cash: state.cash + supportRevenue - payroll - operatingCost,
+      supportContracts: contracts,
+      supportPayments: [...state.supportPayments, ...payments],
+      opportunities: makeOpportunities(state.week),
+      weekResults: [...state.weekResults, result],
+    };
+  }
+
+  function signContract(state, id, now = Date.now(), random = Math.random) {
+    const current = tick(state, now);
+    if (current.phase !== 'week') return current;
+    const contract = current.contracts.find(item => item.id === id);
+    if (!isContractAvailable(current, contract, now)) return current;
+
+    const chance = calcChance(current, contract);
+    const succeeded = random() * 100 < chance;
+    const status = succeeded ? 'won' : 'lost';
+    const result = { ...contract, status, chance };
+    const kind = contract.kind || 'project';
+    const record = {
+      week: current.week, id, client: contract.client, title: contract.title,
+      amount: contract.amount, status, chance, kind,
+      ...(kind === 'support' ? { months: contract.months } : {}),
+    };
+    const supportContracts = succeeded && kind === 'support'
+      ? [...current.supportContracts, {
+        week: current.week,
+        id,
+        client: contract.client,
+        title: contract.title,
+        amount: contract.amount,
+        remainingMonths: contract.months,
+        nextPaymentWeek: firstSupportPaymentWeek(current.week),
+      }] : current.supportContracts;
+    return {
+      ...current,
+      cash: current.cash + (succeeded && kind === 'project' ? contract.amount : 0),
+      supportContracts,
+      contracts: current.contracts.map(item => item.id === id ? result : item),
+      history: [...current.history, record],
+    };
+  }
+
+  function buyOpportunity(state, id) {
+    if (state.phase !== 'opportunities') return state;
+    const card = state.opportunities.find(item => item.id === id);
+    if (!card || card.purchased || card.cost > state.cash) return state;
+
+    const stats = { ...state.stats };
+    const boosts = {};
+    for (const [key, points] of Object.entries(card.boosts)) {
+      const applied = Math.min(points, 100 - stats[key]);
+      if (applied > 0) {
+        stats[key] += applied;
+        boosts[key] = applied;
+      }
+    }
+    if (Object.keys(boosts).length === 0) return state;
+    const record = { week: state.week, id, title: card.title, cost: card.cost, boosts };
+    return {
+      ...state,
+      cash: state.cash - card.cost,
+      stats,
+      opportunities: state.opportunities.map(item => item.id === id ? { ...card, purchased: true } : item),
+      opportunityPurchases: [...state.opportunityPurchases, record],
+    };
+  }
+
+  function nextWeek(state, now = Date.now()) {
+    if (state.phase !== 'opportunities') return state;
+    if (state.week === weeksPerYear) return { ...state, phase: 'summary' };
+    return openWeek(state, state.week + 1, now);
+  }
+
+  function summarize(state) {
+    const wins = state.history.filter(record => record.status === 'won');
+    const projectRevenue = wins.reduce((sum, record) =>
+      sum + (record.kind === 'support' ? 0 : record.amount), 0);
+    const supportRevenue = state.supportPayments.reduce((sum, record) => sum + record.amount, 0);
+    const opportunitySpent = state.opportunityPurchases.reduce((sum, record) => sum + record.cost, 0);
+    const refreshSpent = state.opportunityRefreshes.reduce((sum, record) => sum + record.cost, 0);
+    const payroll = state.weekResults.reduce((sum, record) => sum + (record.payroll ?? 0), 0);
+    const operatingCost = state.weekResults.reduce((sum, record) => sum + (record.operatingCost ?? 0), 0);
+    const { eventRevenue, eventSpent } = eventTotals(state.eventHistory);
+    const revenue = projectRevenue + supportRevenue + eventRevenue;
+    const spent = opportunitySpent + refreshSpent + eventSpent + payroll + operatingCost;
+    return {
+      revenue,
+      spent,
+      projectRevenue,
+      supportRevenue,
+      opportunitySpent,
+      refreshSpent,
+      payroll,
+      operatingCost,
+      eventRevenue,
+      eventSpent,
+      signed: state.history.length,
+      won: wins.length,
+      lost: state.history.length - wins.length,
+      net: revenue - spent,
+      finalCash: state.cash,
+    };
+  }
+
+  const api = {
+    roles, statLabels, startCash, weeksPerYear, weekSeconds,
+    restoreGame, firstSupportPaymentWeek, getSupportSchedule,
+    monthlyPayroll, monthlyOperatingCost, getMonthlyCostsSchedule,
+    opportunityRefreshCost, getOpportunityRefreshCost, canRefreshOpportunities, refreshOpportunities,
+    isContractAvailable, contractVisitProgress,
+    createGame, calcChance, tick, signContract, buyOpportunity, nextWeek, summarize,
+  };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else globalThis.CornerGame = api;
+})();
+
+</script>
+  <script>
+(function () {
+  'use strict';
+
+  const templates = [
+    {
+      title: '行业论坛临时征集 SAP 案例',
+      description: '制造业论坛空出一个演讲席位，主办方希望分享一次 SAP 上线的经验。',
+      choices: [
+        { id: 'present', label: '提交匿名案例', description: '赶制演示材料，分享上线切换和库存核对的经验。', effects: { cash: -1800, stats: { reputation: 5 } } },
+        { id: 'refer', label: '推荐客户主讲', description: '让客户的项目负责人分享内部推行经验，你帮忙准备提纲。', effects: { stats: { relationships: 2 } } },
+      ],
+      fallback: { label: '征集结束', description: '主办方把席位给了另一支顾问团队。', effects: {} },
+    },
+    {
+      title: 'HANA 容灾演练中断',
+      description: '演练环境的复制延迟突然升高。客户正在等团队演示主备切换。',
+      choices: [
+        { id: 'restore', label: '启用备用演练环境', description: '租用备用资源完成演示，并向客户交代原环境的问题。', effects: { cash: -2400, chance: 7 } },
+        { id: 'investigate', label: '暂停切换并排查', description: '保留日志，复核复制延迟与切换条件。客户要改期看演示。', effects: { stats: { sap: 2 }, chance: -4 } },
+      ],
+      fallback: { label: '演练未能收尾', description: '客户没等到结论，本周对涉及系统上线的承诺更谨慎。', effects: { chance: -11 } },
+    },
+    {
+      title: '承运商接口证书将到期',
+      description: '承运商提醒，测试端点的证书今晚到期。明早还有一轮 SAP BTP 签收回执联测。',
+      choices: [
+        { id: 'renew', label: '安排夜间联测', description: '安排顾问与承运商更新证书，并跑通一条签收回执。', effects: { cash: -1200, stats: { relationships: 5 } } },
+        { id: 'guide', label: '提供轮换清单', description: '发给客户更新证书、验证连接和失败恢复的检查步骤。', effects: { stats: { reputation: 2 } } },
+      ],
+      fallback: { label: '客户另约联测', description: '客户自己的运维团队接手，重新安排了测试时间。', effects: {} },
+    },
+    {
+      title: '顾问工作坊空出席位',
+      description: '合作伙伴的工作坊空出一席，可派团队带一个在手项目的难题参加。',
+      choices: [
+        { id: 'sap', label: '参加 S/4HANA 实施复盘', description: '拿主数据试迁移和月结验证的难题向实施顾问请教。', effects: { cash: -2600, stats: { sap: 5 } } },
+        { id: 'ai', label: '参加企业 AI 验收实训', description: '带上失败样本，练习构建评测集和验证人工转接。', effects: { cash: -2600, stats: { ai: 5 } } },
+      ],
+      fallback: { label: '席位被补上', description: '主办方确认了候补团队的报名。', effects: {} },
+    },
+    {
+      title: '仓储客户主动推荐',
+      description: '一家客户在供应链交流会上介绍了你们的 EWM 上线项目。',
+      automatic: { label: '收到同行转介', description: '与会企业听到客户的真实反馈，对团队的交付能力更有信心。', effects: { stats: { reputation: 3 }, chance: 9 } },
+    },
+    {
+      title: '财务月结试跑对不上账',
+      description: '客户验收 SAP 财务流程时，部分应收未清项与对账样本不符。财务负责人希望今天给出解释。',
+      choices: [
+        { id: 'specialist', label: '请 FI 顾问加急复核', description: '抽查原始凭证和清账规则，给客户一份有凭证支持的差异说明。', effects: { cash: -1500, chance: 3 } },
+        { id: 'reconcile', label: '与客户核对样本', description: '一起确认测试数据的口径，约定下一轮复核时间。', effects: { stats: { relationships: 1 }, chance: -3 } },
+      ],
+      fallback: { label: '财务暂缓验收', description: '差异没有及时解释，客户想等月结流程再试一轮。', effects: { chance: -10 } },
+    },
+    {
+      title: '收到智能财务联合提案邀约',
+      description: '合作方想把 SAP 财务实施和 AI 发票识别放在同一份提案里，请你确认分工。',
+      choices: [
+        { id: 'lead', label: '牵头联合提案', description: '投入顾问工时，演示从发票识别到 SAP 待核对单据的过程。', effects: { cash: -3600, stats: { reputation: 6 }, chance: 6 } },
+        { id: 'partner', label: '负责 AI 试点部分', description: '提供识别样本和人工复核设计，由伙伴负责整体提案。', effects: { stats: { relationships: 3, ai: 1 } } },
+      ],
+      fallback: { label: '同行另约伙伴', description: '对方先确定了另一家搭档。', effects: {} },
+    },
+    {
+      title: '测试环境临时扩容',
+      description: '新一轮 S/4HANA 迁移试跑超出了测试环境的存储配额。',
+      automatic: { label: '支付临时资源费', description: '团队申请了额外存储以完成演练，资源费从可用资金中扣除。', effects: { cash: -2200 } },
+    },
+    {
+      title: '知识库客户发来试点复盘',
+      description: '老客户整理了 AI 知识库试用反馈，愿意授权分享脱敏后的成效。',
+      choices: [
+        { id: 'publish', label: '整理脱敏案例', description: '核对授权范围与成效口径，把案例整理成对外材料。', effects: { cash: -2100, stats: { reputation: 5 } } },
+        { id: 'talk', label: '开展内部复盘', description: '和客户团队回看找不到出处的问答，优先处理最常见的问题。', effects: { stats: { relationships: 3 } } },
+      ],
+      fallback: { label: '复盘材料归档', description: '客户保留了反馈材料，等下次运维例会再讨论。', effects: {} },
+    },
+    {
+      title: '企业 AI 试点补贴到账',
+      description: '企业数字化计划通过了你们提交的 AI 视觉质检试点验收材料。',
+      automatic: { label: '收到试点补贴', description: '试点补贴已计入公司可用资金。', effects: { cash: 2800 } },
+    },
+    {
+      title: 'AI 演示引用了过期资料',
+      description: '面向客户的问答演示引用了一份已废止的制度，业务负责人担心正式上线后也会发生。',
+      choices: [
+        { id: 'workshop', label: '组织专项复验', description: '请业务专家核对文档有效期，用脱敏样题重新验证回答和出处。', effects: { cash: -1900, stats: { relationships: 4 }, chance: 4 } },
+        { id: 'demo', label: '暂停问答并修正索引', description: '先排除过期文档并补上回归样本，把完整演示延到下次。', effects: { stats: { ai: 2 }, chance: -4 } },
+      ],
+      fallback: { label: '客户暂缓试点', description: '团队没有及时回应引用问题，客户对本周的方案更谨慎。', effects: { chance: -12 } },
+    },
+    {
+      title: '客户集中进入年审冻结期',
+      description: '几家客户通知，审计期间暂停审批新的系统采购与技术服务。',
+      automatic: { label: '本周审批放缓', description: '客户仍愿意讨论需求，但本周剩余签约的成功率暂时下降。', effects: { chance: -9 } },
+    },
+  ];
+
+  function eventFor(state) {
+    if (state?.phase !== 'week' || !state.contracts.some(contract => Number.isFinite(contract.arrivesAt))) return null;
+    const week = state.week;
+    const template = templates[(week - 1) % templates.length];
+    const start = state.deadline - state.weekDuration * 1000;
+    const pace = state.weekDuration / 60;
+    const opensAt = start + (13 + (week * 7 % 24)) * pace * 1000;
+    const decisionSeconds = Math.max(9, (12 + (week % 5)) * pace);
+    const expiresAt = Math.min(state.deadline, opensAt + decisionSeconds * 1000);
+    return { id: `w${week}-event`, opensAt, expiresAt, ...template };
+  }
+
+  function boundedEffects(state, effects) {
+    const stats = {};
+    for (const [key, points] of Object.entries(effects.stats || {})) {
+      const original = state.stats[key];
+      const applied = Math.max(0, Math.min(100, original + points)) - original;
+      if (applied !== 0) stats[key] = applied;
+    }
+    const cash = Math.max(state.cash > 0 ? -state.cash : 0, effects.cash || 0);
+    return { cash, stats, chance: effects.chance || 0 };
+  }
+
+  function current(state, now = Date.now()) {
+    const event = eventFor(state);
+    if (!event || now < event.opensAt) return null;
+    const resolved = (state.eventHistory || []).find(entry => entry.id === event.id);
+    const choices = resolved || now >= event.expiresAt ? [] : (event.choices || []).map(choice => {
+      const cash = choice.effects.cash || 0;
+      const affordable = cash >= 0 || state.cash + cash >= 0;
+      return { ...choice, affordable, effects: affordable ? boundedEffects(state, choice.effects) : choice.effects };
+    });
+    const { id, title, description, opensAt, expiresAt } = event;
+    return { id, title, description, opensAt, expiresAt, choices, resolved };
+  }
+
+  function resolve(state, event, choice) {
+    const { cash, stats, chance } = boundedEffects(state, choice.effects);
+    const record = {
+      week: state.week, id: event.id, title: event.title,
+      label: choice.label, description: choice.description, cash, stats, chance,
+    };
+    const nextStats = { ...state.stats };
+    for (const [key, points] of Object.entries(stats)) nextStats[key] += points;
+    return {
+      ...state,
+      cash: state.cash + cash,
+      stats: nextStats,
+      eventChanceWeek: state.week,
+      eventChanceBonus: chance,
+      eventHistory: [...(state.eventHistory || []), record],
+    };
+  }
+
+  function tick(state, now = Date.now()) {
+    const event = eventFor(state);
+    if (!event || now < event.opensAt || state.eventHistory?.some(entry => entry.id === event.id)) return state;
+    if (event.automatic) return resolve(state, event, event.automatic);
+    if (now >= event.expiresAt) return resolve(state, event, event.fallback);
+    return state;
+  }
+
+  function choose(state, eventId, choiceId, now = Date.now()) {
+    const next = tick(state, now);
+    const event = current(next, now);
+    if (!event || event.id !== eventId) return next;
+    const choice = event.choices.find(item => item.id === choiceId);
+    return choice?.affordable ? resolve(next, event, choice) : next;
+  }
+
+  const api = { current, tick, choose };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else globalThis.CornerEvents = api;
+})();
+
+</script>
+  <script>
+(() => {
+  "use strict";
+
+  const game = window.CornerGame;
+  const events = window.CornerEvents;
+  const $ = (id) => document.getElementById(id);
+  const dialog = $("dialog");
+  const dialogContent = $("dialog-content");
+  const saveKey = "corner-office.game.v1";
+  const cashFormatter = new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 0 });
+  const money = (amount) => `${amount < 0 ? "−" : ""}¥${cashFormatter.format(Math.abs(amount))}`;
+  const weekNumber = (week) => String(week).padStart(2, "0");
+  const icons = {
+    store: '<path d="M3 10l2-6h14l2 6M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M5 13v7h14v-7M10 20v-5h4v5"/>',
+    help: '<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 4 2.8c-.7.3-1 .8-1 1.7m0 3.2h.01"/>',
+    rotate: '<path d="M3 12a9 9 0 1 1 2.6 6.4M3 12V5m0 7h7"/>',
+    calendar: '<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5h3m3 0h2"/>',
+    map: '<path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2Zm6-2v14m6-12v14"/>',
+    pointer: '<path d="m6 3 13 10-6 1-2 6-5-17Z"/>',
+    list: '<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6m-6 3h6m-6 3h4"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    bolt: '<path d="m13 2-9 12h7l-1 8 10-12h-7l1-8Z"/>',
+    wallet: '<path d="M20 8H6a2 2 0 0 1 0-4h12m-14 2v12a2 2 0 0 0 2 2h14v-5m-4-5h5v5h-5a2.5 2.5 0 0 1 0-5Zm0 2.5h.1"/>',
+    sparkles: '<path d="M12 3l2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3L12 3ZM5 3v4M3 5h4"/>',
+    star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
+    users: '<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2m1-15a3 3 0 0 1 0 6m3 9v-2a4.5 4.5 0 0 0-2.5-4"/>',
+    box: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm-8 4.5 8 4.5 8-4.5M12 12v9m-4-15.8 8 4.6"/>',
+    close: '<path d="m6 6 12 12M18 6 6 18"/>',
+    arrow: '<path d="M4 12h15m-6-6 6 6-6 6"/>',
+    doc: '<path d="M5 3h9l4 4v14H5V3Zm9 0v5h4M8 12h7m-7 4h5"/>',
+    megaphone: '<path d="m4 10 15-5v14L4 14v-4Zm4 5 2 5h3l-1.5-4M2 10v4"/>',
+    exhibition: '<rect x="4" y="4" width="16" height="12" rx="2"/><path d="M12 16v5m-4 0h8M8 12l3-3 2 2 3-3"/>',
+    coffee: '<path d="M4 8h13v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm13 1h2a2 2 0 1 1 0 4h-2M3 21h18M8 3v2m5-2v2"/>',
+    training: '<path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c4 3 8 3 12 0v-6m4-2v6"/>',
+    gift: '<rect x="3" y="8" width="18" height="5" rx="1"/><path d="M5 13v8h14v-8M12 8v13m0-13c-2-7-9-5-6-1 1 1.3 4 1 6 1Zm0 0c2-7 9-5 6-1-1 1.3-4 1-6 1Z"/>'
+  };
+  const statVisuals = {
+    reputation: ["star", "#c18c35"],
+    relationships: ["users", "#74976a"],
+    sap: ["box", "#639e9c"],
+    ai: ["sparkles", "#8f82af"]
+  };
+  const routes = [
+    { start: 4, end: 95, top: 82, still: 15 },
+    { start: 96, end: 5, top: 91, still: 38 },
+    { start: 5, end: 95, top: 94, still: 64 },
+    { start: 95, end: 5, top: 86, still: 85 }
+  ];
+
+  function icon(name) {
+    return `<svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.sparkles}</svg>`;
+  }
+
+  function sprite(id) {
+    return `<svg class="sprite" viewBox="0 0 72 100" aria-hidden="true"><use href="#${id}"></use></svg>`;
+  }
+
+  function load() {
+    try {
+      return game.restoreGame(JSON.parse(localStorage.getItem(saveKey)));
+    } catch {
+      // A fresh game is available if storage is disabled or an old save cannot be read.
+    }
+    return null;
+  }
+
+  let state = load();
+  let selectedRole = game.roles[0].id;
+  let toastTimeout;
+  const walkers = new Map();
+  let eventMarkup;
+  const prefersStill = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const roleIndex = (id) => game.roles.findIndex((role) => role.id === id);
+  const roleData = () => game.roles[roleIndex(state?.roleId || selectedRole)];
+
+  function commit(next) {
+    state = next;
+    try {
+      if (state) localStorage.setItem(saveKey, JSON.stringify(state));
+      else localStorage.removeItem(saveKey);
+      $("save-status").innerHTML = "<i></i> 本地自动存档";
+    } catch {
+      $("save-status").textContent = "当前窗口无法存档";
+    }
+    renderBoard();
+  }
+
+  function toast(message) {
+    $("toast").textContent = message;
+    $("toast").hidden = false;
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => { $("toast").hidden = true; }, 3200);
+  }
+
+  function remainingVisitMs(contract, now) {
+    const visitEnd = Number.isFinite(contract.leavesAt)
+      ? state.deadline - (state.weekDuration - contract.leavesAt) * 1000 : state.deadline;
+    return Math.max(0, visitEnd - now);
+  }
+
+  function renderClock(now = Date.now()) {
+    const duration = state?.weekDuration ?? game.weekSeconds;
+    const seconds = state?.phase === "week"
+      ? Math.min(duration, Math.max(0, Math.ceil((state.deadline - now) / 1000)))
+      : state ? 0 : duration;
+    const label = `${weekNumber(Math.floor(seconds / 60))}:${weekNumber(seconds % 60)}`;
+    if ($("timer").textContent !== label) $("timer").textContent = label;
+    $("timer-fill").style.width = `${100 * seconds / duration}%`;
+    $("timer").parentElement.dataset.low = seconds > 0 && seconds <= 10;
+    const contractTimer = $("contract-timer");
+    if (contractTimer && dialog.dataset.contractId) {
+      const contract = state.contracts.find((item) => item.id === dialog.dataset.contractId);
+      const visitLabel = contract ? `${Math.ceil(remainingVisitMs(contract, now) / 1000)} 秒` : "";
+      if (contractTimer.textContent !== visitLabel) contractTimer.textContent = visitLabel;
+    }
+  }
+
+  function moveWalker(walker, now) {
+    const { element, route, contract } = walker;
+    const progress = game.contractVisitProgress(state, contract, now);
+    const left = prefersStill.matches || progress === null
+      ? route.still : route.start + (route.end - route.start) * progress;
+    element.style.left = `${left}%`;
+  }
+
+  function renderTraffic(now) {
+    const phase = state?.phase || "start";
+    const active = new Set();
+    let onTheWay = false;
+    let missed = 0;
+    if (phase === "week") {
+      state.contracts.forEach((contract, index) => {
+        if (contract.status !== "open") return;
+        if (!game.isContractAvailable(state, contract, now)) {
+          if (remainingVisitMs(contract, now) === 0) missed++;
+          else onTheWay = true;
+          return;
+        }
+        active.add(contract.id);
+        if (walkers.has(contract.id)) return;
+        const route = routes[index % routes.length];
+        const support = contract.kind === "support";
+        const element = document.createElement("button");
+        element.type = "button";
+        element.className = "walker walker-button";
+        element.dataset.action = "contract";
+        element.dataset.id = contract.id;
+        element.dataset.kind = support ? "support" : "project";
+        element.setAttribute("aria-label", `查看${contract.client}的${support ? "月付支持" : "项目"}合同`);
+        element.style.top = `${route.top}%`;
+        element.style.zIndex = route.top;
+        element.innerHTML = `<span class="walker-tag">${icon("doc")} ${support ? "月付" : "合同"}</span>
+          <span class="walker-body">${sprite(`client-${(state.week - 1 + index) % 6}`)}</span>`;
+        const walker = { element, route, contract };
+        moveWalker(walker, now);
+        walkers.set(contract.id, walker);
+        $("traffic").append(element);
+      });
+    }
+    for (const [id, walker] of walkers) {
+      if (active.has(id)) continue;
+      walker.element.remove();
+      walkers.delete(id);
+    }
+    const liveLabel = active.size ? `街上 ${active.size} 位客户`
+      : onTheWay ? "下一批客户正在路上" : "本周客户已走完";
+    const caption = {
+      start: "选好角色，即可开门营业",
+      week: missed ? `${liveLabel} · 错过 ${missed} 位` : liveLabel,
+      opportunities: "休息一下，看看周末机遇",
+      summary: "创业第一年结束了"
+    }[phase];
+    if ($("street-caption").textContent !== caption) $("street-caption").textContent = caption;
+  }
+
+  function animateWalkers() {
+    const now = Date.now();
+    for (const walker of walkers.values()) moveWalker(walker, now);
+    requestAnimationFrame(animateWalkers);
+  }
+
+  function renderBoard() {
+    const phase = state?.phase || "start";
+    const role = roleData();
+    $("reset-button").hidden = !state;
+    const status = $("district-status");
+    status.dataset.phase = phase;
+    status.innerHTML = `<i></i> ${{ start: "等待开业", week: "营业中", opportunities: "本周打烊", summary: "年度已完成" }[phase]}`;
+    $("week-text").textContent = `第 ${weekNumber(state?.week || 1)} 周`;
+    const cash = state?.cash ?? game.startCash;
+    $("cash-label").textContent = cash < 0 ? "资金缺口" : "可用资金";
+    $("cash-value").textContent = money(cash);
+    $("cash-value").dataset.negative = cash < 0;
+    const schedule = state && game.getSupportSchedule(state);
+    const supportMeter = $("support-meter");
+    supportMeter.hidden = !schedule?.activeCount;
+    supportMeter.innerHTML = schedule?.activeCount ? `<div><span>支持合同月收入</span><strong>${money(schedule.monthlyIncome)}</strong></div>
+      <small>${schedule.activeCount} 份在执行 · ${schedule.nextWeek ? `下次第 ${weekNumber(schedule.nextWeek)} 周末到账` : "余款跨年"} </small>` : "";
+    const costsWeek = state && game.getMonthlyCostsSchedule(state);
+    const costMeter = $("cost-meter");
+    costMeter.hidden = !costsWeek;
+    costMeter.innerHTML = costsWeek ? `<div><span>月度固定支出</span><strong>${money(game.monthlyPayroll + game.monthlyOperatingCost)}</strong></div>
+      <small>第 ${weekNumber(costsWeek)} 周末扣款</small><br>
+      <small>工资 ${money(game.monthlyPayroll)} · 运营费 ${money(game.monthlyOperatingCost)}</small>` : "";
+    $("clock-caption").textContent = { start: "签约窗口", week: "签约倒计时", opportunities: "签约已截止", summary: "年度已结算" }[phase];
+    const weekAction = $("week-action");
+    weekAction.hidden = phase === "week" || phase === "start";
+    weekAction.dataset.action = phase === "summary" ? "summary" : "shop";
+    weekAction.innerHTML = phase === "summary" ? `查看年终总结 ${icon("arrow")}` : `进入机遇商店 ${icon("arrow")}`;
+
+    $("role-summary").innerHTML = state
+      ? `<div class="mini-avatar">${sprite(`player-${roleIndex(role.id)}`)}</div><div><b>${role.name}</b>${role.title}</div>`
+      : `<div class="mini-avatar">${sprite(`player-${roleIndex(role.id)}`)}</div><div><b>创始人待定</b>选角后获得起始属性</div>`;
+    $("stats").innerHTML = Object.entries(game.statLabels).map(([key, label]) => {
+      const value = (state?.stats || role.stats)[key];
+      const [glyph, color] = statVisuals[key];
+      return `<div class="stat" style="--stat-color:${color}"><div class="stat-title">${icon(glyph)} ${label}<strong>${value}</strong></div>
+        <div class="stat-track"><span style="width:${value}%"></span></div></div>`;
+    }).join("");
+
+    $("founder").innerHTML = state ? `<div class="walker player" style="left:50%;top:77.5%;z-index:78">
+      <span class="walker-tag">你</span><span class="walker-body">${sprite(`player-${roleIndex(state.roleId)}`)}</span></div>` : "";
+    const now = Date.now();
+    renderTraffic(now);
+    renderEvents(now);
+    renderClock(now);
+  }
+
+  function button(label, action, options = {}) {
+    return `<button class="button${options.accent ? " accent" : ""}" data-action="${action}"${options.id ? ` data-id="${options.id}"` : ""}${options.disabled ? " disabled" : ""}>${label}</button>`;
+  }
+
+  function show(view, kicker, title, description, body, actions, close = true) {
+    dialog.dataset.view = view;
+    delete dialog.dataset.contractId;
+    delete dialog.dataset.awaiting;
+    dialogContent.innerHTML = `<div class="dialog-inner"><header class="dialog-head">
+      <span class="dialog-kicker">${kicker}</span><h2 id="dialog-title">${title}</h2>
+      ${description ? `<p>${description}</p>` : ""}
+      ${close ? `<button class="icon-button" data-action="close" aria-label="关闭">${icon("close")}</button>` : ""}
+      </header>${body}${actions ? `<div class="dialog-actions">${actions}</div>` : ""}</div>`;
+    if (!dialog.open) dialog.showModal();
+    renderClock();
+  }
+
+  function showRoles(focusId) {
+    const roleCards = game.roles.map((role, index) => `<button class="role-card" data-action="role" data-id="${role.id}" aria-pressed="${role.id === selectedRole}">
+      <span class="role-art" style="--role-color:${role.color}">${sprite(`player-${index}`)}</span>
+      <span class="role-name">${role.name}</span><span class="role-title">${role.title}</span>
+      <span class="role-desc">${role.description}</span><span class="role-bonus">${role.bonus}</span></button>`).join("");
+    show("roles", "开业筹备  /  NEW GAME", "谁来经营这家店？",
+      "选择一位创始人。每位创始人带着不同的专长，陪公司走完第一年。",
+      `<div class="role-grid">${roleCards}</div>`,
+      `<span class="push">启动资金 <b>${money(game.startCash)}</b></span>${button(`开门营业 ${icon("arrow")}`, "start", { accent: true })}`, false);
+    if (focusId) dialogContent.querySelector(`[data-id="${focusId}"]`)?.focus();
+  }
+
+  function figure(label, value, risk = "") {
+    return `<div class="figure"${risk ? ` data-risk="${risk}"` : ""}><small>${label}</small><strong>${value}</strong></div>`;
+  }
+
+  function showContract(id, now = Date.now()) {
+    const contract = state?.contracts.find((item) => item.id === id);
+    if (!contract) return;
+    const canSign = game.isContractAvailable(state, contract, now);
+    const support = contract.kind === "support";
+    const firstPaymentWeek = support ? game.firstSupportPaymentWeek(state.week) : null;
+    const firstPaymentLabel = firstPaymentWeek > game.weeksPerYear
+      ? "次年度起开始回款" : `第 ${weekNumber(firstPaymentWeek)} 周末首次到账`;
+    const chance = canSign || contract.status !== "open"
+      ? contract.chance ?? game.calcChance(state, contract) : null;
+    const risk = chance === null ? "" : chance < 35 ? "high" : chance < 65 ? "medium" : "";
+    const wonMessage = support
+      ? `支持合同已生效，每月 ${money(contract.amount)}，${firstPaymentLabel}。`
+      : `签约成功，${money(contract.amount)} 已到账。`;
+    const outcome = contract.status === "won" ? wonMessage
+      : contract.status === "lost" ? "签约失败，这份合同没有产生收入。"
+      : canSign ? "" : "客户已经离开街区，这份合同已过期。";
+    const deliverable = contract.deliverable
+      ? `<div class="document-deliverable"><h3>${support ? "每月服务范围" : "交付与验收"}</h3><p>${contract.deliverable}</p></div>` : "";
+    const body = `<div class="document"><h3>${support ? "月付支持需求" : "客户需求"}</h3><p>${contract.description}</p>${deliverable}</div>
+      <div class="contract-figures">${figure(support ? "每月固定收入" : "签约即到账", money(contract.amount))}
+      ${figure("签约成功率", chance === null ? "已截止" : `${chance}%`, risk)}</div>
+      <p class="contract-note">主要考量 <strong>${game.statLabels[contract.focus]}</strong>
+      ${support ? ` · 连续 ${contract.months} 个月 · ${firstPaymentLabel}` : ""}</p>
+      ${outcome ? `<div class="result" data-status="${contract.status === "open" ? "expired" : contract.status}">${outcome}</div>` : ""}`;
+    const actions = canSign
+      ? `<span class="push">客户将在 <b id="contract-timer"></b>后离开</span>${button("暂不签约", "close")}${button("尝试签约", "sign", { id, accent: true })}`
+      : button("知道了", "close", { accent: true });
+    show("contract", `客户合同  /  ${contract.client}`, contract.title, "", body, actions);
+    dialog.dataset.contractId = id;
+    dialog.dataset.awaiting = String(canSign);
+    renderClock(now);
+  }
+
+  function signedChange(value) {
+    return `${value > 0 ? "+" : "−"}${Math.abs(value)}`;
+  }
+
+  function eventEffects(effects) {
+    const descriptions = [];
+    if (effects.cash) descriptions.push(`${effects.cash > 0 ? "+" : "−"}${money(Math.abs(effects.cash))}`);
+    for (const [key, points] of Object.entries(effects.stats || {})) {
+      if (points) descriptions.push(`${game.statLabels[key]} ${signedChange(points)}`);
+    }
+    if (effects.chance) descriptions.push(`当周签约率 ${signedChange(effects.chance)} 个百分点`);
+    return descriptions.join(" · ");
+  }
+
+  function renderEvents(now) {
+    const event = state && events.current(state, now);
+    const resolved = event?.resolved || state?.eventHistory?.find((entry) => entry.week === state.week);
+    const active = Boolean(event && !resolved);
+    const badge = $("event-badge");
+    const seconds = active ? Math.max(0, Math.ceil((event.expiresAt - now) / 1000)) : 0;
+    const badgeText = active ? `剩余 ${seconds} 秒` : resolved ? "已处理" : "街区动态";
+    if (badge.textContent !== badgeText) badge.textContent = badgeText;
+    badge.dataset.active = active;
+    const markup = resolved
+      ? `<h3>${resolved.title}</h3><p>${resolved.description}</p><p class="event-effects"><b>${resolved.label}</b>
+        ${eventEffects(resolved) || " · 无数值变动"}</p>`
+      : active
+        ? `<h3>${event.title}</h3><p>${event.description}</p>
+          <div class="event-choices">${event.choices.map((choice) => `<button class="event-choice" type="button" data-action="event-choice"
+            data-id="${event.id}" data-choice="${choice.id}"${choice.affordable ? "" : " disabled"}>
+            <strong>${choice.label}</strong><small>${choice.description}</small>
+            <small>${choice.affordable ? eventEffects(choice.effects) || "无数值变动" : "资金不足"}</small></button>`).join("")}</div>`
+        : `<h3>街上暂时平静</h3><p>${state?.phase === "week" ? "留意这里。营业中可能发生需要立即处理的事。" : "营业中的街区消息会出现在这里。"}</p>`;
+    if (markup !== eventMarkup) {
+      $("event-body").innerHTML = markup;
+      eventMarkup = markup;
+    }
+  }
+
+  function boostsMarkup(boosts) {
+    return Object.entries(boosts).map(([key, points]) => `<span>${game.statLabels[key]} +${points}</span>`).join("");
+  }
+
+  function showShop() {
+    if (state?.phase !== "opportunities") return;
+    const cards = state.opportunities.map((item) => {
+      const unaffordable = state.cash < item.cost;
+      const boosts = item.purchased
+        ? state.opportunityPurchases.find((purchase) => purchase.id === item.id).boosts
+        : Object.fromEntries(Object.entries(item.boosts)
+          .map(([key, points]) => [key, Math.min(points, 100 - state.stats[key])])
+          .filter(([, points]) => points > 0));
+      const maxed = Object.keys(boosts).length === 0;
+      const label = item.purchased ? "已购买" : maxed ? "相关属性已满"
+        : unaffordable ? `资金不足 · ${money(item.cost)}` : `购买 · ${money(item.cost)}`;
+      return `<article class="shop-card"><div class="shop-icon" data-icon>${icon(item.icon)}</div>
+        <h3>${item.title}</h3><p>${item.description}</p><div class="boosts">${boostsMarkup(boosts)}</div>
+        ${button(label, "buy", { id: item.id, disabled: item.purchased || unaffordable || maxed })}</article>`;
+    }).join("");
+    const results = state.weekResults.at(-1);
+    const supportIncome = results?.supportRevenue ? `，其中月度支持回款 ${money(results.supportRevenue)}` : "";
+    const monthlySettlement = results?.payroll || results?.operatingCost
+      ? `<p class="monthly-settlement"><b>本月已扣款</b><span>工资 ${money(-results.payroll)}</span>
+        <span>运营费 ${money(-results.operatingCost)}</span></p>` : "";
+    const refreshCost = game.getOpportunityRefreshCost(state);
+    const canRefresh = game.canRefreshOpportunities(state);
+    const refreshLabel = refreshCost === 0 ? "免费刷新"
+      : canRefresh ? `刷新 · ${money(refreshCost)}` : `资金不足 · ${money(refreshCost)}`;
+    const toolbar = `<div class="shop-toolbar"><div class="shop-balance" data-negative="${state.cash < 0}">${state.cash < 0 ? "资金缺口" : "可用资金"} ${money(state.cash)}
+      <small>每周首次免费，之后每次 ${money(game.opportunityRefreshCost)}</small>
+      <small>刷新换出 3 张新卡，已购买的升级会保留</small></div>
+      ${button(`${icon("rotate")} ${refreshLabel}`, "refresh-shop", { disabled: !canRefresh })}</div>`;
+    show("shop", `第 ${weekNumber(state.week)} 周结束  /  WEEKEND`, "周末机遇商店",
+      `本周签约成功 ${results?.won ?? 0} 单，错过 ${results?.expired ?? 0} 位客户，收入 ${money(results?.revenue ?? 0)}${supportIncome}。`,
+      `${monthlySettlement}${toolbar}<div class="shop-grid">${cards}</div>`,
+      `<span class="push">机遇可选购，每张限购一次</span>${button(
+        state.week === game.weeksPerYear ? `查看年终总结 ${icon("arrow")}` : `进入第 ${weekNumber(state.week + 1)} 周 ${icon("arrow")}`,
+        "next", { accent: true })}`);
+  }
+
+  function showSummary() {
+    if (state?.phase !== "summary") return;
+    const result = game.summarize(state);
+    const rate = result.signed ? Math.round(result.won / result.signed * 100) : 0;
+    const body = `<div class="summary-figures">
+      ${figure("期末资金", money(result.finalCash))}${figure("全年收入", money(result.revenue))}
+      ${figure("全年支出", money(result.spent))}${figure("项目收入", money(result.projectRevenue))}
+      ${figure("支持合同回款", money(result.supportRevenue))}${figure("全年工资", money(result.payroll))}
+      ${figure("全年运营费", money(result.operatingCost))}${figure("商店刷新支出", money(result.refreshSpent))}
+      ${figure("年度资金净变动", money(result.net))}${figure("签约成功 / 尝试", `${result.won} / ${result.signed}`)}
+      ${figure("实际签约成功率", `${rate}%`)}
+      </div><div class="summary-stats boosts">${Object.entries(state.stats).map(([key, value]) => `<span>${game.statLabels[key]} ${value}</span>`).join("")}</div>`;
+    show("summary", "年度结算  /  YEAR 01", "创业第一年，收官！",
+      `${roleData().name}经营了 52 周，拿下 ${result.won} 份合同，投资了 ${state.opportunityPurchases.length} 次周末机遇。`,
+      body, `${button("经营记录", "history")}${button("开启新档", "reset", { accent: true })}`);
+  }
+
+  function showHistory() {
+    const entries = [
+      ...(state?.history || []).map((entry) => ({
+        week: entry.week, title: entry.title, detail: entry.client,
+        result: entry.status !== "won" ? "签约失败"
+          : entry.kind === "support" ? `签约 · ${money(entry.amount)}/月` : `+${money(entry.amount)}`
+      })),
+      ...(state?.eventHistory || []).map((entry) => ({
+        week: entry.week, title: entry.title, detail: `突发事件 · ${entry.label}`,
+        result: eventEffects(entry) || "已处理"
+      })),
+      ...(state?.supportPayments || []).map((entry) => ({
+        week: entry.week, title: entry.title, detail: `${entry.client} · 月度支持回款`, result: `+${money(entry.amount)}`
+      })),
+      ...(state?.weekResults || []).flatMap((entry) => [
+        ["发放工资", entry.payroll], ["运营费", entry.operatingCost]
+      ].filter(([, amount]) => amount > 0).map(([title, amount]) => ({
+        week: entry.week, title, detail: "月度固定支出", result: money(-amount)
+      }))),
+      ...(state?.opportunityPurchases || []).map((entry) => ({
+        week: entry.week, title: entry.title, detail: "周末机遇", result: `−${money(entry.cost)}`
+      })),
+      ...(state?.opportunityRefreshes || []).map((entry) => ({
+        week: entry.week, title: "刷新机遇商店", detail: "周末机遇", result: entry.cost === 0 ? "免费" : `−${money(entry.cost)}`
+      }))
+    ].reverse().sort((a, b) => b.week - a.week);
+    show("history", "经营档案  /  LOGBOOK", "经营记录", "回顾签约、回款、突发事件和经营支出。",
+      entries.length ? `<ul class="history-list">${entries.map((entry) => `<li>
+        <div><b>${entry.title}</b><br><small>第 ${weekNumber(entry.week)} 周 · ${entry.detail}</small></div><strong>${entry.result}</strong></li>`).join("")}</ul>`
+        : '<p class="empty-records">接待客户、处理事件或购买机遇后，这里会留下记录。</p>',
+      button("关闭", "close", { accent: true }));
+  }
+
+  function showHelp() {
+    show("help", "经营手册  /  HOW TO PLAY", "公司怎么经营？", "",
+      `<ol class="help-list"><li>选择创始人，带着 ${money(game.startCash)} 启动资金开业。</li>
+      <li>每周有 ${game.weekSeconds} 秒营业时间。客户陆续经过街区，离开后本周就错过了这份合同。点击客户可查看金额、成功率和离开倒计时。</li>
+      <li>项目签约后即时到账。标记「月付」的支持合同通常更难签，从签约周之后的首个月末开始按月回款。</li>
+      <li>月末自动扣除工资 ${money(game.monthlyPayroll)} 和运营费 ${money(game.monthlyOperatingCost)}。资金不足时余额会变为负数，后续收入可填补缺口。</li>
+      <li>营业中可能遇到接口故障、上线变更或演示插曲。限时决定会影响资金、公司属性或当周签约率，超时会自动结算。</li>
+      <li>周末可安排技术演练、客户交流等活动来升级公司属性。每周首次刷新机遇免费，之后每次 ${money(game.opportunityRefreshCost)}。准备好后手动进入下一周。</li>
+      <li>经营满 ${game.weeksPerYear} 周后，查看收入、支出、签约和公司属性的年度总结。</li>
+      <li>进度保存在本机。营业倒计时会持续计时，周末商店可随时回来继续。</li></ol>`,
+      button("开始经营", "close", { accent: true }));
+  }
+
+  function checkDeadline(now = Date.now()) {
+    const next = state && game.tick(events.tick(state, now), now);
+    const changed = next !== state;
+    if (changed) {
+      const weekEnded = next.phase === "opportunities" && state.phase === "week";
+      commit(next);
+      if (weekEnded) {
+        showShop();
+        return;
+      }
+    }
+    if (dialog.open && dialog.dataset.awaiting === "true") {
+      const id = dialog.dataset.contractId;
+      const contract = state.contracts.find((item) => item.id === id);
+      if (contract && (changed || !game.isContractAvailable(state, contract, now))) showContract(id, now);
+    }
+    renderTraffic(now);
+    renderEvents(now);
+    renderClock(now);
+  }
+
+  document.addEventListener("click", (event) => {
+    const control = event.target.closest("button[data-action]");
+    if (!control || control.disabled) return;
+    const { action, id } = control.dataset;
+    const now = Date.now();
+    switch (action) {
+      case "role":
+        selectedRole = id;
+        renderBoard();
+        showRoles(id);
+        break;
+      case "start":
+        commit(game.createGame(selectedRole, now));
+        dialog.close();
+        toast("O一下 信息科技有限公司开业了！");
+        break;
+      case "contract":
+        checkDeadline(now);
+        if (state?.phase === "week") showContract(id, now);
+        break;
+      case "sign": {
+        checkDeadline(now);
+        if (state?.phase !== "week") break;
+        const next = game.signContract(state, id, now);
+        if (next !== state) commit(next);
+        showContract(id, now);
+        break;
+      }
+      case "event-choice": {
+        checkDeadline(now);
+        if (state?.phase !== "week") break;
+        const next = events.choose(state, id, control.dataset.choice, now);
+        if (next !== state) commit(next);
+        break;
+      }
+      case "buy": {
+        const next = game.buyOpportunity(state, id);
+        if (next !== state) commit(next);
+        showShop();
+        if (next.opportunities.find((item) => item.id === id)?.purchased) {
+          dialogContent.querySelector('[data-action="next"]')?.focus();
+        }
+        break;
+      }
+      case "refresh-shop": {
+        const next = game.refreshOpportunities(state);
+        if (next === state) break;
+        commit(next);
+        showShop();
+        dialogContent.querySelector(game.canRefreshOpportunities(state) ? '[data-action="refresh-shop"]' : '[data-action="next"]')?.focus();
+        break;
+      }
+      case "next": {
+        const next = game.nextWeek(state, now);
+        if (next === state) break;
+        commit(next);
+        if (state.phase === "summary") showSummary();
+        else {
+          dialog.close();
+          toast(`第 ${state.week} 周开始，客户已经到了。`);
+        }
+        break;
+      }
+      case "shop": showShop(); break;
+      case "summary": showSummary(); break;
+      case "history": showHistory(); break;
+      case "help": showHelp(); break;
+      case "reset":
+        show("reset", "重新经营  /  NEW GAME", "开启新的第一年？",
+          "确认后，当前本地存档会被清除。你可以重新选择创始人。", "",
+          `${button("返回", "close")}${button("清除存档并重开", "confirm-reset", { accent: true })}`);
+        break;
+      case "confirm-reset":
+        selectedRole = game.roles[0].id;
+        commit(null);
+        showRoles();
+        break;
+      case "close": dialog.close(); break;
+    }
+  });
+
+  dialog.addEventListener("cancel", (event) => {
+    if (dialog.dataset.view === "roles") event.preventDefault();
+  });
+  document.addEventListener("visibilitychange", () => checkDeadline());
+  window.addEventListener("pageshow", () => checkDeadline());
+  document.querySelectorAll("[data-icon]").forEach((element) => {
+    element.innerHTML = icon(element.dataset.icon);
+  });
+
+  if (state) {
+    const now = Date.now();
+    commit(game.tick(events.tick(state, now), now));
+    if (state.phase === "opportunities") showShop();
+    if (state.phase === "summary") showSummary();
+  } else {
+    renderBoard();
+    showRoles();
+  }
+  setInterval(checkDeadline, 150);
+  requestAnimationFrame(animateWalkers);
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4e9">
+  <title>O一下 信息科技有限公司 · 公司经营模拟</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- SPRITES -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img class="brand-mark" src="logo.svg" width="40" height="40" alt="">
+        <div><div class="brand-name">O一下 信息科技有限公司</div><div class="brand-sub">SAP CONSULTING &amp; ENTERPRISE AI</div></div>
+      </div>
+      <div class="top-actions">
+        <span class="save-status" id="save-status"><i></i> 本地自动存档</span>
+        <button class="icon-button" data-action="history" aria-label="经营记录" title="经营记录" data-icon="list"></button>
+        <button class="icon-button" data-action="help" aria-label="玩法说明" title="玩法说明" data-icon="help"></button>
+        <button class="icon-button" id="reset-button" data-action="reset" aria-label="重新经营" title="重新经营" data-icon="rotate" hidden></button>
+      </div>
+    </div>
+  </header>
+  <main class="page">
+    <div class="intro">
+      <div>
+        <div class="eyebrow"><span></span> SAP × AI 经营模拟</div>
+        <h1>创业第一年<span>。</span></h1>
+        <p>为企业实施 SAP、集成业务系统，交付可用的 AI 解决方案。</p>
+      </div>
+      <div class="year-tag"><span data-icon="calendar"></span> 第一年 <b>·</b> 52 周挑战</div>
+    </div>
+    <div class="board">
+      <div class="primary">
+        <section class="panel scene-panel" aria-labelledby="scene-title">
+          <div class="panel-head">
+            <h2 id="scene-title"><span class="heading-icon" data-icon="map"></span> 公司街区</h2>
+            <span class="status-chip" id="district-status"><i></i> 等待开业</span>
+          </div>
+          <div class="street" id="street">
+            <img class="street-art" src="scene.svg" alt="O一下 信息科技有限公司的黄色雨棚店面和周围的卡通街区">
+            <div class="walkers" id="walkers"><div id="founder"></div><div id="traffic"></div></div>
+          </div>
+          <div class="street-footer">
+            <span><span data-icon="pointer"></span> 点击路过的客户，离开街区后合同失效</span>
+            <strong id="street-caption">选好角色，即可开门营业</strong>
+          </div>
+        </section>
+        <section class="panel event-panel" aria-labelledby="event-title">
+          <div class="panel-head">
+            <h2 id="event-title"><span class="heading-icon" data-icon="bolt"></span> 突发事件</h2>
+            <span class="event-badge" id="event-badge">街区动态</span>
+          </div>
+          <div class="event-body" id="event-body" aria-live="polite"></div>
+        </section>
+      </div>
+      <aside class="sidebar" aria-label="经营面板">
+        <section class="panel clock-panel" aria-labelledby="clock-label">
+          <div class="clock-top">
+            <span id="clock-label"><span data-icon="calendar"></span> 营业日历</span>
+            <span class="clock-year">YEAR 01</span>
+          </div>
+          <div class="week-line"><strong id="week-text">第 01 周</strong><span> / 52 周</span></div>
+          <div class="clock-box">
+            <div class="clock-caption"><span data-icon="clock"></span> <span id="clock-caption">签约窗口</span></div>
+            <b id="timer" role="timer">00:30</b>
+            <div class="timer-track" role="presentation"><span id="timer-fill"></span></div>
+          </div>
+          <button class="button accent week-action" id="week-action" hidden></button>
+        </section>
+        <section class="panel cash-panel" aria-labelledby="cash-label">
+          <div class="cash-main">
+            <div class="cash-icon" data-icon="wallet"></div>
+            <div><div id="cash-label">可用资金</div><div class="cash-value" id="cash-value">¥30,000</div></div>
+          </div>
+          <div class="cash-meter" id="support-meter" hidden></div>
+          <div class="cash-meter" id="cost-meter" hidden></div>
+        </section>
+        <section class="panel stats-panel" aria-labelledby="stats-title">
+          <div class="stats-title"><h2 id="stats-title">公司属性</h2><span>满值 100</span></div>
+          <div id="role-summary" class="role-summary"></div>
+          <div id="stats"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="engine.js"></script>
+  <script src="events.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

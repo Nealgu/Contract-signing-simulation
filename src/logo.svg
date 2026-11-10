@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">O一下 信息科技有限公司</title>
+  <defs>
+    <linearGradient id="badge" x1="7" y1="4" x2="58" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#32745D"/>
+      <stop offset="1" stop-color="#173E33"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#badge)" stroke="#548673"/>
+  <ellipse cx="28" cy="33.5" rx="13.2" ry="15.5" fill="none" stroke="#FFF3D4" stroke-width="7.6"/>
+  <path d="m46.5 7.5 2.9 5.9 6.1 3.1-6.1 3-2.9 6-2.9-6-6.1-3 6.1-3.1z" fill="#FFCE6A"/>
+</svg>
