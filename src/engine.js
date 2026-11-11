@@ -9,6 +9,7 @@
   const monthlyPayroll = 12000;
   const monthlyOperatingCost = 4000;
   const opportunityRefreshCost = 2500;
+  const employeeAppearanceChance = 0.1;
 
   const statLabels = {
     reputation: '公司名声',
@@ -18,24 +19,20 @@
   };
   const statKeys = Object.keys(statLabels);
 
-  const roles = [
+  const leadershipRoles = [
     {
-      id: 'strategist', name: '林小满', title: '品牌策划', color: '#da845e',
-      description: '擅长把复杂的服务讲成简单的故事，让街坊记住公司的名字。',
+      id: 'strategist', name: 'Randal', title: '老板', color: '#da845e',
+      spriteId: 'player-0',
+      description: '负责公司方向与项目统筹，擅长建立公司信誉，带领团队拓展业务。',
       bonus: '公司名声起步领先',
       stats: { reputation: 32, relationships: 20, sap: 16, ai: 16 },
     },
     {
-      id: 'connector', name: '周有邻', title: '客户顾问', color: '#6b9d82',
-      description: '喜欢和客户边喝咖啡边聊业务，擅长把一次合作变成长期关系。',
+      id: 'connector', name: 'Jason', title: '销售总监', color: '#6b9d82',
+      spriteId: 'player-1',
+      description: '负责销售策略与客户开拓，擅长推进签约，把商机发展为长期合作。',
       bonus: '公司关系起步领先',
       stats: { reputation: 18, relationships: 34, sap: 17, ai: 15 },
-    },
-    {
-      id: 'technologist', name: '陈星野', title: '技术合伙人', color: '#738cb5',
-      description: '既能搭好 SAP 流程，也乐于做出一个当天就能试用的 AI 原型。',
-      bonus: 'SAP 与 AI 技能起步领先',
-      stats: { reputation: 13, relationships: 15, sap: 29, ai: 27 },
     },
   ];
 
@@ -240,6 +237,37 @@
     { title: '工业 AI 质检交流', icon: 'sparkles', cost: 4600, boosts: { ai: 5, relationships: 1 }, description: '与工厂质检团队交流样本标注，用光照变化的样本复查误报、漏检与人工复判。' },
   ];
 
+  const employeeTemplates = [
+    { employeeId: 'steven', employeeName: 'Steven', employeeRole: '开发', color: '#7997b6', boosts: { ai: 12 } },
+    { employeeId: 'jeff', employeeName: 'Jeff', employeeRole: '顾问', color: '#b18b6d', boosts: { sap: 12 } },
+    { employeeId: 'albert', employeeName: 'Albert', employeeRole: '开发', color: '#9184b0', boosts: { ai: 12 } },
+    { employeeId: 'davy', employeeName: 'Davy', employeeRole: '开发', color: '#6e9c96', boosts: { ai: 12 } },
+    { employeeId: 'charles', employeeName: 'Charles', employeeRole: '顾问', color: '#a28f6c', boosts: { sap: 12 } },
+  ].map(employee => ({
+    ...employee,
+    spriteId: `employee-${employee.employeeId}`,
+    title: `雇佣 ${employee.employeeName} · ${employee.employeeRole}`,
+    icon: 'users',
+    cost: 8000,
+    monthlySalary: 3000,
+    description: `${employee.employeeName} 加入团队，负责${employee.employeeRole}工作，立即提升公司的专业能力。`,
+  }));
+
+  const roles = [
+    ...leadershipRoles,
+    ...employeeTemplates.map(employee => ({
+      id: employee.employeeId,
+      employeeId: employee.employeeId,
+      name: employee.employeeName,
+      title: employee.employeeRole,
+      color: employee.color,
+      spriteId: employee.spriteId,
+      description: `以${employee.employeeRole}身份轮岗经营，发挥专业所长，带领团队承接客户项目。`,
+      bonus: `${employee.employeeRole === '开发' ? 'AI 技能' : 'SAP 专业技能'}起步领先`,
+      stats: Object.fromEntries(statKeys.map(key => [key, 18 + (employee.boosts[key] || 0)])),
+    })),
+  ];
+
   function roundPrice(value) {
     return Math.round(value / 100) * 100;
   }
@@ -299,17 +327,31 @@
     return templates.map((template, index) => ({
       ...template,
       id: `${prefix}-o${index + 1}`,
-      cost: roundPrice(template.cost * scale),
+      cost: template.employeeId ? template.cost : roundPrice(template.cost * scale),
       boosts: { ...template.boosts },
       purchased: false,
     }));
   }
 
-  function makeOpportunities(week) {
+  function includeEmployeeOpportunity(state, templates, random) {
+    const unavailableIds = new Set([
+      state.roleId,
+      ...state.opportunityPurchases.map(record => record.employeeId),
+      ...state.opportunities.map(card => card.employeeId),
+    ]);
+    const available = employeeTemplates.filter(employee => !unavailableIds.has(employee.employeeId));
+    if (!available.length || random() >= employeeAppearanceChance) return templates;
+    const employee = available[Math.floor(random() * available.length)];
+    templates[Math.floor(random() * templates.length)] = employee;
+    return templates;
+  }
+
+  function makeOpportunities(state, random) {
+    const { week } = state;
     const start = ((week - 1) * 5) % opportunityTemplates.length;
     const templates = Array.from({ length: 3 }, (_, index) =>
       opportunityTemplates[(start + index) % opportunityTemplates.length]);
-    return opportunityCards(week, templates);
+    return opportunityCards(week, includeEmployeeOpportunity(state, templates, random));
   }
 
   function getOpportunityRefreshCost(state) {
@@ -334,7 +376,7 @@
     return {
       ...state,
       cash: state.cash - record.cost,
-      opportunities: opportunityCards(state.week, templates, refreshCount),
+      opportunities: opportunityCards(state.week, includeEmployeeOpportunity(state, templates, random), refreshCount),
       opportunityRefreshes: [...state.opportunityRefreshes, record],
     };
   }
@@ -370,8 +412,10 @@
 
   function restoreGame(saved) {
     const baseArrays = ['contracts', 'opportunities', 'history', 'weekResults', 'opportunityPurchases'];
+    const roleId = saved?.roleId === 'technologist' ? 'connector' : saved?.roleId;
+    const role = roles.find(item => item.id === roleId);
     if (!saved || ![1, 2].includes(saved.version)
-      || !roles.some(role => role.id === saved.roleId)
+      || !role
       || !['week', 'opportunities', 'summary'].includes(saved.phase)
       || !Number.isInteger(saved.week) || saved.week < 1 || saved.week > weeksPerYear
       || !Number.isFinite(saved.cash)
@@ -382,16 +426,21 @@
       || (saved.eventHistory !== undefined && !Array.isArray(saved.eventHistory))) return null;
 
     const eventHistory = saved.eventHistory ?? [];
+    const opportunities = role.employeeId
+      ? saved.opportunities.filter(card => card.employeeId !== role.employeeId)
+      : saved.opportunities;
     const weekDuration = Number.isFinite(saved.weekDuration) && saved.weekDuration > 0
       ? saved.weekDuration : legacyWeekSeconds;
     if (saved.version === 2) {
       const newArrays = ['opportunityRefreshes', 'supportContracts', 'supportPayments'];
       if (!newArrays.every(key => Array.isArray(saved[key]))) return null;
-      return { ...saved, eventHistory, weekDuration };
+      return { ...saved, roleId, opportunities, eventHistory, weekDuration };
     }
     return {
       ...saved,
       version: 2,
+      roleId,
+      opportunities,
       weekDuration,
       contracts: saved.contracts.map(contract => ({ ...contract, kind: 'project' })),
       history: saved.history.map(record => ({ ...record, kind: 'project' })),
@@ -419,6 +468,11 @@
     if (state.phase === 'summary') return null;
     const firstUnsettledWeek = state.week + (state.phase === 'opportunities' ? 1 : 0);
     return monthEndWeeks.find(week => week >= firstUnsettledWeek) ?? null;
+  }
+
+  function getMonthlyPayroll(state) {
+    return monthlyPayroll + state.opportunityPurchases.reduce((total, record) =>
+      total + (record.monthlySalary ?? 0), 0);
   }
 
   function getSupportSchedule(state) {
@@ -466,7 +520,7 @@
     return Math.max(5, Math.min(96, chance));
   }
 
-  function tick(state, now = Date.now()) {
+  function tick(state, now = Date.now(), random = Math.random) {
     if (state.phase !== 'week' || now < state.deadline) return state;
 
     const won = state.contracts.filter(contract => contract.status === 'won');
@@ -477,7 +531,7 @@
       sum + (contract.kind === 'support' ? 0 : contract.amount), 0);
     const supportRevenue = payments.reduce((sum, payment) => sum + payment.amount, 0);
     const isMonthEnd = monthEndWeeks.includes(state.week);
-    const payroll = isMonthEnd ? monthlyPayroll : 0;
+    const payroll = isMonthEnd ? getMonthlyPayroll(state) : 0;
     const operatingCost = isMonthEnd ? monthlyOperatingCost : 0;
     const events = (state.eventHistory || []).filter(event => event.week === state.week);
     const { eventRevenue, eventSpent } = eventTotals(events);
@@ -502,7 +556,7 @@
       cash: state.cash + supportRevenue - payroll - operatingCost,
       supportContracts: contracts,
       supportPayments: [...state.supportPayments, ...payments],
-      opportunities: makeOpportunities(state.week),
+      opportunities: makeOpportunities(state, random),
       weekResults: [...state.weekResults, result],
     };
   }
@@ -546,6 +600,8 @@
     if (state.phase !== 'opportunities') return state;
     const card = state.opportunities.find(item => item.id === id);
     if (!card || card.purchased || card.cost > state.cash) return state;
+    if (card.employeeId && (card.employeeId === state.roleId
+      || state.opportunityPurchases.some(record => record.employeeId === card.employeeId))) return state;
 
     const stats = { ...state.stats };
     const boosts = {};
@@ -557,7 +613,15 @@
       }
     }
     if (Object.keys(boosts).length === 0) return state;
-    const record = { week: state.week, id, title: card.title, cost: card.cost, boosts };
+    const record = {
+      week: state.week, id, title: card.title, cost: card.cost, boosts,
+      ...(card.employeeId ? {
+        employeeId: card.employeeId,
+        employeeName: card.employeeName,
+        employeeRole: card.employeeRole,
+        monthlySalary: card.monthlySalary,
+      } : {}),
+    };
     return {
       ...state,
       cash: state.cash - card.cost,
@@ -607,7 +671,8 @@
   const api = {
     roles, statLabels, startCash, weeksPerYear, weekSeconds,
     restoreGame, firstSupportPaymentWeek, getSupportSchedule,
-    monthlyPayroll, monthlyOperatingCost, getMonthlyCostsSchedule,
+    monthlyPayroll, monthlyOperatingCost, getMonthlyCostsSchedule, getMonthlyPayroll,
+    employeeTemplates, employeeAppearanceChance,
     opportunityRefreshCost, getOpportunityRefreshCost, canRefreshOpportunities, refreshOpportunities,
     isContractAvailable, contractVisitProgress,
     createGame, calcChance, tick, signContract, buyOpportunity, nextWeek, summarize,

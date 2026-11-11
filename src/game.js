@@ -70,8 +70,7 @@
   const walkers = new Map();
   let eventMarkup;
   const prefersStill = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const roleIndex = (id) => game.roles.findIndex((role) => role.id === id);
-  const roleData = () => game.roles[roleIndex(state?.roleId || selectedRole)];
+  const roleData = () => game.roles.find((role) => role.id === (state?.roleId || selectedRole));
 
   function commit(next) {
     state = next;
@@ -197,11 +196,14 @@
     supportMeter.innerHTML = schedule?.activeCount ? `<div><span>支持合同月收入</span><strong>${money(schedule.monthlyIncome)}</strong></div>
       <small>${schedule.activeCount} 份在执行 · ${schedule.nextWeek ? `下次第 ${weekNumber(schedule.nextWeek)} 周末到账` : "余款跨年"} </small>` : "";
     const costsWeek = state && game.getMonthlyCostsSchedule(state);
+    const payroll = state ? game.getMonthlyPayroll(state) : game.monthlyPayroll;
+    const employees = (state?.opportunityPurchases || []).filter((purchase) => purchase.employeeId);
     const costMeter = $("cost-meter");
     costMeter.hidden = !costsWeek;
-    costMeter.innerHTML = costsWeek ? `<div><span>月度固定支出</span><strong>${money(game.monthlyPayroll + game.monthlyOperatingCost)}</strong></div>
+    costMeter.innerHTML = costsWeek ? `<div><span>月度固定支出</span><strong>${money(payroll + game.monthlyOperatingCost)}</strong></div>
       <small>第 ${weekNumber(costsWeek)} 周末扣款</small><br>
-      <small>工资 ${money(game.monthlyPayroll)} · 运营费 ${money(game.monthlyOperatingCost)}</small>` : "";
+      <small>工资 ${money(payroll)} · 运营费 ${money(game.monthlyOperatingCost)}</small>
+      ${employees.length ? `<br><small>已雇佣 ${employees.map((employee) => employee.employeeName).join("、")}</small>` : ""}` : "";
     $("clock-caption").textContent = { start: "签约窗口", week: "签约倒计时", opportunities: "签约已截止", summary: "年度已结算" }[phase];
     const weekAction = $("week-action");
     weekAction.hidden = phase === "week" || phase === "start";
@@ -209,8 +211,8 @@
     weekAction.innerHTML = phase === "summary" ? `查看年终总结 ${icon("arrow")}` : `进入机遇商店 ${icon("arrow")}`;
 
     $("role-summary").innerHTML = state
-      ? `<div class="mini-avatar">${sprite(`player-${roleIndex(role.id)}`)}</div><div><b>${role.name}</b>${role.title}</div>`
-      : `<div class="mini-avatar">${sprite(`player-${roleIndex(role.id)}`)}</div><div><b>创始人待定</b>选角后获得起始属性</div>`;
+      ? `<div class="mini-avatar">${sprite(role.spriteId)}</div><div><b>${role.name}</b>${role.title}</div>`
+      : `<div class="mini-avatar">${sprite(role.spriteId)}</div><div><b>轮岗角色待定</b>选角后获得起始属性</div>`;
     $("stats").innerHTML = Object.entries(game.statLabels).map(([key, label]) => {
       const value = (state?.stats || role.stats)[key];
       const [glyph, color] = statVisuals[key];
@@ -219,7 +221,7 @@
     }).join("");
 
     $("founder").innerHTML = state ? `<div class="walker player" style="left:50%;top:77.5%;z-index:78">
-      <span class="walker-tag">你</span><span class="walker-body">${sprite(`player-${roleIndex(state.roleId)}`)}</span></div>` : "";
+      <span class="walker-tag">你</span><span class="walker-body">${sprite(role.spriteId)}</span></div>` : "";
     const now = Date.now();
     renderTraffic(now);
     renderEvents(now);
@@ -244,12 +246,12 @@
   }
 
   function showRoles(focusId) {
-    const roleCards = game.roles.map((role, index) => `<button class="role-card" data-action="role" data-id="${role.id}" aria-pressed="${role.id === selectedRole}">
-      <span class="role-art" style="--role-color:${role.color}">${sprite(`player-${index}`)}</span>
+    const roleCards = game.roles.map((role) => `<button class="role-card" data-action="role" data-id="${role.id}" aria-pressed="${role.id === selectedRole}">
+      <span class="role-art" style="--role-color:${role.color}">${sprite(role.spriteId)}</span>
       <span class="role-name">${role.name}</span><span class="role-title">${role.title}</span>
       <span class="role-desc">${role.description}</span><span class="role-bonus">${role.bonus}</span></button>`).join("");
-    show("roles", "开业筹备  /  NEW GAME", "谁来经营这家店？",
-      "选择一位创始人。每位创始人带着不同的专长，陪公司走完第一年。",
+    show("roles", "轮岗安排  /  NEW GAME", "本轮由谁来经营？",
+      "选择一位轮岗负责人。选中的员工本局会从机遇商店的招聘池中移除。",
       `<div class="role-grid">${roleCards}</div>`,
       `<span class="push">启动资金 <b>${money(game.startCash)}</b></span>${button(`开门营业 ${icon("arrow")}`, "start", { accent: true })}`, false);
     if (focusId) dialogContent.querySelector(`[data-id="${focusId}"]`)?.focus();
@@ -339,18 +341,28 @@
   function showShop() {
     if (state?.phase !== "opportunities") return;
     const cards = state.opportunities.map((item) => {
+      const employee = Boolean(item.employeeId);
+      const employeeProfile = employee && game.roles.find((role) => role.employeeId === item.employeeId);
+      const artwork = employeeProfile
+        ? `<div class="shop-icon employee-avatar">${sprite(employeeProfile.spriteId)}</div>`
+        : `<div class="shop-icon" data-icon>${icon(item.icon)}</div>`;
+      const purchase = state.opportunityPurchases.find((record) => record.id === item.id
+        || (employee && record.employeeId === item.employeeId));
+      const purchased = item.purchased || Boolean(purchase);
       const unaffordable = state.cash < item.cost;
-      const boosts = item.purchased
-        ? state.opportunityPurchases.find((purchase) => purchase.id === item.id).boosts
+      const boosts = purchased
+        ? purchase?.boosts || item.boosts
         : Object.fromEntries(Object.entries(item.boosts)
           .map(([key, points]) => [key, Math.min(points, 100 - state.stats[key])])
           .filter(([, points]) => points > 0));
       const maxed = Object.keys(boosts).length === 0;
-      const label = item.purchased ? "已购买" : maxed ? "相关属性已满"
-        : unaffordable ? `资金不足 · ${money(item.cost)}` : `购买 · ${money(item.cost)}`;
-      return `<article class="shop-card"><div class="shop-icon" data-icon>${icon(item.icon)}</div>
+      const label = purchased ? (employee ? "已入职" : "已购买") : maxed ? "相关属性已满"
+        : unaffordable ? `资金不足 · ${money(item.cost)}` : `${employee ? "雇佣" : "购买"} · ${money(item.cost)}`;
+      const salary = employee ? `<p class="employee-salary">每月工资 +${money(item.monthlySalary)}</p>
+        <p>入职后，从下一次月末结算开始计薪。每位员工限雇佣一次。</p>` : "";
+      return `<article class="shop-card"${employee ? ' data-kind="employee"' : ""}>${artwork}
         <h3>${item.title}</h3><p>${item.description}</p><div class="boosts">${boostsMarkup(boosts)}</div>
-        ${button(label, "buy", { id: item.id, disabled: item.purchased || unaffordable || maxed })}</article>`;
+        ${salary}${button(label, "buy", { id: item.id, disabled: purchased || unaffordable || maxed })}</article>`;
     }).join("");
     const results = state.weekResults.at(-1);
     const supportIncome = results?.supportRevenue ? `，其中月度支持回款 ${money(results.supportRevenue)}` : "";
@@ -363,7 +375,8 @@
       : canRefresh ? `刷新 · ${money(refreshCost)}` : `资金不足 · ${money(refreshCost)}`;
     const toolbar = `<div class="shop-toolbar"><div class="shop-balance" data-negative="${state.cash < 0}">${state.cash < 0 ? "资金缺口" : "可用资金"} ${money(state.cash)}
       <small>每周首次免费，之后每次 ${money(game.opportunityRefreshCost)}</small>
-      <small>刷新换出 3 张新卡，已购买的升级会保留</small></div>
+      <small>刷新换出 3 张新卡，已购买的升级会保留</small>
+      <small>当前月工资 ${money(game.getMonthlyPayroll(state))}，雇佣员工后增加</small></div>
       ${button(`${icon("rotate")} ${refreshLabel}`, "refresh-shop", { disabled: !canRefresh })}</div>`;
     show("shop", `第 ${weekNumber(state.week)} 周结束  /  WEEKEND`, "周末机遇商店",
       `本周签约成功 ${results?.won ?? 0} 单，错过 ${results?.expired ?? 0} 位客户，收入 ${money(results?.revenue ?? 0)}${supportIncome}。`,
@@ -410,7 +423,9 @@
         week: entry.week, title, detail: "月度固定支出", result: money(-amount)
       }))),
       ...(state?.opportunityPurchases || []).map((entry) => ({
-        week: entry.week, title: entry.title, detail: "周末机遇", result: `−${money(entry.cost)}`
+        week: entry.week, title: entry.title,
+        detail: entry.employeeId ? `${entry.employeeRole} · 每月工资 +${money(entry.monthlySalary)}` : "周末机遇",
+        result: `−${money(entry.cost)}`
       })),
       ...(state?.opportunityRefreshes || []).map((entry) => ({
         week: entry.week, title: "刷新机遇商店", detail: "周末机遇", result: entry.cost === 0 ? "免费" : `−${money(entry.cost)}`
@@ -425,12 +440,13 @@
 
   function showHelp() {
     show("help", "经营手册  /  HOW TO PLAY", "公司怎么经营？", "",
-      `<ol class="help-list"><li>选择创始人，带着 ${money(game.startCash)} 启动资金开业。</li>
+      `<ol class="help-list"><li>选择本轮经营角色，带着 ${money(game.startCash)} 启动资金开业。选中的员工本局会从招聘机遇中移除。</li>
       <li>每周有 ${game.weekSeconds} 秒营业时间。客户陆续经过街区，离开后本周就错过了这份合同。点击客户可查看金额、成功率和离开倒计时。</li>
       <li>项目签约后即时到账。标记「月付」的支持合同通常更难签，从签约周之后的首个月末开始按月回款。</li>
-      <li>月末自动扣除工资 ${money(game.monthlyPayroll)} 和运营费 ${money(game.monthlyOperatingCost)}。资金不足时余额会变为负数，后续收入可填补缺口。</li>
+      <li>月末自动扣除基础工资 ${money(game.monthlyPayroll)}、已雇佣员工的月薪和运营费 ${money(game.monthlyOperatingCost)}。资金不足时余额会变为负数，后续收入可填补缺口。</li>
       <li>营业中可能遇到接口故障、上线变更或演示插曲。限时决定会影响资金、公司属性或当周签约率，超时会自动结算。</li>
       <li>周末可安排技术演练、客户交流等活动来升级公司属性。每周首次刷新机遇免费，之后每次 ${money(game.opportunityRefreshCost)}。准备好后手动进入下一周。</li>
+      <li>开店或刷新时，有 ${Math.round(game.employeeAppearanceChance * 100)}% 的概率出现一张员工卡。花费招聘费可立即提升属性，后续每个月末增加工资支出。每位员工在本局中只能雇佣一次。</li>
       <li>经营满 ${game.weeksPerYear} 周后，查看收入、支出、签约和公司属性的年度总结。</li>
       <li>进度保存在本机。营业倒计时会持续计时，周末商店可随时回来继续。</li></ol>`,
       button("开始经营", "close", { accent: true }));
@@ -526,7 +542,7 @@
       case "help": showHelp(); break;
       case "reset":
         show("reset", "重新经营  /  NEW GAME", "开启新的第一年？",
-          "确认后，当前本地存档会被清除。你可以重新选择创始人。", "",
+          "确认后，当前本地存档会被清除。你可以重新选择经营角色。", "",
           `${button("返回", "close")}${button("清除存档并重开", "confirm-reset", { accent: true })}`);
         break;
       case "confirm-reset":
