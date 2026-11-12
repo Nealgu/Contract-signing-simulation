@@ -247,7 +247,7 @@
 
   function showRoles(focusId) {
     const roleCards = game.roles.map((role) => `<button class="role-card" data-action="role" data-id="${role.id}" aria-pressed="${role.id === selectedRole}">
-      <span class="role-art" style="--role-color:${role.color}">${sprite(role.spriteId)}</span>
+      <span class="role-art" role="img" aria-label="${role.name}，${role.gender === "F" ? "女性" : "男性"}，${role.glasses ? "戴眼镜" : "无眼镜"}" style="--role-color:${role.color}">${sprite(role.spriteId)}</span>
       <span class="role-name">${role.name}</span><span class="role-title">${role.title}</span>
       <span class="role-desc">${role.description}</span><span class="role-bonus">${role.bonus}</span></button>`).join("");
     show("roles", "轮岗安排  /  NEW GAME", "本轮由谁来经营？",

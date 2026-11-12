@@ -124,7 +124,7 @@ h2 { font-size: 17px; font-weight: 900; }
 dialog { width: min(92vw, 710px); max-height: calc(100dvh - 36px); padding: 0; color: var(--ink); border: 1px solid #d9d3be; border-radius: 20px; background: var(--paper); box-shadow: 0 12px 0 #263c3929, 0 25px 100px #16231b44; }
 dialog::backdrop { background: #24362b80; backdrop-filter: blur(2px); }
 dialog[data-view="contract"], dialog[data-view="help"], dialog[data-view="reset"] { width: min(92vw, 490px); }
-dialog[data-view="roles"] { width: min(94vw, 900px); }
+dialog[data-view="roles"] { width: min(94vw, 1040px); }
 .dialog-inner { padding: clamp(19px, 3vw, 30px); }
 .dialog-head { position: relative; padding-right: 38px; margin-bottom: 16px; }
 .dialog-head .icon-button { position: absolute; right: 0; top: 0; }
@@ -139,7 +139,7 @@ dialog[data-view="roles"] { width: min(94vw, 900px); }
 .button.accent { background: var(--yellow); border-color: #d4a74e; box-shadow: 0 2px 0 #bc8f3c; color: #463713; }
 .button:disabled { background: #eeeade; border-color: #e3dece; box-shadow: none; color: #706f62; filter: none; transform: none; }
 .role-grid, .shop-grid { display: grid; gap: 11px; }
-.role-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.role-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); max-height: min(54dvh, 580px); overflow-y: auto; scrollbar-gutter: stable; padding: 3px; }
 .shop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .role-card { min-width: 0; display: flex; flex-direction: column; text-align: left; border: 1px solid var(--line); background: #fcf8ea; border-radius: 13px; padding: 8px 10px 11px; }
 .role-card[aria-pressed="true"] { border-color: #548468; box-shadow: inset 0 0 0 1px #548468; background: #f1f5e9; }

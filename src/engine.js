@@ -23,6 +23,7 @@
     {
       id: 'strategist', name: 'Randal', title: '老板', color: '#da845e',
       spriteId: 'player-0',
+      gender: 'M', glasses: true,
       description: '负责公司方向与项目统筹，擅长建立公司信誉，带领团队拓展业务。',
       bonus: '公司名声起步领先',
       stats: { reputation: 32, relationships: 20, sap: 16, ai: 16 },
@@ -30,6 +31,7 @@
     {
       id: 'connector', name: 'Jason', title: '销售总监', color: '#6b9d82',
       spriteId: 'player-1',
+      gender: 'M', glasses: false,
       description: '负责销售策略与客户开拓，擅长推进签约，把商机发展为长期合作。',
       bonus: '公司关系起步领先',
       stats: { reputation: 18, relationships: 34, sap: 17, ai: 15 },
@@ -238,11 +240,18 @@
   ];
 
   const employeeTemplates = [
-    { employeeId: 'steven', employeeName: 'Steven', employeeRole: '开发', color: '#7997b6', boosts: { ai: 12 } },
-    { employeeId: 'jeff', employeeName: 'Jeff', employeeRole: '顾问', color: '#b18b6d', boosts: { sap: 12 } },
-    { employeeId: 'albert', employeeName: 'Albert', employeeRole: '开发', color: '#9184b0', boosts: { ai: 12 } },
-    { employeeId: 'davy', employeeName: 'Davy', employeeRole: '开发', color: '#6e9c96', boosts: { ai: 12 } },
-    { employeeId: 'charles', employeeName: 'Charles', employeeRole: '顾问', color: '#a28f6c', boosts: { sap: 12 } },
+    { employeeId: 'charles', employeeName: 'Charles', employeeRole: '顾问', gender: 'M', glasses: true, color: '#a28f6c', boosts: { sap: 12 } },
+    { employeeId: 'jeff', employeeName: 'Jeff', employeeRole: '顾问', gender: 'M', glasses: false, color: '#b18b6d', boosts: { sap: 12 } },
+    { employeeId: 'grace', employeeName: 'Grace', employeeRole: '顾问', gender: 'F', glasses: false, color: '#b48f99', boosts: { sap: 12 } },
+    { employeeId: 'neal', employeeName: 'Neal', employeeRole: '顾问', gender: 'M', glasses: true, color: '#7f99ad', boosts: { sap: 12 } },
+    { employeeId: 'steven', employeeName: 'Steven', employeeRole: '开发', gender: 'M', glasses: true, color: '#7997b6', boosts: { ai: 12 } },
+    { employeeId: 'gloria', employeeName: 'Gloria', employeeRole: '顾问', gender: 'F', glasses: false, color: '#86a48a', boosts: { sap: 12 } },
+    { employeeId: 'josie', employeeName: 'Josie', employeeRole: '顾问', gender: 'F', glasses: false, color: '#9b89b6', boosts: { sap: 12 } },
+    { employeeId: 'jeffery', employeeName: 'Jeffery', employeeRole: '开发', gender: 'M', glasses: false, color: '#82a5a1', boosts: { ai: 12 } },
+    { employeeId: 'albert', employeeName: 'Albert', employeeRole: '开发', gender: 'M', glasses: false, color: '#9184b0', boosts: { ai: 12 } },
+    { employeeId: 'davy', employeeName: 'Davy', employeeRole: '开发', gender: 'M', glasses: true, color: '#6e9c96', boosts: { ai: 12 } },
+    { employeeId: 'sherry', employeeName: 'Sherry', employeeRole: '市场', gender: 'F', glasses: false, color: '#c68c7b', boosts: { reputation: 12 } },
+    { employeeId: 'renne', employeeName: 'Renne', employeeRole: '顾问', gender: 'F', glasses: false, color: '#90a2bc', boosts: { sap: 12 } },
   ].map(employee => ({
     ...employee,
     spriteId: `employee-${employee.employeeId}`,
@@ -262,8 +271,10 @@
       title: employee.employeeRole,
       color: employee.color,
       spriteId: employee.spriteId,
+      gender: employee.gender,
+      glasses: employee.glasses,
       description: `以${employee.employeeRole}身份轮岗经营，发挥专业所长，带领团队承接客户项目。`,
-      bonus: `${employee.employeeRole === '开发' ? 'AI 技能' : 'SAP 专业技能'}起步领先`,
+      bonus: `${Object.keys(employee.boosts).map(key => statLabels[key]).join('与')}起步领先`,
       stats: Object.fromEntries(statKeys.map(key => [key, 18 + (employee.boosts[key] || 0)])),
     })),
   ];
