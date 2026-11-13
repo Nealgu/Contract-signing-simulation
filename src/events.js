@@ -18,7 +18,7 @@
         { id: 'restore', label: '启用备用演练环境', description: '租用备用资源完成演示，并向客户交代原环境的问题。', effects: { cash: -2400, chance: 7 } },
         { id: 'investigate', label: '暂停切换并排查', description: '保留日志，复核复制延迟与切换条件。客户要改期看演示。', effects: { stats: { sap: 2 }, chance: -4 } },
       ],
-      fallback: { label: '演练未能收尾', description: '客户没等到结论，本周对涉及系统上线的承诺更谨慎。', effects: { chance: -11 } },
+      fallback: { label: '演练未能收尾', description: '客户没等到结论，本轮对涉及系统上线的承诺更谨慎。', effects: { chance: -11 } },
     },
     {
       title: '承运商接口证书将到期',
@@ -87,25 +87,26 @@
         { id: 'workshop', label: '组织专项复验', description: '请业务专家核对文档有效期，用脱敏样题重新验证回答和出处。', effects: { cash: -1900, stats: { relationships: 4 }, chance: 4 } },
         { id: 'demo', label: '暂停问答并修正索引', description: '先排除过期文档并补上回归样本，把完整演示延到下次。', effects: { stats: { ai: 2 }, chance: -4 } },
       ],
-      fallback: { label: '客户暂缓试点', description: '团队没有及时回应引用问题，客户对本周的方案更谨慎。', effects: { chance: -12 } },
+      fallback: { label: '客户暂缓试点', description: '团队没有及时回应引用问题，客户对本轮的方案更谨慎。', effects: { chance: -12 } },
     },
     {
       title: '客户集中进入年审冻结期',
       description: '几家客户通知，审计期间暂停审批新的系统采购与技术服务。',
-      automatic: { label: '本周审批放缓', description: '客户仍愿意讨论需求，但本周剩余签约的成功率暂时下降。', effects: { chance: -9 } },
+      automatic: { label: '本轮审批放缓', description: '客户仍愿意讨论需求，但本轮剩余签约的成功率暂时下降。', effects: { chance: -9 } },
     },
   ];
 
   function eventFor(state) {
     if (state?.phase !== 'week' || !state.contracts.some(contract => Number.isFinite(contract.arrivesAt))) return null;
-    const week = state.week;
+    const week = state.legacyWeek ?? state.week;
     const template = templates[(week - 1) % templates.length];
     const start = state.deadline - state.weekDuration * 1000;
     const pace = state.weekDuration / 60;
     const opensAt = start + (13 + (week * 7 % 24)) * pace * 1000;
     const decisionSeconds = Math.max(9, (12 + (week % 5)) * pace);
     const expiresAt = Math.min(state.deadline, opensAt + decisionSeconds * 1000);
-    return { id: `w${week}-event`, opensAt, expiresAt, ...template };
+    const id = state.legacyWeek ? `w${week}-event` : `r${week}-event`;
+    return { id, opensAt, expiresAt, ...template };
   }
 
   function boundedEffects(state, effects) {
@@ -135,7 +136,7 @@
   function resolve(state, event, choice) {
     const { cash, stats, chance } = boundedEffects(state, choice.effects);
     const record = {
-      week: state.week, id: event.id, title: event.title,
+      week: state.week, roundId: state.roundId, id: event.id, title: event.title,
       label: choice.label, description: choice.description, cash, stats, chance,
     };
     const nextStats = { ...state.stats };

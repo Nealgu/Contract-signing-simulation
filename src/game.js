@@ -10,6 +10,8 @@
   const cashFormatter = new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 0 });
   const money = (amount) => `${amount < 0 ? "−" : ""}¥${cashFormatter.format(Math.abs(amount))}`;
   const weekNumber = (week) => String(week).padStart(2, "0");
+  const calendarLabel = (round) => `${Math.ceil(round / 2)}月${round % 2 ? "上" : "下"}半月`;
+  const monthEndLabel = (round) => `${Math.ceil(round / 2)}月末`;
   const icons = {
     store: '<path d="M3 10l2-6h14l2 6M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M5 13v7h14v-7M10 20v-5h4v5"/>',
     help: '<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 4 2.8c-.7.3-1 .8-1 1.7m0 3.2h.01"/>',
@@ -98,7 +100,7 @@
   }
 
   function renderClock(now = Date.now()) {
-    const duration = state?.weekDuration ?? game.weekSeconds;
+    const duration = state?.weekDuration ?? game.roundSeconds;
     const seconds = state?.phase === "week"
       ? Math.min(duration, Math.max(0, Math.ceil((state.deadline - now) / 1000)))
       : state ? 0 : duration;
@@ -162,11 +164,11 @@
       walkers.delete(id);
     }
     const liveLabel = active.size ? `街上 ${active.size} 位客户`
-      : onTheWay ? "下一批客户正在路上" : "本周客户已走完";
+      : onTheWay ? "下一批客户正在路上" : "本轮客户已走完";
     const caption = {
       start: "选好角色，即可开门营业",
       week: missed ? `${liveLabel} · 错过 ${missed} 位` : liveLabel,
-      opportunities: "休息一下，看看周末机遇",
+      opportunities: "休息一下，看看轮末机遇",
       summary: "创业第一年结束了"
     }[phase];
     if ($("street-caption").textContent !== caption) $("street-caption").textContent = caption;
@@ -184,8 +186,9 @@
     $("reset-button").hidden = !state;
     const status = $("district-status");
     status.dataset.phase = phase;
-    status.innerHTML = `<i></i> ${{ start: "等待开业", week: "营业中", opportunities: "本周打烊", summary: "年度已完成" }[phase]}`;
-    $("week-text").textContent = `第 ${weekNumber(state?.week || 1)} 周`;
+    status.innerHTML = `<i></i> ${{ start: "等待开业", week: "营业中", opportunities: "本轮打烊", summary: "年度已完成" }[phase]}`;
+    $("week-text").textContent = calendarLabel(state?.week || 1);
+    $("round-text").textContent = `第 ${weekNumber(state?.week || 1)} 轮 / ${game.roundsPerYear} 轮`;
     const cash = state?.cash ?? game.startCash;
     $("cash-label").textContent = cash < 0 ? "资金缺口" : "可用资金";
     $("cash-value").textContent = money(cash);
@@ -194,14 +197,14 @@
     const supportMeter = $("support-meter");
     supportMeter.hidden = !schedule?.activeCount;
     supportMeter.innerHTML = schedule?.activeCount ? `<div><span>支持合同月收入</span><strong>${money(schedule.monthlyIncome)}</strong></div>
-      <small>${schedule.activeCount} 份在执行 · ${schedule.nextWeek ? `下次第 ${weekNumber(schedule.nextWeek)} 周末到账` : "余款跨年"} </small>` : "";
+      <small>${schedule.activeCount} 份在执行 · ${schedule.nextWeek ? `下次${monthEndLabel(schedule.nextWeek)}到账` : "余款跨年"} </small>` : "";
     const costsWeek = state && game.getMonthlyCostsSchedule(state);
     const payroll = state ? game.getMonthlyPayroll(state) : game.monthlyPayroll;
     const employees = (state?.opportunityPurchases || []).filter((purchase) => purchase.employeeId);
     const costMeter = $("cost-meter");
     costMeter.hidden = !costsWeek;
     costMeter.innerHTML = costsWeek ? `<div><span>月度固定支出</span><strong>${money(payroll + game.monthlyOperatingCost)}</strong></div>
-      <small>第 ${weekNumber(costsWeek)} 周末扣款</small><br>
+      <small>${monthEndLabel(costsWeek)}扣款（第 ${weekNumber(costsWeek)} 轮结束）</small><br>
       <small>工资 ${money(payroll)} · 运营费 ${money(game.monthlyOperatingCost)}</small>
       ${employees.length ? `<br><small>已雇佣 ${employees.map((employee) => employee.employeeName).join("、")}</small>` : ""}` : "";
     $("clock-caption").textContent = { start: "签约窗口", week: "签约倒计时", opportunities: "签约已截止", summary: "年度已结算" }[phase];
@@ -267,8 +270,8 @@
     const canSign = game.isContractAvailable(state, contract, now);
     const support = contract.kind === "support";
     const firstPaymentWeek = support ? game.firstSupportPaymentWeek(state.week) : null;
-    const firstPaymentLabel = firstPaymentWeek > game.weeksPerYear
-      ? "次年度起开始回款" : `第 ${weekNumber(firstPaymentWeek)} 周末首次到账`;
+    const firstPaymentLabel = firstPaymentWeek > game.roundsPerYear
+      ? "次年度起开始回款" : `${monthEndLabel(firstPaymentWeek)}首次到账`;
     const chance = canSign || contract.status !== "open"
       ? contract.chance ?? game.calcChance(state, contract) : null;
     const risk = chance === null ? "" : chance < 35 ? "high" : chance < 65 ? "medium" : "";
@@ -305,13 +308,13 @@
     for (const [key, points] of Object.entries(effects.stats || {})) {
       if (points) descriptions.push(`${game.statLabels[key]} ${signedChange(points)}`);
     }
-    if (effects.chance) descriptions.push(`当周签约率 ${signedChange(effects.chance)} 个百分点`);
+    if (effects.chance) descriptions.push(`本轮签约率 ${signedChange(effects.chance)} 个百分点`);
     return descriptions.join(" · ");
   }
 
   function renderEvents(now) {
     const event = state && events.current(state, now);
-    const resolved = event?.resolved || state?.eventHistory?.find((entry) => entry.week === state.week);
+    const resolved = event?.resolved || state?.eventHistory?.find((entry) => game.isCurrentRoundRecord(state, entry));
     const active = Boolean(event && !resolved);
     const badge = $("event-badge");
     const seconds = active ? Math.max(0, Math.ceil((event.expiresAt - now) / 1000)) : 0;
@@ -374,15 +377,15 @@
     const refreshLabel = refreshCost === 0 ? "免费刷新"
       : canRefresh ? `刷新 · ${money(refreshCost)}` : `资金不足 · ${money(refreshCost)}`;
     const toolbar = `<div class="shop-toolbar"><div class="shop-balance" data-negative="${state.cash < 0}">${state.cash < 0 ? "资金缺口" : "可用资金"} ${money(state.cash)}
-      <small>每周首次免费，之后每次 ${money(game.opportunityRefreshCost)}</small>
+      <small>每轮首次免费，之后每次 ${money(game.opportunityRefreshCost)}</small>
       <small>刷新换出 3 张新卡，已购买的升级会保留</small>
       <small>当前月工资 ${money(game.getMonthlyPayroll(state))}，雇佣员工后增加</small></div>
       ${button(`${icon("rotate")} ${refreshLabel}`, "refresh-shop", { disabled: !canRefresh })}</div>`;
-    show("shop", `第 ${weekNumber(state.week)} 周结束  /  WEEKEND`, "周末机遇商店",
-      `本周签约成功 ${results?.won ?? 0} 单，错过 ${results?.expired ?? 0} 位客户，收入 ${money(results?.revenue ?? 0)}${supportIncome}。`,
+    show("shop", `${calendarLabel(state.week)}结束  /  ROUND ${weekNumber(state.week)}`, "轮末机遇商店",
+      `本轮签约成功 ${results?.won ?? 0} 单，错过 ${results?.expired ?? 0} 位客户，收入 ${money(results?.revenue ?? 0)}${supportIncome}。`,
       `${monthlySettlement}${toolbar}<div class="shop-grid">${cards}</div>`,
       `<span class="push">机遇可选购，每张限购一次</span>${button(
-        state.week === game.weeksPerYear ? `查看年终总结 ${icon("arrow")}` : `进入第 ${weekNumber(state.week + 1)} 周 ${icon("arrow")}`,
+        state.week === game.roundsPerYear ? `查看年终总结 ${icon("arrow")}` : `进入${calendarLabel(state.week + 1)} ${icon("arrow")}`,
         "next", { accent: true })}`);
   }
 
@@ -399,7 +402,7 @@
       ${figure("实际签约成功率", `${rate}%`)}
       </div><div class="summary-stats boosts">${Object.entries(state.stats).map(([key, value]) => `<span>${game.statLabels[key]} ${value}</span>`).join("")}</div>`;
     show("summary", "年度结算  /  YEAR 01", "创业第一年，收官！",
-      `${roleData().name}经营了 52 周，拿下 ${result.won} 份合同，投资了 ${state.opportunityPurchases.length} 次周末机遇。`,
+      `${roleData().name}完成了全年 ${game.roundsPerYear} 轮经营，拿下 ${result.won} 份合同，投资了 ${state.opportunityPurchases.length} 次机遇。`,
       body, `${button("经营记录", "history")}${button("开启新档", "reset", { accent: true })}`);
   }
 
@@ -424,16 +427,16 @@
       }))),
       ...(state?.opportunityPurchases || []).map((entry) => ({
         week: entry.week, title: entry.title,
-        detail: entry.employeeId ? `${entry.employeeRole} · 每月工资 +${money(entry.monthlySalary)}` : "周末机遇",
+        detail: entry.employeeId ? `${entry.employeeRole} · 每月工资 +${money(entry.monthlySalary)}` : "轮末机遇",
         result: `−${money(entry.cost)}`
       })),
       ...(state?.opportunityRefreshes || []).map((entry) => ({
-        week: entry.week, title: "刷新机遇商店", detail: "周末机遇", result: entry.cost === 0 ? "免费" : `−${money(entry.cost)}`
+        week: entry.week, title: "刷新机遇商店", detail: "轮末机遇", result: entry.cost === 0 ? "免费" : `−${money(entry.cost)}`
       }))
     ].reverse().sort((a, b) => b.week - a.week);
     show("history", "经营档案  /  LOGBOOK", "经营记录", "回顾签约、回款、突发事件和经营支出。",
       entries.length ? `<ul class="history-list">${entries.map((entry) => `<li>
-        <div><b>${entry.title}</b><br><small>第 ${weekNumber(entry.week)} 周 · ${entry.detail}</small></div><strong>${entry.result}</strong></li>`).join("")}</ul>`
+        <div><b>${entry.title}</b><br><small>${calendarLabel(entry.week)} · 第 ${weekNumber(entry.week)} 轮 · ${entry.detail}</small></div><strong>${entry.result}</strong></li>`).join("")}</ul>`
         : '<p class="empty-records">接待客户、处理事件或购买机遇后，这里会留下记录。</p>',
       button("关闭", "close", { accent: true }));
   }
@@ -441,14 +444,14 @@
   function showHelp() {
     show("help", "经营手册  /  HOW TO PLAY", "公司怎么经营？", "",
       `<ol class="help-list"><li>选择本轮经营角色，带着 ${money(game.startCash)} 启动资金开业。选中的员工本局会从招聘机遇中移除。</li>
-      <li>每周有 ${game.weekSeconds} 秒营业时间。客户陆续经过街区，离开后本周就错过了这份合同。点击客户可查看金额、成功率和离开倒计时。</li>
-      <li>项目签约后即时到账。标记「月付」的支持合同通常更难签，从签约周之后的首个月末开始按月回款。</li>
+      <li>每轮推进半个月，每月分为上半月和下半月，全年共 ${game.roundsPerYear} 轮。每轮有 ${game.roundSeconds} 秒营业时间，客户离开后本轮就错过了这份合同。点击客户可查看金额、成功率和离开倒计时。</li>
+      <li>项目签约后即时到账。标记「月付」的支持合同通常更难签，从签约轮之后的首个月末开始按月回款：上半月签约当月末首次到账，下半月签约下月末首次到账。</li>
       <li>月末自动扣除基础工资 ${money(game.monthlyPayroll)}、已雇佣员工的月薪和运营费 ${money(game.monthlyOperatingCost)}。资金不足时余额会变为负数，后续收入可填补缺口。</li>
-      <li>营业中可能遇到接口故障、上线变更或演示插曲。限时决定会影响资金、公司属性或当周签约率，超时会自动结算。</li>
-      <li>周末可安排技术演练、客户交流等活动来升级公司属性。每周首次刷新机遇免费，之后每次 ${money(game.opportunityRefreshCost)}。准备好后手动进入下一周。</li>
+      <li>营业中可能遇到接口故障、上线变更或演示插曲。限时决定会影响资金、公司属性或本轮签约率，超时会自动结算。</li>
+      <li>每轮结束可安排技术演练、客户交流等活动来升级公司属性。每轮首次刷新机遇免费，之后每次 ${money(game.opportunityRefreshCost)}。准备好后手动进入下半月或下个月。</li>
       <li>开店或刷新时，有 ${Math.round(game.employeeAppearanceChance * 100)}% 的概率出现一张员工卡。花费招聘费可立即提升属性，后续每个月末增加工资支出。每位员工在本局中只能雇佣一次。</li>
-      <li>经营满 ${game.weeksPerYear} 周后，查看收入、支出、签约和公司属性的年度总结。</li>
-      <li>进度保存在本机。营业倒计时会持续计时，周末商店可随时回来继续。</li></ol>`,
+      <li>每个下半月结束时结算月度工资、运营费和到期支持回款，一年共结算 12 次。经营满 ${game.roundsPerYear} 轮后，查看年度总结。</li>
+      <li>进度保存在本机。营业倒计时会持续计时，轮末商店可随时回来继续。</li></ol>`,
       button("开始经营", "close", { accent: true }));
   }
 
@@ -532,7 +535,7 @@
         if (state.phase === "summary") showSummary();
         else {
           dialog.close();
-          toast(`第 ${state.week} 周开始，客户已经到了。`);
+          toast(`${calendarLabel(state.week)}开始，客户已经到了。`);
         }
         break;
       }

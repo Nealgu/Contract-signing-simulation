@@ -2,10 +2,15 @@
   'use strict';
 
   const startCash = 30000;
-  const weeksPerYear = 52;
-  const weekSeconds = 30;
+  const roundsPerYear = 24;
+  const roundSeconds = 30;
+  // Keep the original API and save field names as aliases for half-month rounds.
+  const weeksPerYear = roundsPerYear;
+  const weekSeconds = roundSeconds;
   const legacyWeekSeconds = 60;
-  const monthEndWeeks = [4, 8, 13, 17, 21, 26, 30, 34, 39, 43, 47, 52];
+  const legacyWeeksPerYear = 52;
+  const legacyMonthEndWeeks = [4, 8, 13, 17, 21, 26, 30, 34, 39, 43, 47, 52];
+  const monthEndWeeks = Array.from({ length: 12 }, (_, month) => (month + 1) * 2);
   const monthlyPayroll = 12000;
   const monthlyOperatingCost = 4000;
   const opportunityRefreshCost = 2500;
@@ -283,7 +288,7 @@
     return Math.round(value / 100) * 100;
   }
 
-  // Rotation keeps each group of offers off the street for two full weeks.
+  // Rotation keeps each group of offers off the street for two full rounds.
   const rotationLength = 3;
   const visitWindows = [
     [0, 7], [0, 9], [1, 11], [2, 13], [7, 17], [9, 19],
@@ -296,7 +301,7 @@
     const round = Math.floor((week - 1) / rotationLength);
     const projectCount = contractTemplates.length / rotationLength;
     const supportCount = supportTemplates.length / rotationLength;
-    const scale = 1 + Math.floor((week - 1) / 13) * 0.12;
+    const scale = 1 + Math.floor((week - 1) / 6) * 0.12;
     let projectIndex = round * 4;
     let supportIndex = round;
     return visitWindows.map(([arrivesAt, leavesAt], index) => {
@@ -306,7 +311,7 @@
         : contractTemplates[group * projectCount + projectIndex++ % projectCount];
       return {
         ...template,
-        id: `w${week}-c${index + 1}`,
+        id: `r${week}-c${index + 1}`,
         kind: support ? 'support' : 'project',
         amount: roundPrice(template.amount * scale),
         arrivesAt,
@@ -332,9 +337,9 @@
     return Math.min(1, Math.max(0, progress));
   }
 
-  function opportunityCards(week, templates, refreshCount = 0) {
-    const scale = 1 + Math.floor((week - 1) / 13) * 0.15;
-    const prefix = refreshCount ? `w${week}-r${refreshCount}` : `w${week}`;
+  function opportunityCards(week, templates, refreshCount = 0, roundId = `r${week}`) {
+    const scale = 1 + Math.floor((week - 1) / 6) * 0.15;
+    const prefix = refreshCount ? `${roundId}-r${refreshCount}` : roundId;
     return templates.map((template, index) => ({
       ...template,
       id: `${prefix}-o${index + 1}`,
@@ -362,11 +367,16 @@
     const start = ((week - 1) * 5) % opportunityTemplates.length;
     const templates = Array.from({ length: 3 }, (_, index) =>
       opportunityTemplates[(start + index) % opportunityTemplates.length]);
-    return opportunityCards(week, includeEmployeeOpportunity(state, templates, random));
+    return opportunityCards(week, includeEmployeeOpportunity(state, templates, random), 0, state.roundId);
+  }
+
+  function isCurrentRoundRecord(state, record) {
+    if (record.roundId && state.roundId) return record.roundId === state.roundId;
+    return record.week === state.week;
   }
 
   function getOpportunityRefreshCost(state) {
-    const refreshedThisWeek = state.opportunityRefreshes.some(record => record.week === state.week);
+    const refreshedThisWeek = state.opportunityRefreshes.some(record => isCurrentRoundRecord(state, record));
     return refreshedThisWeek ? opportunityRefreshCost : 0;
   }
 
@@ -378,36 +388,41 @@
     if (!canRefreshOpportunities(state)) return state;
     const visibleTitles = new Set(state.opportunities.map(card => card.title));
     const pool = opportunityTemplates.filter(template => !visibleTitles.has(template.title));
-    const refreshCount = state.opportunityRefreshes.filter(record => record.week === state.week).length + 1;
+    const refreshCount = state.opportunityRefreshes.filter(record => isCurrentRoundRecord(state, record)).length + 1;
     const templates = Array.from({ length: 3 }, () =>
       pool.splice(Math.floor(random() * pool.length), 1)[0]);
     const record = {
-      week: state.week, id: `w${state.week}-r${refreshCount}`, cost: getOpportunityRefreshCost(state),
+      week: state.week, roundId: state.roundId,
+      id: `${state.roundId || `r${state.week}`}-r${refreshCount}`, cost: getOpportunityRefreshCost(state),
     };
     return {
       ...state,
       cash: state.cash - record.cost,
-      opportunities: opportunityCards(state.week, includeEmployeeOpportunity(state, templates, random), refreshCount),
+      opportunities: opportunityCards(state.week, includeEmployeeOpportunity(state, templates, random), refreshCount, state.roundId),
       opportunityRefreshes: [...state.opportunityRefreshes, record],
     };
   }
 
   function openWeek(state, week, now) {
+    const { legacyWeek, ...current } = state;
     return {
-      ...state,
+      ...current,
       week,
+      roundId: `r${week}`,
       phase: 'week',
       weekDuration: weekSeconds,
       deadline: now + weekSeconds * 1000,
       contracts: makeContracts(week),
       opportunities: [],
+      eventChanceWeek: null,
+      eventChanceBonus: 0,
     };
   }
 
   function createGame(roleId, now = Date.now()) {
     const role = roles.find(item => item.id === roleId) || roles[0];
     return openWeek({
-      version: 2,
+      version: 3,
       roleId: role.id,
       cash: startCash,
       stats: { ...role.stats },
@@ -421,14 +436,59 @@
     }, 1, now);
   }
 
+  function legacyWeekToRound(week, afterSettlement = false) {
+    if (!Number.isInteger(week) || week < 1) return week;
+    const year = Math.floor((week - 1) / legacyWeeksPerYear);
+    const weekOfYear = (week - 1) % legacyWeeksPerYear + 1;
+    const month = legacyMonthEndWeeks.findIndex(end => end >= weekOfYear);
+    const monthStart = month === 0 ? 0 : legacyMonthEndWeeks[month - 1];
+    const monthEnd = legacyMonthEndWeeks[month];
+    // A legacy shop before month-end must leave the new month-end round unplayed.
+    const secondHalf = afterSettlement
+      ? weekOfYear === monthEnd
+      : weekOfYear > monthStart + Math.ceil((monthEnd - monthStart) / 2);
+    return year * roundsPerYear + month * 2 + (secondHalf ? 2 : 1);
+  }
+
+  function migrateWeeklyGame(saved) {
+    const week = saved.phase === 'summary' ? roundsPerYear
+      : legacyWeekToRound(saved.week, saved.phase === 'opportunities');
+    const roundId = `legacy-w${saved.week}`;
+    const migrateRecord = record => ({
+      ...record,
+      week: record.week === saved.week ? week : legacyWeekToRound(record.week),
+      roundId: `legacy-w${record.week}`,
+    });
+    return {
+      ...saved,
+      version: 3,
+      week,
+      roundId,
+      // Finish the current legacy turn without changing its timer or pending event.
+      legacyWeek: saved.week,
+      eventChanceWeek: saved.eventChanceWeek === saved.week ? week : null,
+      history: saved.history.map(migrateRecord),
+      weekResults: saved.weekResults.map(migrateRecord),
+      opportunityPurchases: saved.opportunityPurchases.map(migrateRecord),
+      opportunityRefreshes: saved.opportunityRefreshes.map(migrateRecord),
+      supportPayments: saved.supportPayments.map(migrateRecord),
+      eventHistory: saved.eventHistory.map(migrateRecord),
+      supportContracts: saved.supportContracts.map(contract => ({
+        ...migrateRecord(contract),
+        nextPaymentWeek: legacyWeekToRound(contract.nextPaymentWeek),
+      })),
+    };
+  }
+
   function restoreGame(saved) {
     const baseArrays = ['contracts', 'opportunities', 'history', 'weekResults', 'opportunityPurchases'];
     const roleId = saved?.roleId === 'technologist' ? 'connector' : saved?.roleId;
     const role = roles.find(item => item.id === roleId);
-    if (!saved || ![1, 2].includes(saved.version)
+    if (!saved || ![1, 2, 3].includes(saved.version)
       || !role
       || !['week', 'opportunities', 'summary'].includes(saved.phase)
-      || !Number.isInteger(saved.week) || saved.week < 1 || saved.week > weeksPerYear
+      || !Number.isInteger(saved.week) || saved.week < 1
+      || saved.week > (saved.version === 3 ? roundsPerYear : legacyWeeksPerYear)
       || !Number.isFinite(saved.cash)
       || (saved.phase === 'week' && !Number.isFinite(saved.deadline))
       || !saved.stats || !statKeys.every(key => Number.isFinite(saved.stats[key])
@@ -442,12 +502,15 @@
       : saved.opportunities;
     const weekDuration = Number.isFinite(saved.weekDuration) && saved.weekDuration > 0
       ? saved.weekDuration : legacyWeekSeconds;
-    if (saved.version === 2) {
+    if (saved.version !== 1) {
       const newArrays = ['opportunityRefreshes', 'supportContracts', 'supportPayments'];
       if (!newArrays.every(key => Array.isArray(saved[key]))) return null;
-      return { ...saved, roleId, opportunities, eventHistory, weekDuration };
+      const restored = { ...saved, roleId, opportunities, eventHistory, weekDuration };
+      return saved.version === 3
+        ? { ...restored, roundId: saved.roundId || `r${saved.week}` }
+        : migrateWeeklyGame(restored);
     }
-    return {
+    return migrateWeeklyGame({
       ...saved,
       version: 2,
       roleId,
@@ -466,7 +529,7 @@
       supportContracts: [],
       supportPayments: [],
       eventHistory,
-    };
+    });
   }
 
   function firstSupportPaymentWeek(week) {
@@ -505,7 +568,7 @@
     const contracts = state.supportContracts.map(contract => {
       if (contract.remainingMonths === 0 || contract.nextPaymentWeek !== state.week) return contract;
       const { id, title, client, amount } = contract;
-      payments.push({ week: state.week, id, title, client, amount });
+      payments.push({ week: state.week, roundId: state.roundId, id, title, client, amount });
       const remainingMonths = contract.remainingMonths - 1;
       return {
         ...contract,
@@ -544,10 +607,11 @@
     const isMonthEnd = monthEndWeeks.includes(state.week);
     const payroll = isMonthEnd ? getMonthlyPayroll(state) : 0;
     const operatingCost = isMonthEnd ? monthlyOperatingCost : 0;
-    const events = (state.eventHistory || []).filter(event => event.week === state.week);
+    const events = (state.eventHistory || []).filter(event => isCurrentRoundRecord(state, event));
     const { eventRevenue, eventSpent } = eventTotals(events);
     const result = {
       week: state.week,
+      roundId: state.roundId,
       revenue: projectRevenue + supportRevenue + eventRevenue,
       projectRevenue,
       supportRevenue,
@@ -584,13 +648,14 @@
     const result = { ...contract, status, chance };
     const kind = contract.kind || 'project';
     const record = {
-      week: current.week, id, client: contract.client, title: contract.title,
+      week: current.week, roundId: current.roundId, id, client: contract.client, title: contract.title,
       amount: contract.amount, status, chance, kind,
       ...(kind === 'support' ? { months: contract.months } : {}),
     };
     const supportContracts = succeeded && kind === 'support'
       ? [...current.supportContracts, {
         week: current.week,
+        roundId: current.roundId,
         id,
         client: contract.client,
         title: contract.title,
@@ -625,7 +690,7 @@
     }
     if (Object.keys(boosts).length === 0) return state;
     const record = {
-      week: state.week, id, title: card.title, cost: card.cost, boosts,
+      week: state.week, roundId: state.roundId, id, title: card.title, cost: card.cost, boosts,
       ...(card.employeeId ? {
         employeeId: card.employeeId,
         employeeName: card.employeeName,
@@ -680,7 +745,8 @@
   }
 
   const api = {
-    roles, statLabels, startCash, weeksPerYear, weekSeconds,
+    roles, statLabels, startCash, roundsPerYear, roundSeconds, weeksPerYear, weekSeconds,
+    isCurrentRoundRecord,
     restoreGame, firstSupportPaymentWeek, getSupportSchedule,
     monthlyPayroll, monthlyOperatingCost, getMonthlyCostsSchedule, getMonthlyPayroll,
     employeeTemplates, employeeAppearanceChance,
